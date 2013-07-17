@@ -1,0 +1,6 @@
+services:
+    symbb_table_prefix:
+        class: SymBB\ConfigBundle\EventListener\DoctrineNameListener
+        arguments: ['@service_container']
+        tags:
+            - { name: doctrine.event_listener, event: loadClassMetadata, connection: symbb }
