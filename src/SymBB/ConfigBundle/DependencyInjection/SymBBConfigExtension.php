@@ -16,9 +16,11 @@ class SymBBConfigExtension extends Extension implements PrependExtensionInterfac
         
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-     
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('config.yml');
+        $loader->load('symbb.yml');
+        $loader->load('doctrine.yml');
+        $loader->load('twig.yml');
+        $loader->load('fos_user.yml');
+        $loader->load('fos_rest.yml');
 
     }
         

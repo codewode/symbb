@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             // SymBB, befor other Bundles
             new SymBB\ConfigBundle\SymBBConfigBundle(),
             new SymBB\UserBundle\SymBBUserBundle(),
+            new \SymBB\TemplateBundle\SymBBTemplateBundle,
             
             // FOS
             new FOS\UserBundle\FOSUserBundle(),
