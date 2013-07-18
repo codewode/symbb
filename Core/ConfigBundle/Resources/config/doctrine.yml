@@ -20,8 +20,8 @@ doctrine:
                 auto_mapping: false
                 connection:   symbb
                 mappings:
-                    SymBBConfigBundle: ~
-                    SymBBUserBundle: ~
-                    SymBBTemplateBundle: ~
-                    SymBBAdminBundle: ~
-                    SymBBForumBundle: ~
+                    SymBBCoreConfigBundle: ~
+                    SymBBCoreUserBundle: ~
+                    SymBBCoreTemplateBundle: ~
+                    SymBBCoreAdminBundle: ~
+                    SymBBCoreForumBundle: ~

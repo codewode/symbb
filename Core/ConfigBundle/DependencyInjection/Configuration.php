@@ -9,21 +9,25 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('symbb_config');
+        $rootNode = $treeBuilder->root('sym_bb_core_config');
 
         $rootNode
             ->children()
                 ->arrayNode('database') 
-                    ->scalarNode('table_prefix') 
-                        ->defaultValue('symbb_')
+                    ->children()
+                        ->scalarNode('table_prefix') 
+                            ->defaultValue('symbb_')
+                        ->end()
                     ->end()
                 ->end()
                 ->arrayNode('template') 
-                    ->scalarNode('acp') 
-                        ->defaultValue('SymBBTemplateAcpBundle')
-                    ->end()
-                    ->scalarNode('forum') 
-                        ->defaultValue('SymBBTemplateSimpleBundle')
+                    ->children()
+                        ->scalarNode('acp') 
+                            ->defaultValue('SymBBTemplateAcpBundle')
+                        ->end()
+                        ->scalarNode('forum') 
+                            ->defaultValue('SymBBTemplateSimpleBundle')
+                        ->end()
                     ->end()
                 ->end()
             ->end();

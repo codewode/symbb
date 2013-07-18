@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
-class SymBBConfigExtension extends Extension implements PrependExtensionInterface 
+class SymBBCoreConfigExtension extends Extension implements PrependExtensionInterface 
 {
     
     public function prepend(ContainerBuilder $container)

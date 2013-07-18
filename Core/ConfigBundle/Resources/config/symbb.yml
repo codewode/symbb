@@ -1,4 +1,4 @@
-sym_bb_config:
+sym_bb_core_config:
     database:
       table_prefix: symbb_
     template: 
