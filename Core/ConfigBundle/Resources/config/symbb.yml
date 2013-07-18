@@ -1,0 +1,7 @@
+sym_bb_config:
+    database:
+      table_prefix: symbb_
+    template: 
+      acp: SymBBTemplateAcpBundle
+      forum: SymBBTemplateSimpleBundle
+    
