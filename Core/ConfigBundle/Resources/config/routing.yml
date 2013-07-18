@@ -1,3 +1,11 @@
+_symbb_acp:
+    pattern:  /acp
+    defaults: { _controller: SymBBCoreAdmin:Display:index }
+
+
+
+
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
