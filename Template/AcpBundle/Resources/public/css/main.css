@@ -1,5 +1,18 @@
 body, html {
     padding: 0;
     margin: 0;
+    background-color: #F6F6F6; 
+    color: #FFF;
 }
 
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.clear {
+    clear: both;
+}

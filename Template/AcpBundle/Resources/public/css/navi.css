@@ -1,0 +1,42 @@
+#nav {
+    background-image: url('/bundles/symbbtemplateacp/images/topnavBg.png');
+    background-color: #303941;
+    color: #FFF;
+    height: 34px;
+    overflow: hidden;
+}
+
+#nav a ,
+#nav a:active,
+#nav a:link,
+#nav a:visited {
+    color: #FFF;
+    text-decoration: none;
+}
+
+#nav ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+}
+
+#nav ul li {
+    border-right: 1px solid #000000;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#nav .right ul li:first-child,
+#nav .left ul li:first-child {
+    border-left: 1px solid #000000;
+}
+
+#nav ul li:hover {
+    background-color: #293138;
+}

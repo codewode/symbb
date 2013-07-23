@@ -13,7 +13,7 @@ class DoctrineNameListener
     public function __construct($container)
     {
         $config         = $container->getParameter('symbb_config');
-        $this->prefix   = $config['table_prefix'];
+        $this->prefix   = $config['database']['table_prefix'];
     }
     
     public function loadClassMetadata(\Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs)
