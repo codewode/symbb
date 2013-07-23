@@ -2,9 +2,12 @@ _symbb_acp:
     pattern:  /acp
     defaults: { _controller: SymBBCoreAdminBundle:Display:index }
 
+_seyon_eajaxcrud:
+   resource: "@SeyonEAjaxCRUDBundle/Resources/config/routing.yml"
+   prefix: /crud
 
-
-
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
@@ -28,3 +31,4 @@ fos_user_change_password:
 fos_user_group:
     resource: "@FOSUserBundle/Resources/config/routing/group.xml"
     prefix: /group
+ 

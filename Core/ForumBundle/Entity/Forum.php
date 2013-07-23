@@ -29,7 +29,7 @@ class Forum
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $link;
     
@@ -39,7 +39,7 @@ class Forum
     private $countLinkCalls = false;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
     
@@ -50,7 +50,7 @@ class Forum
 
     /**
      * @ORM\ManyToOne(targetEntity="Forum", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      */
     private $parent;
     

@@ -3,6 +3,8 @@ body, html {
     margin: 0;
     background-color: #F6F6F6; 
     color: #FFF;
+    height: 100%;
+    width: 100%;
 }
 
 .left {
@@ -15,4 +17,8 @@ body, html {
 
 .clear {
     clear: both;
+}
+
+#listContainer {
+    height: 100%;
 }
