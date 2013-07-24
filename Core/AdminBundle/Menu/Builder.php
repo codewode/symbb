@@ -11,14 +11,14 @@ class Builder extends ContainerAware
     {
         $menu = $factory->createItem('root');
 
-        $menu->addChild('Übersicht', array('route' => '_symbb_acp'));
-        $menu->addChild('Foren', array('route' => '_symbb_acp'));
-        $menu->addChild('Benutzer', array('route' => '_symbb_acp'));
-        $menu->addChild('Aussehen', array('route' => '_symbb_acp'));
-        $menu->addChild('Einstellungen', array('route' => '_symbb_acp'));
-        $menu->addChild('Erweiterungen', array('route' => '_symbb_acp'));
-        $menu->addChild('Wartung', array('route' => '_symbb_acp'));
-        $menu->addChild('Forum anzeigen', array('route' => '_symbb_acp'));
+        $menu->addChild('Übersicht', array('route' => '_symbb_acp'))->setExtra('translation_domain', 'menu');
+        $menu->addChild('Foren', array('route' => '_symbb_acp'))->setExtra('translation_domain', 'menu');
+        $menu->addChild('Benutzer', array('route' => '_symbb_acp'))->setExtra('translation_domain', 'menu');
+        $menu->addChild('Aussehen', array('route' => '_symbb_acp'))->setExtra('translation_domain', 'menu');
+        $menu->addChild('Einstellungen', array('route' => '_symbb_acp'))->setExtra('translation_domain', 'menu');
+        $menu->addChild('Erweiterungen', array('route' => '_symbb_acp'))->setExtra('translation_domain', 'menu');
+        $menu->addChild('Wartung', array('route' => '_symbb_acp'))->setExtra('translation_domain', 'menu');
+        $menu->addChild('Forum anzeigen', array('route' => '_symbb_acp'))->setExtra('translation_domain', 'menu');
 
         return $menu;
     }

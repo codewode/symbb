@@ -35,14 +35,16 @@ list:
       width: 100px
       call: getID()
     -
+      key: type
+      sort: type
+      label: Art des Forums
+      width: 100px
+      call: getType()
+      format:
+        display: SymBB\Core\ForumBundle\Helper\Format\Forum\Type
+    -
       key: name
       sort: name
       label: Name
       width: auto
       call: getName()
-    -
-      key: type
-      sort: type
-      label: Art des Forums
-      width: 50px
-      call: getType()
