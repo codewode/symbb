@@ -6,11 +6,6 @@
         
         {% block stylesheets %} 
             {% stylesheets 
-                '@SeyonEAjaxCRUDBundle/Resources/public/css/*' filter='?yui_css'
-                '@SeyonEAjaxCRUDBundle/Resources/public/css/libs/mBox/*' filter='?yui_css'
-                '@SeyonEAjaxCRUDBundle/Resources/public/css/libs/mBox/themes/mBoxTooltip-Black.css' filter='?yui_css'
-                '@SeyonEAjaxCRUDBundle/Resources/public/css/libs/mForm/mForm.css' filter='?yui_css'
-                '@SeyonEAjaxCRUDBundle/Resources/public/css/libs/mForm/mFormElement-Select.css' filter='?yui_css'
                 '@SymBBTemplateAcpBundle/Resources/public/css/main.css' filter='?yui_css'
                 '@SymBBTemplateAcpBundle/Resources/public/css/navi.css' filter='?yui_css'
              %}
@@ -22,23 +17,9 @@
             {% javascripts 
                 '@SymBBTemplateAcpBundle/Resources/public/js/libs/mootools/mootools1.4.5.js'  filter='?yui_js'
                 '@SymBBTemplateAcpBundle/Resources/public/js/libs/mootools/mootools-more-1.4.0.1.js'  filter='?yui_js'
-                '@SeyonEAjaxCRUDBundle/Resources/public/js/libs/mBox/min/mBox.All.min.js'
-                '@SeyonEAjaxCRUDBundle/Resources/public/js/libs/mForm/mForm.Core.js'
-                '@SeyonEAjaxCRUDBundle/Resources/public/js/libs/mForm/mForm.Element.Select.js'
-                '@SeyonEAjaxCRUDBundle/Resources/public/js/libs/mForm/mForm.Element.js'
-                '@SeyonEAjaxCRUDBundle/Resources/public/js/libs/mForm/mForm.Submit.js'
                 '@SymBBTemplateAcpBundle/Resources/public/js/main.js'  filter='?yui_js'
              %}
              <script type="text/javascript" src="{{ asset_url }}" ></script>
-            {% endjavascripts %}
-            {% javascripts
-                '@SeyonEAjaxCRUDBundle/Resources/public/js/coffee/helper.coffee'
-                '@SeyonEAjaxCRUDBundle/Resources/public/js/coffee/request.coffee'
-                '@SeyonEAjaxCRUDBundle/Resources/public/js/coffee/resizer.coffee'
-                '@SeyonEAjaxCRUDBundle/Resources/public/js/coffee/entires.coffee'
-                '@SeyonEAjaxCRUDBundle/Resources/public/js/coffee/list.coffee'
-            %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
         {% endblock %}
         

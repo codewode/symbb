@@ -1,6 +1,0 @@
-assetic:
-    filters:
-        coffee:
-            bin: /usr/local/bin/coffee
-            node: /usr/local/bin/node
-            apply_to: "\.coffee$"
