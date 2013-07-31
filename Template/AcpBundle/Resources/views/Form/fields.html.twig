@@ -1,0 +1,15 @@
+{% block form_row %}
+<div class="form_row">
+    {{ form_label(form) }}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+</div>
+<div class="clear"></div>
+{% endblock form_row %}
+
+
+{% block field_label %}
+{% spaceless %}
+<label for="{{ id }}">{{ id|trans|trans({}, "form") }}</label>
+{% endspaceless %}
+{% endblock field_label %}

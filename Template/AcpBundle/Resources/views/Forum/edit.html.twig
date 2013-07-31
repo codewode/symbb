@@ -1,0 +1,13 @@
+{% extends getSymbbTemplateConfig('acp') ~ ':Forum:list.html.twig' %}
+
+{% form_theme form getSymbbTemplateConfig('acp') ~ ':Form:fields.html.twig' %}
+
+{% block content %}
+<form action="" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <input type="hidden" name="id" value="{{ entity.getId() }}" />
+    <div class="actions">
+        <input type="submit" value="{{ 'Eintrag speichern'|trans({}, "form") }}" />
+    </div>
+</form>
+{% endblock %}

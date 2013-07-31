@@ -4,3 +4,9 @@ services:
         arguments: ['@service_container']
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata, connection: symbb }
+    symbb_config_template:
+        twig.extension.symbb_twig_template_config:
+        class: SymBB\Core\ConfigBundle\DependencyInjection\TwigTemplateConfigExtension
+        arguments: ['@service_container']
+        tags:
+            - { name: twig.extension }

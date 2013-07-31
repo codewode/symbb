@@ -10,11 +10,8 @@ class DisplayController extends Controller
 {
     
 	public function indexAction(){
-        $container      = $this->container;
-        $config         = $container->getParameter('symbb_config');
-        $acpTemplate    = $config['template']['acp'];
         return $this->render(
-            $acpTemplate.'::layout.html.twig',
+            'SymBBTemplateAcpBundle:Forum:list.html.twig',
             array()
         );
 	}

@@ -3,8 +3,13 @@
     background-color: #303941;
     color: #FFF;
     height: 34px;
+    width: 100%;
     overflow: hidden;
     border-top: 1px solid #FFF;
+    position: fixed;
+    top: 0px;
+    left: 0px;    
+    z-index: 100;
 }
 
 #nav a ,
@@ -42,4 +47,26 @@
 
 #nav ul li:hover {
     background-color: #293138;
+}
+
+.container .subnavi {
+    width: 250px;
+    height: 100%;
+    border-right: 1px solid #CCC;
+    float: left;
+    z-index: 90;
+}
+
+.container .subnavi ul {
+    padding-top: 50px;
+}
+
+.container .subnavi ul li {
+    padding: 5px;
+    background-color: #EEE;
+    border-bottom: 1px dotted #CCC;
+}
+
+.container .subnavi ul li:hover {
+    background-color: #CCC;
 }

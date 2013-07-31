@@ -2,7 +2,7 @@ body, html {
     padding: 0;
     margin: 0;
     background-color: #F6F6F6; 
-    color: #FFF;
+    color: #666;
     height: 100%;
     width: 100%;
 }
@@ -19,6 +19,55 @@ body, html {
     clear: both;
 }
 
-#listContainer {
+.container {
+    height: 100%;    
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.container .content {
+    position: absolute;
+    top: 0;
+    left: 250px;
+    min-width: 800px;
+    /* Firefox */
+    width: -moz-calc(100% - 250px);
+    /* WebKit */
+    width: -webkit-calc(100% - 250px);
+    /* Opera */
+    width: -o-calc(100% - 250px);
+    /* Standard */
+    width: calc(100% - 250px);
     height: 100%;
+    z-index: 1;
+}
+
+.container .content .padding {                     
+    padding-top: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    min-width: 800px;
+    /* Firefox */
+    width: -moz-calc(100% - 100px);
+    /* WebKit */
+    width: -webkit-calc(100% - 100px);
+    /* Opera */
+    width: -o-calc(100% - 100px);
+    /* Standard */
+    width: calc(100% - 100px);
+}
+
+ul, li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+a, a:hover, a:link, a:active, a:visited {
+    color: #000;
+    text-decoration: none;    
+    display: block;
 }

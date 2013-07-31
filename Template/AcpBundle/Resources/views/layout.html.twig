@@ -2,12 +2,14 @@
 <html>
     <head>
         <title></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         
         {% block stylesheets %} 
             {% stylesheets 
                 '@SymBBTemplateAcpBundle/Resources/public/css/main.css' filter='?yui_css'
                 '@SymBBTemplateAcpBundle/Resources/public/css/navi.css' filter='?yui_css'
+                '@SymBBTemplateAcpBundle/Resources/public/css/table.css' filter='?yui_css'
+                '@SymBBTemplateAcpBundle/Resources/public/css/form.css' filter='?yui_css'
              %}
             <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
@@ -21,24 +23,31 @@
              %}
              <script type="text/javascript" src="{{ asset_url }}" ></script>
             {% endjavascripts %}
+            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+            <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
         {% endblock %}
-        
-        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
         
     </head>
     <body>
         <div id="nav">
-            <div class="left">
-                <ul>
-                    <li>{{ 'Hallo %name%'|trans({'%name%': 'ReplaceMe'}, "menu") }}</li>
-                </ul>
-            </div>
             <div class="right">
                 {{ knp_menu_render('SymBBCoreAdminBundle:Builder:mainMenu') }}
             </div>
             <div class="clear"></div>
         </div>
-        <div id="listContainer"></div> 
+        <div class="container">
+            <div class="subnavi">
+                {% block subnavi %}
+
+                {% endblock %}
+            </div>
+            <div class="content">
+                <div class="padding">
+                {% block content %}
+                
+                {% endblock %}
+                </div>    
+            </div>
+        </div> 
     </body>
 </html>

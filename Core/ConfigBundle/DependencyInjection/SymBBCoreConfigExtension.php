@@ -36,9 +36,10 @@ class SymBBCoreConfigExtension extends Extension implements PrependExtensionInte
         }
       
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, array($config));
-
+        $config         = $this->processConfiguration($configuration, array($config));
+        
         $container->setParameter('symbb_config', $config);
+        $container->setParameter('twig.globals.symbb_config.template', $config['template']);
         
     }
 }

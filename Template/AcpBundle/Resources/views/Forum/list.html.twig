@@ -1,0 +1,37 @@
+{% extends getSymbbTemplateConfig('acp') ~ '::layout.html.twig' %}
+
+
+{% block subnavi %}
+    {{ knp_menu_render('SymBBCoreForumBundle:Builder:subMenu') }}
+{% endblock %}
+
+{% block content %}
+    <div class="table">
+        <div class="actions">
+            <button onclick="SymBBUtil.goTo('{{path('_symbb_acp_forum_new')}}')">{{ 'Neues Forum'|trans({}, "list") }}</button>
+        </div>
+        <table>
+            <colgroup>
+                <col style="width: auto;" />
+                <col style="width: 100px;" />
+                <col style="width: 100px;" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>{{ 'Forum'|trans({}, "list") }}</th>
+                    <th>{{ 'Art'|trans({}, "list") }}</th>
+                    <th>{{ 'Aktionen'|trans({}, "list") }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for forum in entityList %}
+                    <tr>
+                        <td>{{forum.getName()}}</td>
+                        <td>{{helper.type.format(forum.getType())}}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

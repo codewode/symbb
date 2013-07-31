@@ -1,10 +1,18 @@
 symbb
 =====
-Symfony 2 Ajax based BB Forum
+Ein Symfony 2 Ajax basiertes BB Forum
 
-!!The bundle is currently still in development!!
+
+
+!!Dieses Bundle ist derzeit noch in Entwicklung!!
 ===
 
-This bundle, the system configures itself
+Das Bundle Konfiguriert sich fast komplett selber!
 ===
-To override the configurations, you must extend the CoreConfigBundle or disable it and set everything yourself. Since many settings are required, this was the easiest way to make the settings.
+Wenn ihr bereits andere Einstellungen habt kann es passieren das diese Überschrieben werden!
+In diesem Fall müsst ihr entweder das CoreConfigBundle überschreiben oder deaktivieren und alle YML Dateien bei euch manuell anpassen!
+
+Folgende Einstellungen müssen derzeit manuell vorgenommen werden!
+===
+- security.yml ( siehe YML Datei in CoreConfigBundle )
+- AppKernel ( siehe Sandbox )

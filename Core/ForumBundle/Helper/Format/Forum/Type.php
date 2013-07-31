@@ -2,32 +2,33 @@
 
 namespace SymBB\Core\ForumBundle\Helper\Format\Forum;
 
-use Seyon\EAjaxCRUDBundle\Helper\Format\FormatInterface;
-
-class Type implements FormatInterface {
+class Type{
     
     protected $translator;
+    static protected $array;
     
     public function setTranslator($translator){
         $this->translator = $translator;
     }
     
-    public function format($value){
-        switch ($value) {
-            case 'forum':
-                $value = $this->translator->trans('Forum', array(), 'options');
-                break;
-            case 'link':
-                $value = $this->translator->trans('Link', array(), 'options');
-                break;
-            case 'category':
-                $value = $this->translator->trans('Kategorie', array(), 'options');
-                break;
-            default:
-                $value = $this->translator->trans('Unbekannt', array(), 'options');
-                break;
+    public function getArray(){
+        if(self::$array === null){
+            self::$array = array(
+                'forum'     => $this->translator->trans('Forum', array(), 'options'),
+                'link'      => $this->translator->trans('Link', array(), 'options'),
+                'category'  => $this->translator->trans('Kategorie', array(), 'options')
+            );
         }
-        return $value;
+       return self::$array;
+    }
+    
+    public function format($value){
+        $array = $this->getArray();
+        if(isset($array[$value])){
+            return $array[$value];
+        } else {
+            return $this->translator->trans('Unbekannt', array(), 'options');
+        }
     }
     
 }
