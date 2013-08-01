@@ -36,9 +36,21 @@
     margin-bottom: 5px;
 }
 
+.table .breadcrum {
+    float: left;
+}
+
 .table .actions button {
     background-color: #EEE;
     height: 25px;
     border: 1px solid #CCC;
     cursor: pointer;
+}
+
+.table .clickable {
+    cursor: pointer;
+}
+
+.sortable_table tr .mover {
+    cursor: move;
 }

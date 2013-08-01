@@ -31,8 +31,8 @@ class AcpController extends \SymBB\Core\AdminBundle\Controller\Base\CrudControll
         return $form;
     }
     
-    protected function findListEntities(){
-        $entityList = $this->getRepository()->findBy(array('parent' => null));  
+    protected function findListEntities($parent = null){
+        $entityList = $this->getRepository()->findBy(array('parent' => $parent), array('position' => 'ASC'));  
         return $entityList;
     }
     

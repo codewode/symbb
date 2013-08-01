@@ -11,10 +11,10 @@ class Builder extends ContainerAware
     {
         $menu = $factory->createItem('root');
 
-        $menu->addChild('Übersicht', array('route' => '_symbb_acp'))->setExtra('translation_domain', 'menu');
-        $menu->addChild('Neues Forum', array('route' => '_symbb_acp_forum_new'))->setExtra('translation_domain', 'menu');
-        $menu->addChild('Neue Kategorie', array('route' => '_symbb_acp_forum_new_category'))->setExtra('translation_domain', 'menu');
-        $menu->addChild('Neuer Link', array('route' => '_symbb_acp_forum_new_link'))->setExtra('translation_domain', 'menu');
+        $menu->addChild('Übersicht', array('route' => '_symbbcoreforumbundle_forum_list'))->setExtra('translation_domain', 'menu');
+        $menu->addChild('Neues Forum', array('route' => '_symbbcoreforumbundle_forum_new'))->setExtra('translation_domain', 'menu');
+        $menu->addChild('Neue Kategorie', array('route' => '_symbbcoreforumbundle_forum_new_category'))->setExtra('translation_domain', 'menu');
+        $menu->addChild('Neuer Link', array('route' => '_symbbcoreforumbundle_forum_new_link'))->setExtra('translation_domain', 'menu');
 
         return $menu;
     }

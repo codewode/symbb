@@ -15,10 +15,28 @@ abstract class CrudController extends Controller
 
     
 
-    public function listAction(){
-        $entityList = $this->findListEntities();
+    public function listAction($parent = null){
+        $entityList     = $this->findListEntities($parent);
+        $breadcrum      = false;
+        $path           = '_'.$this->entityBundle.'_'.$this->entityName;
+        $path           = strtolower($path);
         
-        $params = array('entityList' => $entityList);
+        if($parent){
+            $repository             = $this->getRepository();
+            $parentEntity           = $repository->find($parent);
+            if(is_object($parentEntity)){
+                $breadcrum      = array();
+                $names          = $parentEntity->getExtendNameArray();
+                $uri            = $this->get('router')->generate($path.'_list');
+                $breadcrum[]    = '<a href="'.$uri.'">'.$this->get('translator')->trans('Übersicht', array(), 'list').'</a>';
+                foreach($names as $id => $name){
+                    $uri = $this->get('router')->generate($path.'_list_child', array('parent' => $id));
+                    $breadcrum[] = '<a href="'.$uri.'">'.$name.'</a>';
+                }
+                $breadcrum = implode(' - ', $breadcrum);
+            }
+        }
+        $params = array('entityList' => $entityList, 'breadcrum' => $breadcrum);
         $params = $this->addListParams($params);
         
         return $this->render(
@@ -26,6 +44,34 @@ abstract class CrudController extends Controller
             $params
         );
 	}
+    
+    public function sortAction(){
+        $request                = $this->getRequest();
+        $return                 = array('success' => 0);
+        if($request->isMethod('POST'))
+        {
+            $repository = $this->getRepository();
+            $em         = $this->get('doctrine')->getEntityManager('symbb');
+            $entries    = (array)$request->get('entries');
+            $i          = 0;
+            foreach($entries as $entry){
+                $entry      = explode('_', $entry);
+                $entityId   = end($entry);
+                $entity     = $repository->findOneById($entityId);
+                if($entity){
+                    $entity->setPosition($i);
+                    $em->persist($entity);
+                    $i++;
+                }
+            }
+            $em->flush();
+            $return['success'] = 1;
+        }
+        $json = json_encode($return);
+        $response = new \Symfony\Component\HttpFoundation\Response($json);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
 
     public function newAction()
 	{
@@ -124,8 +170,12 @@ abstract class CrudController extends Controller
         return $repo;
     }
     
-    protected function findListEntities(){
-        $entityList = $this->getRepository()->findAll();  
+    protected function findListEntities($parent = null){
+        if($parent === null){
+            $entityList = $this->getRepository()->findAll();  
+        } else {
+            $entityList = $this->getRepository()->findBy(array('parent' => $parent));  
+        }
         return $entityList;
     }
     

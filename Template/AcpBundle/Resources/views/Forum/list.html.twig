@@ -1,5 +1,21 @@
 {% extends getSymbbTemplateConfig('acp') ~ '::layout.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.addEvent('domready', function() {
+            var sortableList = new Sortables('.sortable_table', {
+                constrain: true,
+                clone: false,
+                revert: true,
+                handle: '.mover',
+                onComplete: function(element){
+                    SymBBUtil.saveSortable(sortableList, '{{ path('_symbbcoreforumbundle_forum_sort') }}');
+                }
+            });
+        });
+    </script>
+{% endblock %}
 
 {% block subnavi %}
     {{ knp_menu_render('SymBBCoreForumBundle:Builder:subMenu') }}
@@ -7,27 +23,35 @@
 
 {% block content %}
     <div class="table">
+        <div class="breadcrum">
+            {% if breadcrum %}
+                {{ breadcrum|raw }}
+            {% endif %}
+        </div>
         <div class="actions">
-            <button onclick="SymBBUtil.goTo('{{path('_symbb_acp_forum_new')}}')">{{ 'Neues Forum'|trans({}, "list") }}</button>
+            <button onclick="SymBBUtil.goTo('{{path('_symbbcoreforumbundle_forum_new')}}')">{{ 'Neues Forum'|trans({}, "list") }}</button>
         </div>
         <table>
             <colgroup>
+                <col style="width: 26px;" />
                 <col style="width: auto;" />
                 <col style="width: 100px;" />
                 <col style="width: 100px;" />
             </colgroup>
             <thead>
                 <tr>
+                    <th>&nbsp;</th>
                     <th>{{ 'Forum'|trans({}, "list") }}</th>
                     <th>{{ 'Art'|trans({}, "list") }}</th>
                     <th>{{ 'Aktionen'|trans({}, "list") }}</th>
                 </tr>
             </thead>
-            <tbody>
-                {% for forum in entityList %}
-                    <tr>
-                        <td>{{forum.getName()}}</td>
-                        <td>{{helper.type.format(forum.getType())}}</td>
+            <tbody class="sortable_table">
+                {% for entry in entityList %}
+                    <tr id="entry_{{entry.getId()}}">
+                        <th class="mover">&nbsp;</th>
+                        <td class="clickable" onclick="SymBBUtil.goTo('{{ path('_symbbcoreforumbundle_forum_list_child', {parent: entry.getId()}) }}')">{{entry.getName()}}</td>
+                        <td>{{helper.type.format(entry.getType())}}</td>
                         <td></td>
                     </tr>
                 {% endfor %}

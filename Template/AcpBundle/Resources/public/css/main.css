@@ -68,6 +68,5 @@ ul, li {
 
 a, a:hover, a:link, a:active, a:visited {
     color: #000;
-    text-decoration: none;    
-    display: block;
+    text-decoration: none;   
 }

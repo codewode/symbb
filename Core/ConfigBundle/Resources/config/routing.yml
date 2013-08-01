@@ -29,15 +29,28 @@ fos_user_group:
 _symbb_acp:
     pattern:  /acp/
     defaults: { _controller: SymBBCoreForumBundle:Acp:list }
+    
+_symbbcoreforumbundle_forum_list:
+    pattern:  /acp/forum/list
+    defaults: { _controller: SymBBCoreForumBundle:Acp:list }
+    
+_symbbcoreforumbundle_forum_list_child:
+    pattern:  /acp/forum/list/{parent}
+    defaults: { _controller: SymBBCoreForumBundle:Acp:list }
 
-_symbb_acp_forum_new:
+_symbbcoreforumbundle_forum_new:
     pattern:  /acp/forum/new/forum
     defaults: { _controller: SymBBCoreForumBundle:Acp:new }
     
-_symbb_acp_forum_new_category:
+_symbbcoreforumbundle_forum_new_category:
     pattern:  /acp/forum/new/category
     defaults: { _controller: SymBBCoreForumBundle:Acp:newCategory }
     
-_symbb_acp_forum_new_link:
+_symbbcoreforumbundle_forum_new_link:
     pattern:  /acp/forum/new/link
     defaults: { _controller: SymBBCoreForumBundle:Acp:newLink }
+    
+_symbbcoreforumbundle_forum_sort:
+    pattern:  /acp/forum/sort
+    defaults: { _controller: SymBBCoreForumBundle:Acp:sort }
+    

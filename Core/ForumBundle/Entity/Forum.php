@@ -9,70 +9,75 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="forums")
  * @ORM\Entity()
  */
-class Forum
+class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
 {
     /**
      * @ORM\Column(type="integer", unique=true)
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=10))
      */
-    private $type = 'forum';
+    protected $type = 'forum';
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $link;
+    protected $link;
     
     /**
      * @ORM\Column(type="boolean")
      */
-    private $countLinkCalls = false;
+    protected $countLinkCalls = false;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
+    protected $description;
     
     /**
      * @ORM\OneToMany(targetEntity="Forum", mappedBy="parent")
      */
-    private $children;
+    protected $children;
 
     /**
      * @ORM\ManyToOne(targetEntity="Forum", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      */
-    private $parent;
+    protected $parent;
     
     /**
      * @ORM\OneToMany(targetEntity="Topic", mappedBy="forum")
      */
-    private $topics;
+    protected $topics;
     
     /**
      * @ORM\Column(type="boolean")
      */
-    private $active = true;
+    protected $active = true;
     
     /**
      * @ORM\Column(type="boolean")
      */
-    private $showSubForumList = false;
+    protected $showSubForumList = false;
     
     /**
      * @ORM\Column(type="integer")
      */
-    private $topicsPerPage = 20;
+    protected $topicsPerPage = 20;
+    
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $position = 0;
 
 
     public function __construct() {
@@ -82,10 +87,6 @@ class Forum
     ############################################################################
     # Default Get and Set
     ############################################################################
-    public function getId(){return $this->id;}
-    public function setId($value){$this->id = $value;}
-    public function getName(){return $this->name;}
-    public function setName($value){$this->name = $value;}
     public function getLink(){return $this->link;}
     public function setLink($value){$this->link = $value;}
     public function getCountLinkCalls(){return $this->countLinkCalls;}
@@ -105,6 +106,8 @@ class Forum
     public function getChildren(){return $this->children;}
     public function getTopics(){return $this->topics;}
     ############################################################################
+    
+
     
     
 }

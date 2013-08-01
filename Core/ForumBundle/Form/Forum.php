@@ -21,6 +21,7 @@ class Forum extends AbstractType
         $aTypes    = $helperTyp->getArray();
         
         $builder->add('name')
+            ->add('parent')
             ->add('description')
             ->add('type', 'choice', array('choices' => $aTypes));
     }
