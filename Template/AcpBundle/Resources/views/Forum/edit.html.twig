@@ -7,7 +7,7 @@
     {{ form_widget(form) }}
     <input type="hidden" name="id" value="{{ entity.getId() }}" />
     <div class="actions">
-        <input type="submit" value="{{ 'Eintrag speichern'|trans({}, "form") }}" />
+        <input name="save" type="submit" value="{{ 'Eintrag speichern'|trans({}, "form") }}" />
     </div>
 </form>
 {% endblock %}

@@ -10,7 +10,7 @@ class AcpController extends \SymBB\Core\AdminBundle\Controller\Base\CrudControll
     protected $entityBundle = 'SymBBCoreForumBundle';
     protected $templateBundle = 'SymBBTemplateAcpBundle';
     protected $entityName = 'Forum';
-    protected $formClass = '\SymBB\Core\ForumBundle\Form\Forum';
+    protected $formClass = '\SymBB\Core\ForumBundle\Form\Type\Forum';
 
     public function newCategoryAction(){
         $entity = $this->getFormEntity();

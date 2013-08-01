@@ -72,7 +72,7 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
     /**
      * @ORM\Column(type="integer")
      */
-    protected $topicsPerPage = 20;
+    protected $entriesPerPage = 20;
     
     /**
      * @ORM\Column(type="integer")
@@ -99,8 +99,8 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
     public function setType($value){$this->type = $value;}
     public function getShowSubForumList(){return $this->showSubForumList;}
     public function setShowSubForumList($value){$this->showSubForumList = $value;}
-    public function getTopicsPerPage(){return $this->topicsPerPage;}
-    public function setTopicsPerPage($value){$this->topicsPerPage = $value;}
+    public function getEntriesPerPage(){return $this->entriesPerPage;}
+    public function setEntriesPerPage($value){$this->entriesPerPage = $value;}
     public function setParent($object){$this->parent = $object;}
     public function getParent(){return $this->parent;}
     public function getChildren(){return $this->children;}

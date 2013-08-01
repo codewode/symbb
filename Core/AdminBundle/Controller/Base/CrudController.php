@@ -101,8 +101,8 @@ abstract class CrudController extends Controller
         {
             $form->bind($request);
             $entity = $this->getFormEntity();
-            
-            if($form->isValid())
+
+            if($form->isValid() && $request->get('save'))
             {
                 $em = $this->get('doctrine')->getEntityManager('symbb');
                 $em->persist($entity);
