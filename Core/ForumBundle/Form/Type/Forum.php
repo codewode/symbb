@@ -41,12 +41,10 @@ class Forum extends AbstractType
     }
     
     private function getParentList(){
-
         $repo = $this->repo;
-        
         $list = array();
 
-        $entries = $repo->findBy(array('parent' => null), array('name' => 'ASC')); // retrieve your accounts in group1.
+        $entries = $repo->findBy(array('parent' => null), array('position' => 'ASC', 'name' => 'ASC'));
         foreach($entries as $entity){
             $list[$entity->getId()] = $entity;
             $this->addChildsToArray($entity, $list);
