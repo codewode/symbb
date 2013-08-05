@@ -53,8 +53,8 @@
                         <td class="clickable" onclick="SymBBUtil.goTo('{{ path('_symbbcoreforumbundle_forum_list_child', {parent: entry.getId()}) }}')">{{entry.getName()}}</td>
                         <td>{{helper.type.format(entry.getType())}}</td>
                         <td>
-                            <img class="clickable" src="/bundles/symbbtemplateacp/images/icons/16_16/pencil.png" alt="{{ 'Editieren'|trans({}, "list") }}" title="{{ 'Editieren'|trans({}, "list") }}" /> 
-                            <img class="clickable" src="/bundles/symbbtemplateacp/images/icons/16_16/cross.png" alt="{{ 'Löschen'|trans({}, "list") }}" title="{{ 'Löschen'|trans({}, "list") }}" /> 
+                            <a href="{{ path('_symbbcoreforumbundle_forum_edit', {id: entry.getId()}) }}"><img class="clickable" src="/bundles/symbbtemplateacp/images/icons/16_16/pencil.png" alt="{{ 'Editieren'|trans({}, "list") }}" title="{{ 'Editieren'|trans({}, "list") }}" /> </a>
+                            <a onclick="confirm('{{ 'Eintrag wirklich löschen?'|trans({}, "list") }}')" href="{{ path('_symbbcoreforumbundle_forum_remove', {id: entry.getId()}) }}"><img class="clickable" src="/bundles/symbbtemplateacp/images/icons/16_16/cross.png" alt="{{ 'Löschen'|trans({}, "list") }}" title="{{ 'Löschen'|trans({}, "list") }}" /> </a>
                         </td>
                     </tr>
                 {% endfor %}

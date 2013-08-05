@@ -117,6 +117,20 @@ abstract class CrudController extends Controller
         }
     }
     
+    
+    public function removeAction($id){
+        $repository     = $this->getRepository();
+        $entity         = $repository->findOneById($id);
+        $parent         = null;
+        if(is_object($entity)){
+            $parent         = $entity->getParent();
+            $em = $this->get('doctrine')->getEntityManager('symbb');
+            $em->remove($entity);
+            $em->flush();
+        }
+        return $this->listAction($parent);
+    }
+    
         /**
      * Entity object for the form
      * Dont load the object twice and load from this method

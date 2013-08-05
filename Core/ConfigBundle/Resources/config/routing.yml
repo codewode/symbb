@@ -41,6 +41,10 @@ _symbbcoreforumbundle_forum_list_child:
 _symbbcoreforumbundle_forum_new:
     pattern:  /acp/forum/new/forum
     defaults: { _controller: SymBBCoreForumBundle:Acp:new }
+
+_symbbcoreforumbundle_forum_edit:
+    pattern:  /acp/forum/edit/{id}
+    defaults: { _controller: SymBBCoreForumBundle:Acp:edit }
     
 _symbbcoreforumbundle_forum_new_category:
     pattern:  /acp/forum/new/category
@@ -53,4 +57,8 @@ _symbbcoreforumbundle_forum_new_link:
 _symbbcoreforumbundle_forum_sort:
     pattern:  /acp/forum/sort
     defaults: { _controller: SymBBCoreForumBundle:Acp:sort }
+    
+_symbbcoreforumbundle_forum_remove:
+    pattern:  /acp/forum/remove/{id}
+    defaults: { _controller: SymBBCoreForumBundle:Acp:remove }
     

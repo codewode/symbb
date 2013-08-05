@@ -34,7 +34,7 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
     protected $link;
     
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $countLinkCalls = false;
 
@@ -44,7 +44,7 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
     protected $description;
     
     /**
-     * @ORM\OneToMany(targetEntity="Forum", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Forum", mappedBy="parent", cascade={"persist", "remove"})
      */
     protected $children;
 
@@ -60,22 +60,22 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
     protected $topics;
     
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $active = true;
     
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $showSubForumList = false;
     
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $entriesPerPage = 20;
     
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $position = 0;
 

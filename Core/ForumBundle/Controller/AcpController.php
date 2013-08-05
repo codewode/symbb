@@ -27,7 +27,7 @@ class AcpController extends \SymBB\Core\AdminBundle\Controller\Base\CrudControll
     protected function getForm()
     {
         $entity = $this->getFormEntity();        
-        $form   = $this->createForm(new $this->formClass($this->get('translator')), $entity);
+        $form   = $this->createForm(new $this->formClass($this->get('translator'), $this->getRepository()), $entity);
         return $form;
     }
     
