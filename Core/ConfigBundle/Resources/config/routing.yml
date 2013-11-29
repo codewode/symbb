@@ -25,40 +25,10 @@ fos_user_group:
     prefix: /group
  
  
+_symbb_acp_routings:
+    resource: "@SymBBCoreConfigBundle/Resources/config/routing/acp.yml"
+    
+_symbb_frontend_routings:
+    resource: "@SymBBCoreConfigBundle/Resources/config/routing/frontend.yml"
  
-_symbb_acp:
-    pattern:  /acp/
-    defaults: { _controller: SymBBCoreForumBundle:Acp:list }
-    
-_symbbcoreforumbundle_forum_list:
-    pattern:  /acp/forum/list
-    defaults: { _controller: SymBBCoreForumBundle:Acp:list }
-    
-_symbbcoreforumbundle_forum_list_child:
-    pattern:  /acp/forum/list/{parent}
-    defaults: { _controller: SymBBCoreForumBundle:Acp:list }
-
-_symbbcoreforumbundle_forum_new:
-    pattern:  /acp/forum/new/forum
-    defaults: { _controller: SymBBCoreForumBundle:Acp:new }
-
-_symbbcoreforumbundle_forum_edit:
-    pattern:  /acp/forum/edit/{id}
-    defaults: { _controller: SymBBCoreForumBundle:Acp:edit }
-    
-_symbbcoreforumbundle_forum_new_category:
-    pattern:  /acp/forum/new/category
-    defaults: { _controller: SymBBCoreForumBundle:Acp:newCategory }
-    
-_symbbcoreforumbundle_forum_new_link:
-    pattern:  /acp/forum/new/link
-    defaults: { _controller: SymBBCoreForumBundle:Acp:newLink }
-    
-_symbbcoreforumbundle_forum_sort:
-    pattern:  /acp/forum/sort
-    defaults: { _controller: SymBBCoreForumBundle:Acp:sort }
-    
-_symbbcoreforumbundle_forum_remove:
-    pattern:  /acp/forum/remove/{id}
-    defaults: { _controller: SymBBCoreForumBundle:Acp:remove }
     

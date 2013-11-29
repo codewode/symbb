@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class AcpController extends \SymBB\Core\AdminBundle\Controller\Base\CrudController
 {
     protected $entityBundle = 'SymBBCoreForumBundle';
-    protected $templateBundle = 'SymBBTemplateAcpBundle';
     protected $entityName = 'Forum';
     protected $formClass = '\SymBB\Core\ForumBundle\Form\Type\Forum';
 

@@ -1,0 +1,3 @@
+_symbb_index:
+    pattern:  /
+    defaults: { _controller: SymBBCoreForumBundle:Frontend:index }

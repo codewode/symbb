@@ -9,7 +9,7 @@ abstract class CrudController extends Controller
 {
     private $formEntity;
     protected $entityBundle = 'SymBBCoreForumBundle';
-    protected $templateBundle = 'SymBBTemplateAcpBundle';
+    protected $templateBundle = null;
     protected $entityName = '';
     protected $formClass = '';
 
@@ -38,9 +38,8 @@ abstract class CrudController extends Controller
         }
         $params = array('entityList' => $entityList, 'breadcrum' => $breadcrum);
         $params = $this->addListParams($params);
-        
         return $this->render(
-            $this->templateBundle.':'.$this->entityName.':list.html.twig',
+            $this->getTemplateBundleName().':'.$this->entityName.':list.html.twig',
             $params
         );
 	}
@@ -201,6 +200,14 @@ abstract class CrudController extends Controller
                     );
         $params = $this->addFormParams($params);
         
-        return $this->render($this->templateBundle.':'.$this->entityName.':edit.html.twig', $params);
+        return $this->render($this->getTemplateBundleName().':'.$this->entityName.':edit.html.twig', $params);
+    }
+    
+    protected function getTemplateBundleName(){
+        if($this->templateBundle === null){
+            $config = $this->container->getParameter('symbb_config');
+            $this->templateBundle = $config['template']['acp'];
+        }
+        return $this->templateBundle;
     }
 }
