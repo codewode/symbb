@@ -1,0 +1,69 @@
+
+{% macro forumRow(object) %}
+    <div class="row forum">
+        <div class="col-md-6 nameBlock">{{_self.nameRow(object)}}</div>
+        <div class="col-md-1 topicCountBlock">{{object.getTopicCount()}}</div>
+        <div class="col-md-1 postCountBlock">{{object.getPostCount()}}</div>
+        <div class="col-md-4 lastPostBlock">{{_self.lastPostRow(object)}}</div>
+    </div>
+{% endmacro %}
+    
+
+{% macro categoryRow(object) %}
+    <div class="row category">
+        <div class="col-md-6 nameBlock">{{object.getName()}}</div>
+        <div class="col-md-1 topicCountBlock">{% trans %}Topics{% endtrans %}</div>
+        <div class="col-md-1 postCountBlock">{% trans %}Posts{% endtrans %}</div>
+        <div class="col-md-4 lastPostBlock">{% trans %}Last post{% endtrans %}</div>
+    </div>
+    {{ _self.showForumList(object.getChildren()) }}
+    <div class="row space">
+    </div>
+{% endmacro %}
+
+{% macro linkRow(object) %}
+    
+{% endmacro %}
+
+{% macro nameRow(object) %}
+<div class="icon"></div>
+<div class="name">{{object.getName()}}</div>
+<div class="description">{{object.getDescription()}}</div>
+{% if object.hasShowSubForumList() %}
+    <div class="subForumList">
+        {% if object.getChildren()|length > 0 %}
+        {% trans %}Unterforen: {% endtrans %}
+        {% endif %}
+        {% for subobject in object.getChildren() if subobject.isActive() %}
+            {{subobject.getName()}}
+            {% if loop.index <  object.getChildren()|length %}, {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
+{% endmacro %}
+
+{% macro lastPostRow(object) %}
+    <div>
+    {{object.getPostCount()}}
+    </div>
+{% endmacro %}
+
+{% macro showForumList(objects) %}
+    {% for object in objects if object.isActive() %}
+
+        {% if object.getType() == 'category' %}
+            {{ _self.categoryRow(object) }}
+        {% elseif object.getType() == 'link' %}
+            {{ _self.linkRow(object) }}
+        {% else %}
+            {{ _self.forumRow(object) }}
+        {% endif %}
+
+    {% else %}
+        <div class="row forum">
+            <div class="col-md-12">{% trans %}No Forum found{% endtrans %}</div>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+

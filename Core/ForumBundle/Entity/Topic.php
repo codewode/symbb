@@ -36,6 +36,7 @@ class Topic
     
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="topic")
+     * @ORM\OrderBy({"changed" = "DESC", "created" = "DESC"})
      */
     private $posts;
 
@@ -79,10 +80,11 @@ class Topic
     }
 
     /**
+    * @ORM\PrePersist
     * @ORM\PreUpdate
     */
     public function setChangedValue()
     {
-      $this->created = new \DateTime();
+      $this->changed = new \DateTime();
     }
 }

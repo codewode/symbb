@@ -74,10 +74,11 @@ class Post
     }
 
     /**
+    * @ORM\PrePersist
     * @ORM\PreUpdate
     */
     public function setChangedValue()
     {
-       $this->created = new \DateTime();
+       $this->changed = new \DateTime();
     }
 }

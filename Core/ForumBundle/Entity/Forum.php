@@ -57,6 +57,7 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
     
     /**
      * @ORM\OneToMany(targetEntity="Topic", mappedBy="forum")
+     * @ORM\OrderBy({"changed" = "DESC", "created" = "DESC"})
      */
     protected $topics;
     
@@ -80,6 +81,9 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
      */
     protected $position = 0;
 
+    protected $topicCount = null;
+    protected $postCount = null;
+
 
     public function __construct() {
         $this->children = new ArrayCollection();
@@ -94,11 +98,11 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
     public function setCountLinkCalls($value){$this->countLinkCalls = $value;}
     public function getDescription(){return $this->description;}
     public function setDescription($value){$this->description = $value;}
-    public function getActive(){return $this->active;}
+    public function isActive(){return $this->active;}
     public function setActive($value){$this->active = $value;}
     public function getType(){return $this->type;}
     public function setType($value){$this->type = $value;}
-    public function getShowSubForumList(){return $this->showSubForumList;}
+    public function hasShowSubForumList(){return $this->showSubForumList;}
     public function setShowSubForumList($value){$this->showSubForumList = $value;}
     public function getEntriesPerPage(){return $this->entriesPerPage;}
     public function setEntriesPerPage($value){$this->entriesPerPage = $value;}
@@ -109,6 +113,27 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
     ############################################################################
     
 
+    public function getTopicCount(){
+        $count = $this->topicCount;
+        if($count === null){
+            $topics = $this->getTopics();
+            $count  = $this->topicCount = count($topics);
+        }
+        return $count;
+    }
     
+    public function getPostCount(){
+        $count = $this->postCount;
+        if($count === null){
+            $topics = $this->getTopics();
+            $count  = 0;
+            foreach($topics as $topic){
+                $posts  = $topic->getPosts();
+                $count  += count($posts);
+            }
+            $this->topicCount = $count;
+        }
+        return $count;
+    }
     
 }

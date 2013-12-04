@@ -2,8 +2,6 @@
 
 namespace SymBB\Core\ForumBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 
 class AcpController extends \SymBB\Core\AdminBundle\Controller\Base\CrudController
 {

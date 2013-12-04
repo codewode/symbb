@@ -33,7 +33,8 @@ class Forum extends AbstractType
         $builder->add('name')
             ->add('parent', 'entity', array(
                 'class' => 'SymBBCoreForumBundle:Forum',
-                'choices' => $this->getParentList()
+                'choices' => $this->getParentList(),
+                'required' => false
             ))
             ->add('type', 'choice', array('choices' => $aTypes, 'attr' => array('onchange' => 'submit();')));
         
@@ -49,7 +50,7 @@ class Forum extends AbstractType
             $list[$entity->getId()] = $entity;
             $this->addChildsToArray($entity, $list);
         }
-
+        
         return $list;
     } 
     

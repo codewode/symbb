@@ -1,0 +1,44 @@
+.navbar .container {
+    width: 95%;
+}
+
+.symbb_forum_list {
+    display: block;
+    width: 95%;
+    margin: 1em auto;
+}
+
+.symbb_forum_list .row.space {
+    height: 1em;
+}
+
+.symbb_forum_list .row.category {
+    background-color: #1e2025;
+    padding: 0.5em;
+    color: #FFF;
+}
+
+.symbb_forum_list .row.forum {
+    background-color: #EEE;
+    padding: 0.3em;
+    margin-bottom: 1px;
+    border-bottom: 1px solid #CCC;
+    cursor: pointer;
+}
+
+.symbb_forum_list .row.forum .description {
+    font-size: 0.8em;
+}
+
+.symbb_forum_list .row.forum .subForumList {
+    font-size: 0.8em;
+}
+
+
+.symbb_forum_list .row.forum:hover {
+    background-color: #CCC;
+}
+
+.symbb_forum_list .padding1em {
+    padding: 1em;
+}

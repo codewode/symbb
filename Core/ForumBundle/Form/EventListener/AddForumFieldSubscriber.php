@@ -54,9 +54,11 @@ class AddForumFieldSubscriber implements EventSubscriberInterface
             $this->addLinkFields($form, true);
         }
         
-        if ($data && ($data['type'] == 'forum' || $data['type'] == 'category')) {
+        if ($data && ($data['type'] == 'forum')) {
             $this->addForumFields($form);
-        } else if($data) {
+        } else if ($data && ($data['type'] == 'category')) {
+            $this->addCategoryFields($form);
+        }else if($data) {
             $this->addForumFields($form, true);
         }
     }
@@ -77,6 +79,15 @@ class AddForumFieldSubscriber implements EventSubscriberInterface
         }
         $form->add('description', $type);
         $form->add('showSubForumList', $type); 
+        $form->add('entriesPerPage', $type);
+    }
+    
+    protected function addCategoryFields($form, $hidden = false){
+        $type = null;
+        if($hidden){
+            $type = 'hidden';
+        }
+        $form->add('description', $type);
         $form->add('entriesPerPage', $type);
     }
 }

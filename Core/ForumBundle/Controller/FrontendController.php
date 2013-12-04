@@ -11,19 +11,27 @@ class FrontendController  extends Controller
     protected $templateBundle = null;
     
     public function indexAction(){
-        $forumList = $this->getDoctrine()
-            ->getRepository('SymBBForumBundle:Forum')
-            ->findBy(array('parent' => null));
-        
-        $params = array('forumList' => $forumList);
-        
-        return $this->render($this->getTemplateBundleName().':'.$this->entityName.':edit.html.twig', $params);
+        return $this->portalAction();
     }
     
-    protected function getTemplateBundleName(){
+    public function portalAction(){
+        $forumList = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Forum', 'symbb')
+            ->findBy(array('parent' => null));
+        $params = array('forumList' => $forumList);
+        return $this->render($this->getTemplateBundleName('portal').':Portal:index.html.twig', $params);
+    }
+    
+    public function forumAction(){
+        $forumList = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Forum', 'symbb')
+            ->findBy(array('parent' => null), array('position' => 'asc'));
+        $params = array('forumList' => $forumList);
+        return $this->render($this->getTemplateBundleName('portal').':Forum:index.html.twig', $params);
+    }
+    
+    protected function getTemplateBundleName($for = 'forum'){
         if($this->templateBundle === null){
             $config = $this->container->getParameter('symbb_config');
-            $this->templateBundle = $config['template']['frontend'];
+            $this->templateBundle = $config['template'][$for];
         }
         return $this->templateBundle;
     }

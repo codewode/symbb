@@ -28,6 +28,9 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('forum') 
                             ->defaultValue('SymBBTemplateSimpleBundle')
                         ->end()
+                        ->scalarNode('portal') 
+                            ->defaultValue('SymBBTemplateSimpleBundle')
+                        ->end()
                     ->end()
                 ->end()
             ->end();
