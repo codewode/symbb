@@ -18,7 +18,8 @@
     color: #FFF;
 }
 
-.symbb_forum_list .row.forum {
+.symbb_forum_list .row.forum, 
+.symbb_forum_list .row.subcategory {
     background-color: #EEE;
     padding: 0.3em;
     margin-bottom: 1px;
