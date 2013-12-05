@@ -89,12 +89,12 @@ Macro to generate the structure of the lastPost Row
 
 -->
 
-{% macro lastPostRow(object) %}
+{% macro lastPostRow(object) %} 
 <div class="lastPostBlock">
     {% if object.getLastPost() %}
         <a href="{{ path('_symbb_forum_topic_show_2', {'id': object.getLastPost().getTopic().getId(), 'name': object.getLastPost().getTopic().getSeoName()}) }}#{{object.getLastPost().getSeoName()}}-{{object.getLastPost().getId()}}">
             <div class="name">{{object.getLastPost().getName()}}</div>
-            <div class="user">{% trans with {'%user%': object.getLastPost().getAuthor().getUsername(), '%date%': getSymbbDateFormater.getTimestamp()|format_date, '%time%': object.getLastPost().getCreated().getTimestamp()|date('H:i')} %}by %user% on %date% at %time%{% endtrans %}</div>
+            <div class="user">{% trans with {'%user%': object.getLastPost().getAuthor().getUsername(), '%date%': object.getLastPost().getChanged()|format_date, '%time%': object.getLastPost().getChanged()|date('H:i')} %}by %user% on %date% at %time%{% endtrans %}</div>
         </a>
     {% else %}
         {% trans %}no topics{% endtrans %}
