@@ -28,6 +28,14 @@ class FrontendController  extends Controller
         return $this->render($this->getTemplateBundleName('portal').':Forum:index.html.twig', $params);
     }
     
+    public function forumShowAction($name, $id){
+        $forum = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Forum', 'symbb')
+            ->find($id);
+        $params = array('forum' => $forum);
+        return $this->render($this->getTemplateBundleName('portal').':Forum:show.html.twig', $params);
+    }
+    
+    
     protected function getTemplateBundleName($for = 'forum'){
         if($this->templateBundle === null){
             $config = $this->container->getParameter('symbb_config');
@@ -35,4 +43,6 @@ class FrontendController  extends Controller
         }
         return $this->templateBundle;
     }
+    
+    
 }

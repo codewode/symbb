@@ -2,7 +2,8 @@
     width: 95%;
 }
 
-.symbb_forum_list {
+.symbb_forum_body,
+.symbb_forum_breadcrumb {
     display: block;
     width: 95%;
     margin: 1em auto;
@@ -27,6 +28,12 @@
     cursor: pointer;
 }
 
+.symbb_forum_list .row.forum a, 
+.symbb_forum_list .row.subcategory a {
+    cursor: pointer;
+    color: #000;
+}
+
 .symbb_forum_list .row.forum .description {
     font-size: 0.8em;
 }
@@ -42,4 +49,9 @@
 
 .symbb_forum_list .padding1em {
     padding: 1em;
+}
+
+.row {
+margin-left: 0;
+margin-right: 0;
 }

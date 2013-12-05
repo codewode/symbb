@@ -1,3 +1,11 @@
 _symbb_index:
     pattern:  /
     defaults: { _controller: SymBBCoreForumBundle:Frontend:forum }
+    
+_symbb_forum_index:
+    pattern:  /forum
+    defaults: { _controller: SymBBCoreForumBundle:Frontend:forum }
+    
+_symbb_forum_show:
+    pattern:  /forum/f-{name}/{id}
+    defaults: { _controller: SymBBCoreForumBundle:Frontend:forumShow }

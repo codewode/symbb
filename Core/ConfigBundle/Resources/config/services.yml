@@ -1,4 +1,8 @@
 services:
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
     symbb_table_prefix:
         class: SymBB\Core\ConfigBundle\EventListener\DoctrineNameListener
         arguments: ['@service_container']
@@ -10,3 +14,9 @@ services:
         arguments: ['@service_container']
         tags:
             - { name: twig.extension }
+    symbb_forum_breadcrumb:
+        twig.extension.symbb_forum_breadcrumb:
+        class: SymBB\Core\ForumBundle\DependencyInjection\TwigBreadcrumbExtension
+        arguments: ['@translator', '@router']
+        tags:
+            - { name: twig.extension } 

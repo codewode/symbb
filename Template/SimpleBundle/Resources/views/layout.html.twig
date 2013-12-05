@@ -1,14 +1,14 @@
+{% trans_default_domain "symbbfrontend" %}
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale }}">
   <head>
     <title>{% block title %}{% endblock %}</title>
+    <meta http-equiv="Content-Language" content="{{ app.request.locale }}" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
-
+    
     {% block stylesheets %} 
     {% endblock %}
         
@@ -23,9 +23,17 @@
         {% block symbb_forum_navi %} 
         
         {% endblock %}
+            
+        <div class="symbb_forum_breadcrumb">
+        {% block symbb_forum_breadcrumb %}
+
+        {% endblock %}
+        </div>
         
+        <div class="symbb_forum_body">
         {% block symbb_forum_body %}
 
         {% endblock %}
+        </div>
     </body>
 </html>

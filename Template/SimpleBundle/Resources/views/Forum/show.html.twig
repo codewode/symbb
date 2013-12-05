@@ -1,0 +1,15 @@
+{% extends getSymbbTemplateConfig('forum') ~ ':Forum:index.html.twig' %}
+
+
+
+{% block symbb_forum_breadcrumb %}
+    {{ getSymbbBreadcrumb(forum) }}
+{% endblock %}
+
+{% block symbb_forum_body %}
+
+    <div class="symbb_forum_list">
+        {{ symbBBForumMacro.showForum(forum, 1) }}
+    </div>
+{% endblock %}
+

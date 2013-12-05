@@ -136,4 +136,11 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
         return $count;
     }
     
+    public function getSeoName(){
+        $name = $this->getName();
+        $name = preg_replace('/\W+/', '-', $name);
+        $name = strtolower(trim($name, '-'));
+        return $name;
+    }
+    
 }
