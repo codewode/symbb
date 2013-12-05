@@ -136,13 +136,6 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
         return $count;
     }
     
-    public function getSeoName(){
-        $name = $this->getName();
-        $name = preg_replace('/\W+/', '-', $name);
-        $name = strtolower(trim($name, '-'));
-        return $name;
-    }
-    
     public function getLastPost(){
         $lastPost = null;
         $lastTopic = $this->getTopics()->last();
@@ -150,5 +143,13 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
             $lastPost = $lastTopic->getPosts()->last();
         }
         return $lastPost;
+    }
+    
+    public function hasTopics(){
+        $topics = $this->getTopics();
+        if($topics->count() > 0){
+            return true;
+        }
+        return false;
     }
 }

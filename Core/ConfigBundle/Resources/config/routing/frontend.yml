@@ -9,3 +9,11 @@ _symbb_forum_index:
 _symbb_forum_show:
     pattern:  /forum/f-{name}/{id}
     defaults: { _controller: SymBBCoreForumBundle:Frontend:forumShow }
+    
+_symbb_forum_topic_show:
+    pattern:  /forum/t-{name}/{id}
+    defaults: { _controller: SymBBCoreForumBundle:Frontend:TopicShow}
+    
+_symbb_forum_topic_show_2:
+    pattern:  /forum/t-{name}/{id}
+    defaults: { _controller: SymBBCoreForumBundle:Frontend:TopicShow }

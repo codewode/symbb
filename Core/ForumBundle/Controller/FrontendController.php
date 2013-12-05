@@ -25,14 +25,21 @@ class FrontendController  extends Controller
         $forumList = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Forum', 'symbb')
             ->findBy(array('parent' => null), array('position' => 'asc'));
         $params = array('forumList' => $forumList);
-        return $this->render($this->getTemplateBundleName('portal').':Forum:index.html.twig', $params);
+        return $this->render($this->getTemplateBundleName('forum').':Forum:index.html.twig', $params);
     }
     
     public function forumShowAction($name, $id){
         $forum = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Forum', 'symbb')
             ->find($id);
         $params = array('forum' => $forum);
-        return $this->render($this->getTemplateBundleName('portal').':Forum:show.html.twig', $params);
+        return $this->render($this->getTemplateBundleName('forum').':Forum:show.html.twig', $params);
+    }
+    
+    public function topicShowAction($name, $id, $post){
+        $topic = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Topic', 'symbb')
+            ->find($id);
+        $params = array('topic' => $topic);
+        return $this->render($this->getTemplateBundleName('forum').':Topic:show.html.twig', $params);
     }
     
     

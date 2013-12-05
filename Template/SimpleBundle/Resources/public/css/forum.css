@@ -28,12 +28,17 @@
 }
 
 .symbb_forum_list .row.forum, 
-.symbb_forum_list .row.subcategory {
+.symbb_forum_list .row.subcategory, 
+.symbb_forum_list .row.topic {
     background-color: #EEE;
     padding: 0.3em;
     margin-bottom: 1px;
     border-bottom: 1px solid #CCC;
-    cursor: pointer;
+}
+
+.symbb_forum_list .row.topic .nameBlock .user,
+.symbb_forum_list .row.topic .lastPostBlock .user {
+    font-size: 0.8em;
 }
 
 .symbb_forum_list .row.category a, 
@@ -43,7 +48,8 @@
 }
 
 .symbb_forum_list .row.forum a, 
-.symbb_forum_list .row.subcategory a {
+.symbb_forum_list .row.subcategory a, 
+.symbb_forum_list .row.topic a {
     cursor: pointer;
     color: #000;
 }

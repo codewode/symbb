@@ -3,16 +3,13 @@
 
 
 {% block symbb_forum_breadcrumb %}
-    {{ getSymbbBreadcrumb(forum) }}
+    {{ getSymbbBreadcrumb(topic) }}
 {% endblock %}
 
 {% block symbb_forum_body %}
 
     <div class="symbb_forum_list">
-        {{ symbBBForumMacro.showForumList(forum.getChildren(), 1) }}
-        {% if forum.hasTopics() %}
-            {{ symbBBForumMacro.showTopicList(forum) }}
-        {% endif %}
+        {{ symbBBForumMacro.showPostList(topic) }}
     </div>
 {% endblock %}
 

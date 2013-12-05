@@ -33,4 +33,11 @@ abstract class CrudAbstract {
         return $this->getExtendName();
     }
     
+    public function getSeoName(){
+        $name = $this->getName();
+        $name = preg_replace('/\W+/', '-', $name);
+        $name = strtolower(trim($name, '-'));
+        return $name;
+    }
+    
 }

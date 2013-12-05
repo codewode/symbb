@@ -6,3 +6,8 @@ Last post: Letzter Beitrag
 Forums: Foren
 Overview: Übersicht
 no topics: Keine Beiträge
+Answers: Antworten
+Zugriffe: Zugriffe
+by %user% on %date% at %time%: von %user% am %date%, %time%
+by %user%{% endtrans %}: von %user%
+on %date% at %time%: am %date% um %time%

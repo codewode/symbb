@@ -69,6 +69,8 @@ class Topic
     public function setAuthor($object){$this->author = $object;}
     public function getAuthor(){return $this->author;}
     public function getPosts(){return $this->posts;}
+    public function getCreated(){return $this->created;}
+    public function getChanged(){return $this->changed;}
     ############################################################################
     
     /**
@@ -86,5 +88,31 @@ class Topic
     public function setChangedValue()
     {
       $this->changed = new \DateTime();
+    }
+    
+    
+    
+    public function hasPosts(){
+        $posts = $this->getPosts();
+        if($posts->count() > 0){
+            return true;
+        }
+        return false;
+    }
+    
+    public function getSeoName(){
+        $name = $this->getName();
+        $name = preg_replace('/\W+/', '-', $name);
+        $name = strtolower(trim($name, '-'));
+        return $name;
+    }
+    
+    public function getLastPost(){
+        return $this->getPosts()->last();
+    }
+    
+    public function getPostCount(){
+        $count = $this->getPosts()->count() - 1;
+        return $count;
     }
 }

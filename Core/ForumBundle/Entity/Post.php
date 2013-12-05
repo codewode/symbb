@@ -63,6 +63,8 @@ class Post
     public function getTopic(){return $this->topic;}
     public function setAuthor($object){$this->author = $object;}
     public function getAuthor(){return $this->author;}
+    public function getCreated(){return $this->created;}
+    public function getChanged(){return $this->changed;}
     ############################################################################
     
     /**
@@ -80,5 +82,12 @@ class Post
     public function setChangedValue()
     {
        $this->changed = new \DateTime();
+    }
+    
+    public function getSeoName(){
+        $name = $this->getName();
+        $name = preg_replace('/\W+/', '-', $name);
+        $name = strtolower(trim($name, '-'));
+        return $name;
     }
 }
