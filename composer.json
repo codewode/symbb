@@ -20,7 +20,8 @@
         "friendsofsymfony/rest-bundle": ">=0.13",
         "knplabs/knp-menu-bundle": ">=2.0",
         "friendsofsymfony/jsrouting-bundle": ">=1.1",
-        "knplabs/knp-paginator-bundle": ">=2.3"
+        "knplabs/knp-paginator-bundle": ">=2.3",
+        "sonata-project/intl-bundle": "master"
     },
     "autoload": {
         "psr-0": { "SymBB\\": "" }

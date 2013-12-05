@@ -22,6 +22,7 @@ class FrontendController  extends Controller
     }
     
     public function forumAction(){
+        
         $forumList = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Forum', 'symbb')
             ->findBy(array('parent' => null), array('position' => 'asc'));
         $params = array('forumList' => $forumList);

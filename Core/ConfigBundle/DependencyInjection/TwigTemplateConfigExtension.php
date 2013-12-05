@@ -13,10 +13,10 @@ class TwigTemplateConfigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('getSymbbTemplateConfig', array($this, 'getSymbbTemplateConfig')),
+            new \Twig_SimpleFunction('getSymbbTemplateConfig', array($this, 'getSymbbTemplateConfig'))
         );
     }
-
+    
     public function getSymbbTemplateConfig($config)
     {
         return $this->config[$config];

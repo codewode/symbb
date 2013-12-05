@@ -1,3 +1,4 @@
+{% trans_default_domain "symbbfrontend" %}
 
 <!--
 
@@ -69,7 +70,7 @@ Macro to generate the structure of the forum/Category name Row
 {% if object.hasShowSubForumList() %}
     <div class="subForumList">
         {% if object.getChildren()|length > 0 %}
-        {% trans %}Unterforen: {% endtrans %}
+        {% trans %}subforums{% endtrans %}: 
         {% endif %}
         {% for subobject in object.getChildren() if subobject.isActive() %}
             <a href="{{ path('_symbb_forum_show', {'id': subobject.getId(), 'name': subobject.getSeoName()}) }}">
@@ -93,7 +94,7 @@ Macro to generate the structure of the lastPost Row
     {% if object.getLastPost() %}
         <a href="{{ path('_symbb_forum_topic_show_2', {'id': object.getLastPost().getTopic().getId(), 'name': object.getLastPost().getTopic().getSeoName()}) }}#{{object.getLastPost().getSeoName()}}-{{object.getLastPost().getId()}}">
             <div class="name">{{object.getLastPost().getName()}}</div>
-            <div class="user">{% trans with {'%user%': object.getLastPost().getAuthor().getUsername(), '%date%': object.getLastPost().getCreated().format('D d.M Y'), '%time%': object.getLastPost().getCreated().format('H:i')} %}by %user% on %date% at %time%{% endtrans %}</div>
+            <div class="user">{% trans with {'%user%': object.getLastPost().getAuthor().getUsername(), '%date%': getSymbbDateFormater.getTimestamp()|format_date, '%time%': object.getLastPost().getCreated().getTimestamp()|date('H:i')} %}by %user% on %date% at %time%{% endtrans %}</div>
         </a>
     {% else %}
         {% trans %}no topics{% endtrans %}
