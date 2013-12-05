@@ -23,14 +23,12 @@ Macro to generate the row of a category
 
 {% macro categoryRow(object) %}
     <div class="row category">
-        <div class="col-md-6 nameBlock">{{object.getName()}}</div>
+        <div class="col-md-6 nameBlock">{{_self.nameRow(object)}}</div>
         <div class="col-md-1 topicCountBlock">{% trans %}Topics{% endtrans %}</div>
         <div class="col-md-1 postCountBlock">{% trans %}Posts{% endtrans %}</div>
         <div class="col-md-4 lastPostBlock">{% trans %}Last post{% endtrans %}</div>
     </div>
     {{_self.showForum(object, 0)}}
-    <div class="row space">
-    </div>
 {% endmacro %}
 
 

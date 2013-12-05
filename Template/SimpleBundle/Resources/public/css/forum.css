@@ -2,6 +2,10 @@
     width: 95%;
 }
 
+.symbb_forum_breadcrumb a {
+    color: #000;
+}
+
 .symbb_forum_body,
 .symbb_forum_breadcrumb {
     display: block;
@@ -19,6 +23,10 @@
     color: #FFF;
 }
 
+.symbb_forum_list .row.category {
+    margin-top: 1em;
+}
+
 .symbb_forum_list .row.forum, 
 .symbb_forum_list .row.subcategory {
     background-color: #EEE;
@@ -28,11 +36,18 @@
     cursor: pointer;
 }
 
+.symbb_forum_list .row.category a, 
+.symbb_forum_list .row a {
+    cursor: pointer;
+    color: #FFF;
+}
+
 .symbb_forum_list .row.forum a, 
 .symbb_forum_list .row.subcategory a {
     cursor: pointer;
     color: #000;
 }
+
 
 .symbb_forum_list .row.forum .description {
     font-size: 0.8em;
@@ -52,6 +67,6 @@
 }
 
 .row {
-margin-left: 0;
-margin-right: 0;
+    margin-left: 0;
+    margin-right: 0;
 }
