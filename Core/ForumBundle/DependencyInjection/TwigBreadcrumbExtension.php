@@ -21,7 +21,7 @@ class TwigBreadcrumbExtension extends \Twig_Extension
         );
     }
 
-    public function getSymbbBreadcrumb(\SymBB\Core\ForumBundle\Entity\Forum $forum)
+    public function getSymbbBreadcrumb($forum = null)
     {
         
         $breadcrumb = array();

@@ -35,13 +35,13 @@ class Topic
     private $name;
     
     /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="topic")
+     * @ORM\OneToMany(targetEntity="SymBB\Core\ForumBundle\Entity\Post", mappedBy="topic")
      * @ORM\OrderBy({"changed" = "DESC", "created" = "DESC"})
      */
     private $posts;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Forum", inversedBy="topics")
+     * @ORM\ManyToOne(targetEntity="SymBB\Core\ForumBundle\Entity\Forum", inversedBy="topics")
      * @ORM\JoinColumn(name="forum_id", referencedColumnName="id")
      */
     private $forum;

@@ -143,4 +143,12 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
         return $name;
     }
     
+    public function getLastPost(){
+        $lastPost = null;
+        $lastTopic = $this->getTopics()->last();
+        if($lastTopic){
+            $lastPost = $lastTopic->getPosts()->last();
+        }
+        return $lastPost;
+    }
 }

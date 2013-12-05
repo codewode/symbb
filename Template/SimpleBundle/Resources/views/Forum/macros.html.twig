@@ -28,7 +28,7 @@ Macro to generate the row of a category
         <div class="col-md-1 postCountBlock">{% trans %}Posts{% endtrans %}</div>
         <div class="col-md-4 lastPostBlock">{% trans %}Last post{% endtrans %}</div>
     </div>
-    {{_self.showForum(object)}}
+    {{_self.showForum(object, 0)}}
     <div class="row space">
     </div>
 {% endmacro %}
@@ -92,7 +92,11 @@ Macro to generate the structure of the lastPost Row
 
 {% macro lastPostRow(object) %}
     <div>
-    {{object.getPostCount()}}
+    {% if object.getLastPost() %}
+        {{object.getLastPost().getAuthor().getUsername()}}
+    {% else %}
+        {% trans %}no topics{% endtrans %}
+    {% endif %}
     </div>
 {% endmacro %}
 
@@ -103,9 +107,15 @@ Macro to generate a List of Categories and Forums
 
 -->
 
-{% macro showForumList(objects) %}
+{% macro showForumList(objects, forumTitle) %}
 
-    {% set forumTitle = 0 %}
+    {% for object in objects if object.isActive() %}
+        {% if loop.first %}
+            {% if object.getType() == 'category' %}
+                {% set forumTitle = 0 %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
 
     {% for object in objects if object.isActive() %}
 
@@ -124,7 +134,9 @@ Macro to generate a List of Categories and Forums
         {% endif %}
 
     {% else %}
-        {{ _self.showEmptyForumHeader() }}
+        {% if forumTitle %}
+            {{ _self.showEmptyForumHeader() }}
+        {% endif %}
         <div class="row forum">
             <div class="col-md-12">{% trans %}No Forum found{% endtrans %}</div>
         </div>
@@ -148,7 +160,21 @@ Macro to generate a List of Subcategories, Forums and Topics for the given Forum
 -->
 {% macro showForum(object, forumTitle) %}
 
+        
     {% for subobject in object.getChildren() if subobject.isActive() %}
+        {% if loop.first %}
+            {% if subobject.getType() == 'category' %}
+                {% set forumTitle = 0 %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% for subobject in object.getChildren() if subobject.isActive() %}
+
+        {% if forumTitle %}
+            {{ _self.showEmptyForumHeader() }}
+            {% set forumTitle = 0 %}
+        {% endif %}
 
         {% if subobject.getType() == 'category' %}
             {{ _self.subCategoryRow(subobject) }}
@@ -156,15 +182,13 @@ Macro to generate a List of Subcategories, Forums and Topics for the given Forum
         {% elseif subobject.getType() == 'link' %}
             {{ _self.linkRow(subobject) }}
         {% else %}
-        {% if forumTitle %}
-            {{ _self.showEmptyForumHeader() }}
-            {% set forumTitle = 0 %}
-        {% endif %}
             {{ _self.forumRow(subobject) }}
         {% endif %}
 
-    {% else %}
-        {{ _self.showEmptyForumHeader() }}
+    {% else%}
+        {% if forumTitle %}
+            {{ _self.showEmptyForumHeader() }}
+        {% endif %}
         <div class="row forum">
             <div class="col-md-12">{% trans %}No Forum found{% endtrans %}</div>
         </div>
