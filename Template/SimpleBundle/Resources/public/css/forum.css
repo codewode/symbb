@@ -36,8 +36,8 @@
     border-bottom: 1px solid #CCC;
 }
 
-.symbb_forum_list .row.topic .nameBlock .user,
-.symbb_forum_list .row.topic .lastPostBlock .user {
+.symbb_forum_list .row .nameBlock .user,
+.symbb_forum_list .row .lastPostBlock .user {
     font-size: 0.8em;
 }
 
@@ -72,7 +72,13 @@
     padding: 1em;
 }
 
-.row {
+.symbb_forum_list .row {
     margin-left: 0;
     margin-right: 0;
+    min-height: 3em;
+}
+
+.symbb_forum_list  .topicCountBlock ,
+.symbb_forum_list  .postCountBlock {
+    text-align: right;
 }

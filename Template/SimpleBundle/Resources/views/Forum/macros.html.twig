@@ -89,15 +89,24 @@ Macro to generate the structure of the lastPost Row
 -->
 
 {% macro lastPostRow(object) %}
-    <div>
+<div class="lastPostBlock">
     {% if object.getLastPost() %}
-        {{object.getLastPost().getAuthor().getUsername()}}
+        <a href="{{ path('_symbb_forum_topic_show_2', {'id': object.getLastPost().getTopic().getId(), 'name': object.getLastPost().getTopic().getSeoName()}) }}#{{object.getLastPost().getSeoName()}}-{{object.getLastPost().getId()}}">
+            <div class="name">{{object.getLastPost().getName()}}</div>
+            <div class="user">{% trans with {'%user%': object.getLastPost().getAuthor().getUsername(), '%date%': object.getLastPost().getCreated().format('D d.M Y'), '%time%': object.getLastPost().getCreated().format('H:i')} %}by %user% on %date% at %time%{% endtrans %}</div>
+        </a>
     {% else %}
         {% trans %}no topics{% endtrans %}
     {% endif %}
     </div>
 {% endmacro %}
 
+
+<!--
+
+Macro to generate a list of all topics
+
+-->
 
 {% macro showTopicList(object) %}
     {{ _self.showEmptyTopicHeader() }}
@@ -113,12 +122,9 @@ Macro to generate the structure of the lastPost Row
             </a>
         </div>
         <div class="col-md-1 topicCountBlock">{{topic.getPostCount()}}</div>
-        <div class="col-md-4 lastPostBlock">
+        <div class="col-md-4">
             {% if topic.getPostCount() %}
-                <a href="{{ path('_symbb_forum_topic_show_2', {'id': topic.getId(), 'name': topic.getSeoName()}) }}#{{topic.getLastPost().getSeoName()}}-{{topic.getLastPost().getId()}}">
-                    <div class="name">{{topic.getLastPost().getName()}}</div>
-                    <div class="user">{% trans with {'%user%': topic.getLastPost().getAuthor().getUsername(), '%date%': topic.getLastPost().getCreated().format('D d.M Y'), '%time%': topic.getLastPost().getCreated().format('H:i')} %}by %user% on %date% at %time%{% endtrans %}</div>
-                </a>
+                {{_self.lastPostRow(topic)}}
             {% endif %}
         </div>
     </div>
@@ -175,6 +181,11 @@ Macro to generate a List of Categories and Forums
     {% endfor %}
 {% endmacro %}
 
+<!--
+
+Macro to generate a Header for a Forum block
+
+-->
 
 {% macro showEmptyForumHeader() %}
 <div class="row category">
@@ -184,6 +195,12 @@ Macro to generate a List of Categories and Forums
     <div class="col-md-4 lastPostBlock">{% trans %}Last post{% endtrans %}</div>
 </div>
 {% endmacro %}
+
+<!--
+
+Macro to generate a Header for a Topic block
+
+-->
 
 {% macro showEmptyTopicHeader() %}
 <div class="row category">
