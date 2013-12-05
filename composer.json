@@ -18,10 +18,10 @@
         "symfony/symfony": ">=2.4",
         "friendsofsymfony/user-bundle": ">=2.0",
         "friendsofsymfony/rest-bundle": ">=0.13",
-        "knplabs/knp-menu-bundle": ">=2.0",
         "friendsofsymfony/jsrouting-bundle": ">=1.1",
+        "knplabs/knp-menu-bundle": ">=2.0",
         "knplabs/knp-paginator-bundle": ">=2.3",
-        "sonata-project/intl-bundle": "master"
+        "sonata-project/intl-bundle": "2.2.*@dev"
     },
     "autoload": {
         "psr-0": { "SymBB\\": "" }
