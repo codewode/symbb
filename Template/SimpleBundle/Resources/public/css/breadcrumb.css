@@ -5,6 +5,12 @@
 
 .symbb_breadcrumb .navbar {
     min-height: 0em !important;
+    margin-bottom: 0;
+}
+
+.symbb_breadcrumb .navbar .container {
+    width: 95%;
+    margin: 0 auto;
 }
 
 .symbb_breadcrumb .navbar-nav>li>a{

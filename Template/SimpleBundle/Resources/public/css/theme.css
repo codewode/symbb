@@ -15,18 +15,23 @@ root, body, html {
     background-image: -o-linear-gradient(#2E6278, #2C445E 100%); 
     background-image: linear-gradient(#2E6278, #2C445E 100%);
     position: relative;
-    height: 8em;
+}
+
+.symbb_header .navbar {
+    margin-bottom: 0;
+    width: 95%;
+    margin: 0 auto;
 }
 
 
 .symbb_header .content {
-    width: 95%;
+    width: 100%;
     margin: 0 auto;
     padding-top: 0.6em;
 }
 
 .symbb_header .logo {
-    height: 1em;
+    height: 3em;
     width: 100%;
 }
 
