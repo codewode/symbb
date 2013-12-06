@@ -72,6 +72,15 @@ Aktueller Plan
 - Sitemaps
 -- XML
 -- HTML
+- Kalender
+-- Beim erstellen von Beiträgen soll man optional sagen können das es als Kalender Eintrag angelegt wird
+-- Dabei kann man einstellen Welche Gruppen es sehen können
+-- Der Intervall des Eintragen
+-- Anmeldeliste wo die User sich einträgen können
+-- Zudem muss der Kalender im Forum/Portal in kleiner Form angezeigt werden ( aktuelle Woche )
+-- und es muss eine Seite geben wo man ihn komplett sieht
+- Umfragen
+-- Es soll ein leichtes Umfrage modul geben ähnlich wie das von PHPBB
 - Menu
 -- soll flexible gestalltbar sein
 -- eigene Einträge sollen erweitert werden können mit pos angabe und es sol möglich sein vorhanden zu deaktivieren
