@@ -67,8 +67,8 @@ Aktueller Plan
         - im Template sind "positionen" festzulegen wo man die Blocke später dann erstellen kann (z.b mit einer Twig erweiterung getPortalUserBlocks(ABC) )
         - Blocke sind je User verschiebbar
 - Feeds
-        - RSS
-        - ???
+    - RSS
+    - ???
 - Sitemaps
     -  XML
     -  HTML
