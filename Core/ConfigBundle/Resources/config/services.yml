@@ -16,7 +16,7 @@ services:
             - { name: twig.extension }
     symbb_forum_breadcrumb:
         twig.extension.symbb_forum_breadcrumb:
-        class: SymBB\Core\ForumBundle\DependencyInjection\TwigBreadcrumbExtension
-        arguments: ['@translator', '@router']
+        class: SymBB\Core\ForumBundle\Twig\BreadcrumbExtension
+        arguments: ['@service_container']
         tags:
             - { name: twig.extension } 

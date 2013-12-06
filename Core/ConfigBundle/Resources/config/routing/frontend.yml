@@ -13,7 +13,3 @@ _symbb_forum_show:
 _symbb_forum_topic_show:
     pattern:  /forum/t-{name}/{id}
     defaults: { _controller: SymBBCoreForumBundle:Frontend:TopicShow}
-    
-_symbb_forum_topic_show_2:
-    pattern:  /forum/t-{name}/{id}
-    defaults: { _controller: SymBBCoreForumBundle:Frontend:TopicShow }

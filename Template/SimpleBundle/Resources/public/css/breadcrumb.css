@@ -1,0 +1,22 @@
+.symbb_breadcrumb a {
+    color: #000;
+    font-size: 1em;
+}
+
+.symbb_breadcrumb .navbar {
+    min-height: 0em !important;
+}
+
+.symbb_breadcrumb .navbar-nav>li>a{
+    padding: 0.8em;
+}
+
+
+.symbb_breadcrumb .navbar-brand{
+    padding: 0.7em;
+}
+
+
+.symbb_breadcrumb li a img {
+    margin-left: 15px;
+}

@@ -36,7 +36,7 @@ class FrontendController  extends Controller
         return $this->render($this->getTemplateBundleName('forum').':Forum:show.html.twig', $params);
     }
     
-    public function topicShowAction($name, $id, $post){
+    public function topicShowAction($name, $id){
         $topic = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Topic', 'symbb')
             ->find($id);
         $params = array('topic' => $topic);

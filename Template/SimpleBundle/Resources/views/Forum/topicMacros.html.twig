@@ -1,0 +1,10 @@
+{% macro showPostList(object) %}
+
+    {% for post in object.getPosts() %}
+        <div class="row">
+            <div class="col-md-9">{{post.getText()}}</div>
+            <div class="col-md-3">{{post.getAuthor().getUsername()}}</div>
+        </div>
+    {% endfor %}
+
+{% endmacro %}

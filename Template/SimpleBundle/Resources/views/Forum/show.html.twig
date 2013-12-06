@@ -1,16 +1,16 @@
-{% trans_default_domain "symbbfrontend" %}
+{% trans_default_domain "symbb_frontend" %}
 
-{% extends getSymbbTemplateConfig('forum') ~ ':Forum:index.html.twig' %}
+{% extends getSymbbTemplateConfig('forum') ~ ':Forum:layout.html.twig' %}
 
 
 
-{% block symbb_forum_breadcrumb %}
+{% block symbb_breadcrumb %}
     {{ getSymbbBreadcrumb(forum) }}
 {% endblock %}
 
-{% block symbb_forum_body %}
+{% block symbb_body %}
 
-    <div class="symbb_forum_list">
+    <div class="symbb_list">
         {{ symbBBForumMacro.showForumList(forum.getChildren(), 1) }}
         {% if forum.hasTopics() %}
             {{ symbBBForumMacro.showTopicList(forum) }}

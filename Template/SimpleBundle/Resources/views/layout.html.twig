@@ -1,4 +1,4 @@
-{% trans_default_domain "symbbfrontend" %}
+{% trans_default_domain "symbb_frontend" %}
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
   <head>
@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     
     {% block stylesheets %} 
+        {% stylesheets 
+            '@SymBBTemplateSimpleBundle/Resources/public/css/theme.css' filter='?yui_css'
+            '@SymBBTemplateSimpleBundle/Resources/public/css/breadcrumb.css' filter='?yui_css'
+         %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
     {% endblock %}
         
     
@@ -20,18 +26,23 @@
     </head>
 
     <body>
-        {% block symbb_forum_navi %} 
         
-        {% endblock %}
-            
-        <div class="symbb_forum_breadcrumb">
-        {% block symbb_forum_breadcrumb %}
-
-        {% endblock %}
+        <div class="symbb_header">
+            <div class="content">
+                <div class="logo">&nbsp;</div>
+                <div class="navi">
+                    {% block symbb_navi %} 
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="border_bottom">&nbsp;</div>
         </div>
+            
+        {% block symbb_breadcrumb %}
+        {% endblock %}
         
-        <div class="symbb_forum_body">
-        {% block symbb_forum_body %}
+        <div class="symbb_body">
+        {% block symbb_body %}
 
         {% endblock %}
         </div>

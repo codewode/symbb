@@ -1,15 +1,16 @@
-{% extends getSymbbTemplateConfig('forum') ~ ':Forum:index.html.twig' %}
+{% trans_default_domain "symbb_frontend" %}
+
+{% extends getSymbbTemplateConfig('forum') ~ ':Forum:layout.html.twig' %}
 
 
-
-{% block symbb_forum_breadcrumb %}
+{% block symbb_breadcrumb %}
     {{ getSymbbBreadcrumb(topic) }}
 {% endblock %}
 
-{% block symbb_forum_body %}
+{% block symbb_body %}
 
-    <div class="symbb_forum_list">
-        {{ symbBBForumMacro.showPostList(topic) }}
+    <div class="symbb_list">
+        {{ symbBBForumTopicMacro.showPostList(topic) }}
     </div>
 {% endblock %}
 

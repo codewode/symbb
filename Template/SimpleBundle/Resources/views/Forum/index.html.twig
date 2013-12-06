@@ -1,29 +1,12 @@
-{% trans_default_domain "symbbfrontend" %}
+{% trans_default_domain "symbb_frontend" %}
 
-{% extends getSymbbTemplateConfig('forum') ~ '::layout.html.twig' %}
+{% extends getSymbbTemplateConfig('forum') ~ ':Forum:layout.html.twig' %}
 
-{% import "SymBBTemplateSimpleBundle:Forum:macros.html.twig" as symbBBForumMacro %}
+{% block symbb_body %}
 
-{% block stylesheets %} 
-    {% stylesheets 
-        '@SymBBTemplateSimpleBundle/Resources/public/css/forum.css' filter='?yui_css'
-     %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-{% endblock %}
-    
-    
-{% block symbb_forum_navi %} 
-{% endblock %}
-
-{% block symbb_forum_breadcrumb %}
-    {{ getSymbbBreadcrumb() }}
-{% endblock %}
-    
-{% block symbb_forum_body %}
-
-    <div class="symbb_forum_list">
+    <div class="symbb_list">
         {{ symbBBForumMacro.showForumList(forumList) }}
     </div>
+    
 {% endblock %}
 
