@@ -2,6 +2,14 @@
 
 {% extends getSymbbTemplateConfig('forum') ~ ':Forum:layout.html.twig' %}
 
+{% block stylesheets %} 
+    {{ parent() }}
+    {% stylesheets 
+        '@SymBBTemplateSimpleBundle/Resources/public/css/topic.css' filter='?yui_css'
+     %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
 
 {% block symbb_breadcrumb %}
     {{ getSymbbBreadcrumb(topic) }}
@@ -9,7 +17,7 @@
 
 {% block symbb_body %}
 
-    <div class="symbb_list">
+    <div class="symbb_topic">
         {{ symbBBForumTopicMacro.showPostList(topic) }}
     </div>
 {% endblock %}

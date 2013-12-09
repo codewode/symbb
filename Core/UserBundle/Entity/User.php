@@ -20,7 +20,7 @@ class User extends BaseUser implements UserInterface
     protected $id;
     
      /**
-     * @ORM\ManyToMany(targetEntity="SymBB\Core\UserBundle\Entity\Group")
+     * @ORM\ManyToMany(targetEntity="\SymBB\Core\UserBundle\Entity\Group")
      * @ORM\JoinTable(name="user_groups",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
@@ -29,19 +29,20 @@ class User extends BaseUser implements UserInterface
     protected $groups;
         
     /**
-     * @ORM\OneToMany(targetEntity="SymBB\Core\ForumBundle\Entity\Topic", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="\SymBB\Core\ForumBundle\Entity\Topic", mappedBy="author")
      */
     private $topics;
         
     /**
-     * @ORM\OneToMany(targetEntity="SymBB\Core\ForumBundle\Entity\Post", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="\SymBB\Core\ForumBundle\Entity\Post", mappedBy="author")
      */
     private $posts;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity="\SymBB\Core\UserBundle\Entity\User\Data", inversedBy="user")
+     * @ORM\JoinColumn(name="data_id", referencedColumnName="id")
      */
-    private $signature;
+    private $symbbData;
 
     public function __construct()
     {
@@ -55,7 +56,14 @@ class User extends BaseUser implements UserInterface
     ############################################################################
     public function getTopics(){return $this->topics;}
     public function getPosts(){return $this->posts;}
-    public function getSignature(){return $this->signature;}
-    public function setSignature($value){ $this->signature = $value;}
+    public function setSymbbData(\SymBB\Core\UserBundle\Entity\User\Data  $value){ $this->symbbData = $value;}
     ############################################################################
+    
+    public function getSymbbData(){
+        $data = $this->symbbData;
+        if(!$data){
+            $this->symbbData = new User\Data();
+        }
+        return $this->symbbData;
+    }
 }
