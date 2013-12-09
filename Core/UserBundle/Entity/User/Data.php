@@ -21,7 +21,7 @@ class Data
     protected $id;
     
     /**
-     * @ORM\OneToOne(targetEntity="SymBB\Core\UserBundle\Entity\User", inversedBy="data")
+     * @ORM\OneToOne(targetEntity="SymBB\Core\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;

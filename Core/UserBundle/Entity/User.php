@@ -39,7 +39,7 @@ class User extends BaseUser implements UserInterface
     private $posts;
 
     /**
-     * @ORM\OneToOne(targetEntity="\SymBB\Core\UserBundle\Entity\User\Data", inversedBy="user")
+     * @ORM\OneToOne(targetEntity="\SymBB\Core\UserBundle\Entity\User\Data")
      * @ORM\JoinColumn(name="data_id", referencedColumnName="id")
      */
     private $symbbData;
