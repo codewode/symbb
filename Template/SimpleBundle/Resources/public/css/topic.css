@@ -30,3 +30,31 @@
     width: 150px;
     height: 150px;
 }
+
+
+.symbb_topic .row.subheader {
+    padding: 0.5em;
+    color: #FFF;
+    padding-top: 0.8em;
+}
+
+.symbb_topic .like_dislike {
+    margin-top: 1em;
+    float: right;
+}
+
+.symbb_topic .like_img ,
+.symbb_topic .dislike_img {
+    display: inline;
+    float: left;
+    cursor: pointer;
+}
+
+.symbb_topic .like_count ,
+.symbb_topic .dislike_count {
+    float: left;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding-top: 0.5em;
+    margin-right: 1em;
+}

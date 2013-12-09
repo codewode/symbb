@@ -12,4 +12,8 @@ _symbb_forum_show:
     
 _symbb_forum_topic_show:
     pattern:  /forum/t-{name}/{id}
-    defaults: { _controller: SymBBCoreForumBundle:Frontend:TopicShow}
+    defaults: { _controller: SymBBCoreForumBundle:FrontendTopic:show}
+    
+_symbb_forum_post_evaluate:
+    pattern:  /forum/evaluate/p-{id}/{like}
+    defaults: { _controller: SymBBCoreForumBundle:FrontendTopic:evaluatePost}

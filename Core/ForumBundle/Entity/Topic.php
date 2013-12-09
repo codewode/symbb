@@ -28,11 +28,6 @@ class Topic
      * @ORM\Column(type="date")
      */
     private $changed;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
     
     /**
      * @ORM\OneToMany(targetEntity="SymBB\Core\ForumBundle\Entity\Post", mappedBy="topic")
@@ -62,8 +57,8 @@ class Topic
     ############################################################################
     public function getId(){return $this->id;}
     public function setId($value){$this->id = $value;}
-    public function getName(){return $this->name;}
-    public function setName($value){$this->name = $value;}
+    public function getName(){return $this->getPosts()->first()->getName();}
+    public function setName($value){$this->getPosts()->first()->setName($value);}
     public function setForum($object){$this->forum = $object;}
     public function getForum(){return $this->forum;}
     public function setAuthor($object){$this->author = $object;}

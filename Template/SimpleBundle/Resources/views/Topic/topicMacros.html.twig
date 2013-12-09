@@ -1,0 +1,47 @@
+{% trans_default_domain "symbb_frontend" %}
+
+{% macro showPostList(object) %}
+
+    {% for post in object.getPosts() %}
+        <div class="row symbb_header_bg {% if loop.first %} header {% else %} subheader {% endif %}">
+            <div class="col-md-12">{{post.getName()}}</div>
+        </div>
+        <div class="row body">
+            <div class="col-md-3 userblock">
+                <div class="avatar">
+                    <img src="{{getSymbbUserAvatar(post.getAuthor())}}" />
+                </div>
+                {{post.getAuthor().getUsername()}}
+            </div>
+            <div class="col-md-9 textblock">
+                {{post.getText()|bbcode_filter('default')}}
+                {{ _self.showRating(post) }}
+                {{ _self.showSignature(post) }}
+            </div>
+        </div>
+    {% endfor %}
+
+{% endmacro %}
+
+{% macro showRating(object) %}
+<div class="row raiting">
+    <div class="like_dislike">
+        <a href="{{ path('_symbb_forum_post_evaluate', {'id': object.getId() , 'like': 1}) }}">
+            <img class="like_img" width="32" height="32" src="/bundles/symbbtemplatesimple/images/icons/like.png" alt="{% trans %}Like{% endtrans %}" title="{% trans %}Like{% endtrans %}" />
+        </a>
+        <div class="like_count">{{ object.getLikes().count() }}</div>
+        <a href="{{ path('_symbb_forum_post_evaluate', {'id': object.getId() , 'like': 0}) }}">
+            <img class="dislike_img" width="32" height="32" src="/bundles/symbbtemplatesimple/images/icons/dislike.png" alt="{% trans %}Like{% endtrans %}" title="{% trans %}Like{% endtrans %}" />
+        </a>
+        <div class="dislike_count">{{ object.getDislikes().count() }}</div>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro showSignature(object) %}
+{% if getSymbbUserData(object.getAuthor()).hasSignature() %}
+    <div class="row signature">
+        <div class="col-md-12">{{getSymbbUserSignature(object.getAuthor())}}</div>
+    </div>
+{% endif %}
+{% endmacro %}
