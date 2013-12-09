@@ -23,7 +23,7 @@ Macro to generate the row of a category
 -->
 
 {% macro categoryRow(object) %}
-    <div class="row category">
+    <div class="row category symbb_header_bg">
         <div class="col-md-6 nameBlock">{{_self.nameRow(object)}}</div>
         <div class="col-md-1 topicCountBlock">{% trans %}Topics{% endtrans %}</div>
         <div class="col-md-1 postCountBlock">{% trans %}Posts{% endtrans %}</div>
@@ -189,7 +189,7 @@ Macro to generate a Header for a Forum block
 -->
 
 {% macro showEmptyForumHeader() %}
-<div class="row category">
+<div class="row category symbb_header_bg">
     <div class="col-md-6 nameBlock">{% trans %}Forums{% endtrans %}</div>
     <div class="col-md-1 topicCountBlock">{% trans %}Topics{% endtrans %}</div>
     <div class="col-md-1 postCountBlock">{% trans %}Posts{% endtrans %}</div>
@@ -204,7 +204,7 @@ Macro to generate a Header for a Topic block
 -->
 
 {% macro showEmptyTopicHeader() %}
-<div class="row category">
+<div class="row category symbb_header_bg">
     <div class="col-md-7 nameBlock">{% trans %}Topics{% endtrans %}</div>
     <div class="col-md-1 topicCountBlock">{% trans %}Answers{% endtrans %}</div>
     <div class="col-md-4 lastPostBlock">{% trans %}Last post{% endtrans %}</div>

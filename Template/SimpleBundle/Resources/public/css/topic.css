@@ -3,10 +3,6 @@
 }
 
 .symbb_topic .row.header {
-    background-image: -webkit-linear-gradient(#2E6278, #2C445E 100%); 
-    background-image: -moz-linear-gradient(#2E6278, #2C445E 100%); 
-    background-image: -o-linear-gradient(#2E6278, #2C445E 100%); 
-    background-image: linear-gradient(#2E6278, #2C445E 100%);
     padding: 0.5em;
     color: #FFF;
     padding-top: 0.8em;

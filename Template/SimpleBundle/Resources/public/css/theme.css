@@ -10,10 +10,6 @@ root, body, html {
 
 
 .symbb_header {
-    background-image: -webkit-linear-gradient(#2E6278, #2C445E 100%); 
-    background-image: -moz-linear-gradient(#2E6278, #2C445E 100%); 
-    background-image: -o-linear-gradient(#2E6278, #2C445E 100%); 
-    background-image: linear-gradient(#2E6278, #2C445E 100%);
     position: relative;
 }
 
@@ -47,4 +43,11 @@ root, body, html {
 .row {
     margin-left: 0;
     margin-right: 0;
+}
+
+.symbb_header_bg {
+    background-image: -webkit-linear-gradient(#2E6278, #2C445E 100%); 
+    background-image: -moz-linear-gradient(#2E6278, #2C445E 100%); 
+    background-image: -o-linear-gradient(#2E6278, #2C445E 100%); 
+    background-image: linear-gradient(#2E6278, #2C445E 100%);
 }
