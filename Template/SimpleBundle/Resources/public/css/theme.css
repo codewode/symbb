@@ -42,3 +42,9 @@ root, body, html {
     position: absolute;
     bottom: 0;
 }
+
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
