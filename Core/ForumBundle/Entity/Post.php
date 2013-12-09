@@ -114,99 +114,29 @@ class Post
     /**
      * @return Topic\Like
      */
-    public function getLikes(){return $this->likes;}
+    public function getLikes(){
+        return $this->likes;
+    }
     /**
      * @return Topic\Dislike
      */
-    public function getDislikes(){return $this->dislikes;}
-    
-    
-    public function addLike(\SymBB\Core\UserBundle\Entity\UserInterface $user, $asDislike = false){
-        
-        
-        $likes      = $this->getLikes();
-        $dislikes   = $this->getDislikes();
-        
-        $myLikes    = array();
-        $myDislikes = array();
-        
-        foreach($likes as $like){
-            if($like->getUser()->getId() === $user->getId()){
-                $myLikes[] = $like;
-                break;
-            }
-        }
-        
-        foreach($dislikes as $dislike){
-            if($dislike->getUser()->getId() === $user->getId()){
-                $myDislikes[] = $dislike;
-                break;
-            }
-        }
-        
-        // if the user "like" it
-        if(!$asDislike){
-            
-            // remove "dislikes"
-            foreach($myDislikes as $myDislike){
-                $this->dislikes->removeElement($myDislike);
-            }
-            
-            // create a new "like" if no one exist
-            if(empty($myLikes)){
-                $myLike = new Topic\Like();
-                $myLike->setUser($user);
-                $myLike->setPost($this);
-            }
-            
-            // if we create a new "like" then add it
-            if(isset($myLike)){
-                $this->likes->add($myLike);
-            }
-           
-        } else {
-            // remove "likes"
-            foreach($myLikes as $myLike){
-                $this->likes->removeElement($myLike);
-            }
-            
-            // create a new "dislike" if no one exist
-            if(empty($myDislikes)){
-                $myDislike = new Topic\Dislike();
-                $myDislike->setUser($user);
-                $myDislike->setPost($this);
-            }
-            
-            // if we create a new "dislike" then add it
-            if(isset($myDislike)){
-                $this->dislikes->add($myDislike);
-            }
-        }
-        
+    public function getDislikes(){
+        return $this->dislikes;
     }
     
-    
-    public function addDislike($user){
-        return $this->addLike($user, true);
+    public function addLike($like){
+        $this->likes->add($like);
     }
     
-    public function removeLike($user){
-        $likes = $this->getLikes();
-        foreach($likes as $like){
-            if($like->getAuthor()->getId() === $user->getId()){
-                $this->likes->removeElement($like);
-                break;
-            }
-        }
+    public function addDislike($like){
+        $this->dislikes->add($like);
     }
     
-    public function removeDislike($user){
-        $likes = $this->getDislikes();
-        foreach($likes as $like){
-            if($like->getAuthor()->getId() === $user->getId()){
-                $this->dislikes->removeElement($like);
-                break;
-            }
-        }
+    public function removeLike($like){
+        $this->likes->removeElement($like);
+    }
+    
+    public function removeDislike($like){
+        $this->dislikes->removeElement($like);
     }
 }

@@ -15,5 +15,5 @@ _symbb_forum_topic_show:
     defaults: { _controller: SymBBCoreForumBundle:FrontendTopic:show}
     
 _symbb_forum_post_evaluate:
-    pattern:  /forum/evaluate/p-{id}/{like}
+    pattern:  /forum/evaluate/p-{name}/{id}/{like}
     defaults: { _controller: SymBBCoreForumBundle:FrontendTopic:evaluatePost}

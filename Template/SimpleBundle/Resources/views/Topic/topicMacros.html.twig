@@ -26,11 +26,11 @@
 {% macro showRating(object) %}
 <div class="row raiting">
     <div class="like_dislike">
-        <a href="{{ path('_symbb_forum_post_evaluate', {'id': object.getId() , 'like': 1}) }}">
+        <a href="{{ path('_symbb_forum_post_evaluate', {'name': object.getSeoName() , 'id': object.getId() , 'like': 'like'}) }}">
             <img class="like_img" width="32" height="32" src="/bundles/symbbtemplatesimple/images/icons/like.png" alt="{% trans %}Like{% endtrans %}" title="{% trans %}Like{% endtrans %}" />
         </a>
         <div class="like_count">{{ object.getLikes().count() }}</div>
-        <a href="{{ path('_symbb_forum_post_evaluate', {'id': object.getId() , 'like': 0}) }}">
+        <a href="{{ path('_symbb_forum_post_evaluate', {'name': object.getSeoName() , 'id': object.getId() , 'like': 'dislike'}) }}">
             <img class="dislike_img" width="32" height="32" src="/bundles/symbbtemplatesimple/images/icons/dislike.png" alt="{% trans %}Like{% endtrans %}" title="{% trans %}Like{% endtrans %}" />
         </a>
         <div class="dislike_count">{{ object.getDislikes().count() }}</div>
