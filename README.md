@@ -21,6 +21,16 @@ English
 A symfony 2 BB forum
 This Bundle is still in development
 
+Die nächsten TODOs
+==
+
+- SF2 Service schreiben welcher einen Post speichern/löscht
+-- Events einfügen um informationen zu manipulieren
+-- User Objekt manipulieren und Post hoch/runterzählen (User Event Listener)
+
+- Userdaten im Beiträgen anzeigen und ein System überlegen wodurch die Elemente erweitert/manipuliert werden können ohne das Template abzuleiten
+
+- Beitrag schreiben in einfacher form ( ohne editor )
 
 
 Aktueller Plan
