@@ -1,7 +1,7 @@
 symbb
 ==
 
-German
+Currently only in German
 ===
 Ein Symfony 2 basiertes BB Forum
 Dieses Bundle ist derzeit noch in Entwicklung!!
@@ -16,10 +16,6 @@ Folgende Einstellungen müssen derzeit manuell vorgenommen werden!
 - security.yml ( siehe YML Datei in CoreConfigBundle )
 - AppKernel ( siehe Sandbox )
 
-English
-===
-A symfony 2 BB forum
-This Bundle is still in development
 
 Die nächsten TODOs
 ==
