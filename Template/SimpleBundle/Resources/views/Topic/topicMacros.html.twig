@@ -35,7 +35,7 @@
 {% macro showSignature(object) %}
 {% if getSymbbUserData(object.getAuthor()).hasSignature() %}
     <div class="row signature">
-        <div class="col-md-12">{{getSymbbUserSignature(object.getAuthor())|bbcode_filter('signature')}}</div>
+        {{getSymbbUserSignature(object.getAuthor())|bbcode_filter('signature')}}
     </div>
 {% endif %}
 {% endmacro %}
