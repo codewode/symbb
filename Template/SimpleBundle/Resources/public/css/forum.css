@@ -20,6 +20,7 @@
 
 .symbb_list .row.category {
     margin-top: 1em;
+    border-radius: 5px 5px 0 0;
 }
 
 .symbb_list .row.forum, 
@@ -30,6 +31,8 @@
     padding-top: 0.8em;
     margin-bottom: 1px;
     border-bottom: 1px solid #CCC;
+    border-left: 1px solid #CCC;
+    border-right: 1px solid #CCC;
 }
 
 .symbb_list .row .nameBlock .user,

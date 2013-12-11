@@ -13,3 +13,8 @@ by %user%{% endtrans %}: von %user%
 on %date% at %time%: am %date% um %time%
 %user% wrote on %date% at %time%: %user% schrieb am %date% um %time%
 subforums: Unterforen
+Quote: Zitieren
+Answer: Antworten
+Edit: Editieren
+Delete: Löschen
+new Topic: Neues Thema

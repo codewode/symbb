@@ -4,7 +4,16 @@
 
     {% for post in object.getPosts() %}
         <div class="row symbb_header_bg {% if loop.first %} header {% else %} subheader {% endif %}">
-            <div class="col-md-12">{{post.getName()}}</div>
+            <div class="col-md-12">{{post.getName()}}
+                <div class="f-right">
+                    <div class="btn-group btn-group-xs">
+                        <button type="button" class="btn btn-default">{% trans %}Answer{% endtrans %}</button>
+                        <button type="button" class="btn btn-default">{% trans %}Quote{% endtrans %}</button>
+                        <button type="button" class="btn btn-default">{% trans %}Edit{% endtrans %}</button>
+                        <button type="button" class="btn btn-default">{% trans %}Delete{% endtrans %}</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row body">
             <div class="col-md-3 userblock">

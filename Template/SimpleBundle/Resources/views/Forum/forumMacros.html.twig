@@ -132,6 +132,14 @@ Macro to generate a list of all topics
 
     {% endfor %}
 
+    <div class="row topic">
+        <div class="col-md-12">
+            <div class="btn-group btn-group-xs">
+                <button type="button" class="btn btn-default">{% trans %}new Topic{% endtrans %}</button>
+            </div>
+        </div>
+    </div>
+
 {% endmacro %}
 
 <!--
@@ -205,7 +213,9 @@ Macro to generate a Header for a Topic block
 
 {% macro showEmptyTopicHeader() %}
 <div class="row category symbb_header_bg">
-    <div class="col-md-7 nameBlock">{% trans %}Topics{% endtrans %}</div>
+    <div class="col-md-7 nameBlock">
+        {% trans %}Topics{% endtrans %}
+    </div>
     <div class="col-md-1 topicCountBlock">{% trans %}Answers{% endtrans %}</div>
     <div class="col-md-4 lastPostBlock">{% trans %}Last post{% endtrans %}</div>
 </div>
