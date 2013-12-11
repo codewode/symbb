@@ -1,15 +1,15 @@
 <?php
 
-namespace SymBB\Core\ForumBundle\Entity\Topic;
+namespace SymBB\Post\RatingBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="forum_topic_dislikes")
+ * @ORM\Table(name="forum_topic_post_likes")
  * @ORM\Entity()
  */
-class Dislike
+class Like
 {
     /**
      * @ORM\Column(type="integer", unique=true)
@@ -19,7 +19,7 @@ class Dislike
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SymBB\Core\ForumBundle\Entity\Post", inversedBy="dislikes")
+     * @ORM\ManyToOne(targetEntity="SymBB\Core\ForumBundle\Entity\Post", inversedBy="likes")
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id", unique=true)
      */
     private $post;

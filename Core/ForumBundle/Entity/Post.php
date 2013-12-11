@@ -49,18 +49,6 @@ class Post
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      */
     private $author;
-    
-    /**
-     * @ORM\OneToMany(targetEntity="SymBB\Core\ForumBundle\Entity\Topic\Like", mappedBy="post", cascade={"persist"})
-     * @var ArrayCollection
-     */
-    private $likes;
-    
-    /**
-     * @ORM\OneToMany(targetEntity="SymBB\Core\ForumBundle\Entity\Topic\Dislike", mappedBy="post", cascade={"persist"})
-     * @var ArrayCollection
-     */
-    private $dislikes;
 
 
     public function __construct() {
@@ -108,35 +96,5 @@ class Post
         $name = preg_replace('/\W+/', '-', $name);
         $name = strtolower(trim($name, '-'));
         return $name;
-    }
-    
-    
-    /**
-     * @return Topic\Like
-     */
-    public function getLikes(){
-        return $this->likes;
-    }
-    /**
-     * @return Topic\Dislike
-     */
-    public function getDislikes(){
-        return $this->dislikes;
-    }
-    
-    public function addLike($like){
-        $this->likes->add($like);
-    }
-    
-    public function addDislike($like){
-        $this->dislikes->add($like);
-    }
-    
-    public function removeLike($like){
-        $this->likes->removeElement($like);
-    }
-    
-    public function removeDislike($like){
-        $this->dislikes->removeElement($like);
     }
 }

@@ -1,0 +1,12 @@
+<div class="row raiting">
+    <div class="like_dislike">
+        <a href="{{ path('_symbb_post_rating_like', {'name': object.getSeoName() , 'id': object.getId() , 'like': 'like'}) }}">
+            <img class="like_img" width="32" height="32" src="/bundles/symbbtemplatesimple/images/icons/like.png" alt="{% trans %}Like{% endtrans %}" title="{% trans %}Like{% endtrans %}" />
+        </a>
+        <div class="like_count">{{ getSymbbLikeCount(object) }}</div>
+        <a href="{{ path('_symbb_post_rating_like', {'name': object.getSeoName() , 'id': object.getId() , 'like': 'dislike'}) }}">
+            <img class="dislike_img" width="32" height="32" src="/bundles/symbbtemplatesimple/images/icons/dislike.png" alt="{% trans %}Like{% endtrans %}" title="{% trans %}Like{% endtrans %}" />
+        </a>
+        <div class="dislike_count">{{ getSymbbDislikeCount(object) }}</div>
+    </div>
+</div>

@@ -8,34 +8,26 @@
         </div>
         <div class="row body">
             <div class="col-md-3 userblock">
+                {{ executeSymbbEvent('before.avatar', post) }}
                 <div class="avatar">
                     <img src="{{getSymbbUserAvatar(post.getAuthor())}}" />
                 </div>
+                {{ executeSymbbEvent('after.avatar', post) }}
+                {{ executeSymbbEvent('before.username', post) }}
                 {{post.getAuthor().getUsername()}}
+                {{ executeSymbbEvent('after.username', post) }}
             </div>
             <div class="col-md-9 textblock">
+                {{ executeSymbbEvent('before.text', post) }}
                 {{post.getText()|bbcode_filter('default')}}
-                {{ _self.showRating(post) }}
+                {{ executeSymbbEvent('after.text', post) }}
+                {{ executeSymbbEvent('before.signature', post) }}
                 {{ _self.showSignature(post) }}
+                {{ executeSymbbEvent('after.signature', post) }}
             </div>
         </div>
     {% endfor %}
 
-{% endmacro %}
-
-{% macro showRating(object) %}
-<div class="row raiting">
-    <div class="like_dislike">
-        <a href="{{ path('_symbb_forum_post_evaluate', {'name': object.getSeoName() , 'id': object.getId() , 'like': 'like'}) }}">
-            <img class="like_img" width="32" height="32" src="/bundles/symbbtemplatesimple/images/icons/like.png" alt="{% trans %}Like{% endtrans %}" title="{% trans %}Like{% endtrans %}" />
-        </a>
-        <div class="like_count">{{ object.getLikes().count() }}</div>
-        <a href="{{ path('_symbb_forum_post_evaluate', {'name': object.getSeoName() , 'id': object.getId() , 'like': 'dislike'}) }}">
-            <img class="dislike_img" width="32" height="32" src="/bundles/symbbtemplatesimple/images/icons/dislike.png" alt="{% trans %}Like{% endtrans %}" title="{% trans %}Like{% endtrans %}" />
-        </a>
-        <div class="dislike_count">{{ object.getDislikes().count() }}</div>
-    </div>
-</div>
 {% endmacro %}
 
 {% macro showSignature(object) %}

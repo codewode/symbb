@@ -3,25 +3,31 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - { name: twig.extension }
-    symbb_table_prefix:
+    symbb.core.table.prefix:
         class: SymBB\Core\ConfigBundle\EventListener\DoctrineNameListener
         arguments: ['@service_container']
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata, connection: symbb }
-    symbb_config_template:
-        twig.extension.symbb_twig_template_config:
+    symbb.core.config.template:
+        twig.extension.symbb.core.config.template:
         class: SymBB\Core\ConfigBundle\DependencyInjection\TwigTemplateConfigExtension
         arguments: ['@service_container']
         tags:
             - { name: twig.extension }
-    symbb_forum_breadcrumb:
-        twig.extension.symbb_forum_breadcrumb:
+    symbb.core.forum.breadcrumb:
+        twig.extension.symbb.core.forum.breadcrumb:
         class: SymBB\Core\ForumBundle\Twig\BreadcrumbExtension
         arguments: ['@service_container']
         tags:
             - { name: twig.extension } 
-    symbb_user_data:
-        twig.extension.symbb_user_data:
+    symbb.core.user.data:
+        twig.extension.symbb.core.user.data:
         class: SymBB\Core\UserBundle\Twig\UserDataExtension
+        tags:
+            - { name: twig.extension } 
+    symbb.core.event.forum:
+        twig.extension.symbb.core.event.forum:
+        class: SymBB\Core\ForumBundle\Twig\EventExtension
+        arguments: ['@service_container']
         tags:
             - { name: twig.extension } 

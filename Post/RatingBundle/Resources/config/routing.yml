@@ -1,0 +1,3 @@
+_symbb_post_rating_like:
+    pattern:  /forum/rate/p-{name}/{id}/{like}
+    defaults: { _controller: SymBBPostRatingBundle:Default:ratePost}
