@@ -20,6 +20,12 @@
     min-height: 200px;
 }
 
+.symbb_topic .textblock .date {
+    margin-bottom: 1em;
+    border-bottom: 1px solid #CCC;
+    color: #BBB;
+}
+
 .symbb_topic .row.signature {
     background-color: #EEE;
     padding: 0.3em;
@@ -28,13 +34,10 @@
     border-top: 1px solid #CCC;
 }
 
-
-
 .symbb_topic .avatar img {
     width: 150px;
     height: 150px;
 }
-
 
 .symbb_topic .row.subheader {
     padding: 0.5em;

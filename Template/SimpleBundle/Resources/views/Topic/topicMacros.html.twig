@@ -18,6 +18,9 @@
                 {{ executeSymbbEvent('after.username', post) }}
             </div>
             <div class="col-md-9 textblock">
+                <div class="date">
+                    {% trans with {'%user%': object.getLastPost().getAuthor().getUsername(), '%date%': object.getLastPost().getChanged()|format_date, '%time%': object.getLastPost().getChanged()|date('H:i')} %}%user% wrote on %date% at %time%{% endtrans %}
+                </div>
                 {{ executeSymbbEvent('before.text', post) }}
                 <div class="text">
                 {{post.getText()|bbcode_filter('default')}}

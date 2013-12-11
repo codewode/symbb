@@ -11,4 +11,5 @@ Zugriffe: Zugriffe
 by %user% on %date% at %time%: von %user% am %date%, %time%
 by %user%{% endtrans %}: von %user%
 on %date% at %time%: am %date% um %time%
+%user% wrote on %date% at %time%: %user% schrieb am %date% um %time%
 subforums: Unterforen
