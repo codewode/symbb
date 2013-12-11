@@ -44,7 +44,7 @@ class UtilExtension extends \Twig_Extension
             $found = $this->em->getRepository('SymBBPostRatingBundle:Like', 'symbb')
             ->findOneBy(array('user' => $this->getCurrentUser(), 'post' => $post));
             if(is_object($found)){
-                $css = 'btn-success';
+                $css = 'btn-warning';
             }
         }
         return $css;
@@ -56,7 +56,7 @@ class UtilExtension extends \Twig_Extension
             $found = $this->em->getRepository('SymBBPostRatingBundle:Dislike', 'symbb')
             ->findOneBy(array('user' => $this->getCurrentUser(), 'post' => $post));
             if(is_object($found)){
-                $css = 'btn-success';
+                $css = 'btn-warning';
             }
         }
         return $css;
