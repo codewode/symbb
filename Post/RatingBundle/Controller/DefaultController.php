@@ -15,16 +15,18 @@ class DefaultController  extends Controller
         
         $user   = $this->getUser();
         
-        if($like === 'like'){
-            $this->addPostLike($post, $user);
-        } else {
-            $this->addPostLike($post, $user, true);
+        if(is_object($user) && $user->getId() > 0){
+            if($like === 'like'){
+                $this->addPostLike($post, $user);
+            } else {
+                $this->addPostLike($post, $user, true);
+            }
+
+            $response = $this->forward('SymBBCoreForumBundle:FrontendTopic:show', array(
+                'name'  => '',
+                'id' => $post->getTopic()->getId(),
+            ));
         }
-        
-        $response = $this->forward('SymBBCoreForumBundle:FrontendTopic:show', array(
-            'name'  => '',
-            'id' => $post->getTopic()->getId(),
-        ));
         
         return $response;
     }

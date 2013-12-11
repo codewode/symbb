@@ -7,6 +7,6 @@ services:
     symbb.post.rating.util:
         twig.extension.symbb.post.rating.util:
         class: SymBB\Post\RatingBundle\Twig\UtilExtension
-        arguments: ['@doctrine']
+        arguments: ['@doctrine', '@security.context']
         tags:
             - { name: twig.extension } 
