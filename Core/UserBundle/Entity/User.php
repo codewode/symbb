@@ -57,13 +57,9 @@ class User extends BaseUser implements UserInterface
     public function getTopics(){return $this->topics;}
     public function getPosts(){return $this->posts;}
     public function setSymbbData(\SymBB\Core\UserBundle\Entity\User\Data  $value){ $this->symbbData = $value;}
+    public function getSymbbData(){ return $this->symbbData; }
+    public function getEmail() {return parent::getEmail();}
+    public function getId() {return parent::getId();}
+    public function getUsername() {return parent::getUsername();}
     ############################################################################
-    
-    public function getSymbbData(){
-        $data = $this->symbbData;
-        if(!$data){
-            $this->symbbData = new User\Data();
-        }
-        return $this->symbbData;
-    }
 }

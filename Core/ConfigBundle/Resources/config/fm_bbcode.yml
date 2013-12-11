@@ -4,3 +4,7 @@ fm_bbcode:
           locale: %locale%
           xhtml: true
           filters: [ default ]
+        signature:
+          locale: %locale%
+          xhtml: true
+          filters: [ default ]

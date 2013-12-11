@@ -16,12 +16,16 @@
     border-bottom: 1px solid #CCC;
 }
 
+.symbb_topic .textblock .text {
+    min-height: 200px;
+}
+
 .symbb_topic .row.signature {
     background-color: #EEE;
     padding: 0.3em;
     padding-top: 0.8em;
-    margin-bottom: 1px;
-    border-bottom: 1px solid #CCC;
+    margin-top: 1px;
+    border-top: 1px solid #CCC;
 }
 
 
