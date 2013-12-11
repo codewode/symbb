@@ -1,0 +1,9 @@
+default: Standard
+block: Block
+email: E-Mail
+image: Bilder
+list: Aufzählung
+quote: Zitat
+test: Text
+url: Link
+video: Video

@@ -3,8 +3,8 @@ fm_bbcode:
         default:
           locale: %locale%
           xhtml: true
-          filters: [ default ]
+          filters: [ default, Block, Email, Image, List, Quote, Text, Url, Video ]
         signature:
           locale: %locale%
           xhtml: true
-          filters: [ default ]
+          filters: [ default, Block, Email, Image, Quote, Url ]

@@ -1,6 +1,6 @@
 
+
 <div class="symbb_breadcrumb">
-    
     <nav class="navbar navbar-default" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -14,20 +14,17 @@
                 <a class="navbar-brand glyphicon glyphicon-th-large" href="{{path('_symbb_index')}}">
                     </a>
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="breadcrumb-collapse-1">
-                <ul class="nav navbar-nav">
-                    {% for item in breadcrumb %}
-                        {% spaceless %}
-                        <li><a href="{{item.link}}">{{item.name}}
-                        {% if not loop.last %}
-                        <div class="glyphicon glyphicon-chevron-right"></div>
-                        {% endif %}   
-                        </a></li>
-                        {% endspaceless %}
-                    {% endfor %}
-                </ul>
-            </div><!-- /.navbar-collapse -->
+            <ol class="breadcrumb">
+                {% for item in breadcrumb %}
+                    {% spaceless %}
+                    {% if loop.last %}
+                    <li class="active">{{item.name}}</li>
+                    {% else %}
+                        <li><a href="{{item.link}}">{{item.name}}</a></li>
+                    {% endif %}
+                    {% endspaceless %}
+                {% endfor %}
+            </ol>
         </div>
     </div>
 </div>

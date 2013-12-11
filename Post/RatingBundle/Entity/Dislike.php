@@ -19,7 +19,7 @@ class Dislike
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SymBB\Core\ForumBundle\Entity\Post", inversedBy="dislikes")
+     * @ORM\ManyToOne(targetEntity="SymBB\Core\ForumBundle\Entity\Post")
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id", unique=true)
      */
     private $post;

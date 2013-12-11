@@ -39,7 +39,7 @@ class BreadcrumbExtension extends \Twig_Extension
             $breadcrumb = $this->createForTopic($object, $breadcrumb);
         }
         
-        $home           = $this->translator->trans('Overview', array(), 'symbbfrontend');
+        $home           = $this->translator->trans('Overview', array(), 'symbb_frontend');
         $uri            = $this->router->generate('_symbb_forum_index');
         $breadcrumb[]   = array('name' => $home, 'link' => $uri);
         $breadcrumb     = array_reverse($breadcrumb);

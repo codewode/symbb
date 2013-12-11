@@ -6,6 +6,7 @@
     {{ parent() }}
     {% stylesheets 
         '@SymBBTemplateSimpleBundle/Resources/public/css/topic.css' filter='?yui_css'
+        '@SymBBTemplateSimpleBundle/Resources/public/css/bbeditor.css' filter='?yui_css'
      %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -20,5 +21,8 @@
     <div class="symbb_topic">
         {{ symbBBForumTopicMacro.showPostList(topic) }}
     </div>
+    
+    {{ getSymcodeBBCodeEditor() }}
+    
 {% endblock %}
 

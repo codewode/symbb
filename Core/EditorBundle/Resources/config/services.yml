@@ -1,0 +1,7 @@
+services:
+    symbb.core.editor.bbcode:
+        twig.extension.symbb.core.editor.bbcode:
+        class: SymBB\Core\EditorBundle\Twig\BBCodeEditorExtension
+        arguments: ['@service_container', '@fm_bbcode.decoda_manager']
+        tags:
+            - { name: twig.extension } 

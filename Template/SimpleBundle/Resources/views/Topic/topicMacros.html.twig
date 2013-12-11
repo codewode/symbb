@@ -7,8 +7,8 @@
             <div class="col-md-12">{{post.getName()}}
                 <div class="f-right">
                     <div class="btn-group btn-group-xs">
-                        <button type="button" class="btn btn-default">{% trans %}Answer{% endtrans %}</button>
-                        <button type="button" class="btn btn-default">{% trans %}Quote{% endtrans %}</button>
+                        <button type="button" class="btn btn-default" onclick="window.location.href='#symbb_bbcode_editor';">{% trans %}Answer{% endtrans %}</button>
+                        <button type="button" class="btn btn-default" onclick="document.getElementById('symbb_bbcode_editor_textarea').innerHTML = '[quote]@p-{{post.getId()}}[/quote]'; window.location.href='#symbb_bbcode_editor';"">{% trans %}Quote{% endtrans %}</button>
                         <button type="button" class="btn btn-default btn-primary">{% trans %}Edit{% endtrans %}</button>
                         <button type="button" class="btn btn-default btn-danger">{% trans %}Delete{% endtrans %}</button>
                     </div>
@@ -31,7 +31,7 @@
                     {% trans with {'%user%': object.getLastPost().getAuthor().getUsername(), '%date%': object.getLastPost().getChanged()|format_date, '%time%': object.getLastPost().getChanged()|date('H:i')} %}%user% wrote on %date% at %time%{% endtrans %}
                 </div>
                 {{ executeSymbbEvent('before.text', post) }}
-                <div class="text">
+                <div class="text" id="symbb_post_body_{{post.getId()}}">
                 {{post.getText()|bbcode_filter('default')}}
                 </div>
                 {{ executeSymbbEvent('after.text', post) }}
