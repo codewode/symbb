@@ -2,10 +2,10 @@
 
 <div id="symbb_bbcode_editor" class="symbb_editor bbcode">
     <div class="preview">
-        
+
     </div> 
     <div class="bbcode_list symbb_topic ">
-        
+
         <div class="row symbb_header_bg subheader">
             <div class="col-md-12">{% trans %}new Post{% endtrans %}</div>
         </div>
@@ -13,19 +13,25 @@
             <div class="col-md-3 userblock">
 
             </div>
-                <div class="col-md-9 textblock">
-                {% for key, groups in bbcodes %}
-                        
+            <div class="col-md-9 textblock">
+                {{ form_start(form) }}
+                    
+                    {{ form_errors(form) }}
+                    
+                    {% for key, groups in bbcodes %}
+
                     <div class="btn-group">
-                    <button type="button" class="btn btn-info btn-sm">{{ key }}</button>
-                    {% for bbcode in groups %}
+                        <button type="button" class="btn btn-info btn-sm">{{ key }}</button>
+                        {% for bbcode in groups %}
                         <button type="button" data-tag="{{ bbcode.tag }}" class="btn btn-default btn-sm symbb_bbcode_code">{{ bbcode.name }}</button>
-                    {% endfor %}
+                        {% endfor %}
                     </div>
-                {% endfor %}
-                <div class="text_input">
-                    <textarea class="symbb_bbcode_editor_textarea"></textarea>
-                </div>
+                    {% endfor %}
+                    
+                    <div class="text_input">
+                        {{ form_widget(form.text) }}
+                    </div>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>

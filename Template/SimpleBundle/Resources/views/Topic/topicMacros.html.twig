@@ -28,7 +28,7 @@
             </div>
             <div class="col-md-9 textblock">
                 <div class="date">
-                    {% trans with {'%user%': object.getLastPost().getAuthor().getUsername(), '%date%': object.getLastPost().getChanged()|format_date, '%time%': object.getLastPost().getChanged()|date('H:i')} %}%user% wrote on %date% at %time%{% endtrans %}
+                    {% trans with {'%user%': post.getAuthor().getUsername(), '%date%': post.getChanged()|format_date, '%time%': post.getChanged()|date('H:i')} %}%user% wrote on %date% at %time%{% endtrans %}
                 </div>
                 {{ executeSymbbEvent('before.text', post) }}
                 <div class="text" id="symbb_post_body_{{post.getId()}}">

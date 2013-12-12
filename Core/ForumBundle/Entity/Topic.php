@@ -20,18 +20,18 @@ class Topic
     private $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $created;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $changed;
     
     /**
      * @ORM\OneToMany(targetEntity="SymBB\Core\ForumBundle\Entity\Post", mappedBy="topic")
-     * @ORM\OrderBy({"changed" = "DESC", "created" = "DESC"})
+     * @ORM\OrderBy({"changed" = "ASC", "created" = "ASC"})
      */
     private $posts;
 

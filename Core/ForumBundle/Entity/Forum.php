@@ -57,7 +57,7 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
     
     /**
      * @ORM\OneToMany(targetEntity="Topic", mappedBy="forum")
-     * @ORM\OrderBy({"changed" = "DESC", "created" = "DESC"})
+     * @ORM\OrderBy({"changed" = "ASC", "created" = "ASC"})
      */
     protected $topics;
     
@@ -138,9 +138,12 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
     
     public function getLastPost(){
         $lastPost = null;
-        $lastTopic = $this->getTopics()->last();
-        if($lastTopic){
-            $lastPost = $lastTopic->getPosts()->last();
+        $topics = $this->getTopics();
+        foreach($topics as $topic){
+            $currLastPost = $topic->getPosts()->last();
+            if(!$lastPost || $currLastPost->getChanged() > $lastPost->getChanged()){
+                $lastPost = $currLastPost;
+            }
         }
         return $lastPost;
     }

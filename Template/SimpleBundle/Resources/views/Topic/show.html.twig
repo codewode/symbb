@@ -15,7 +15,7 @@
 {% block javascripts %} 
     {{ parent() }}
     {% javascripts 
-        '@SymBBCoreEditorBundle/Resources/public/js/bbcodeeditor.js' filter='?yui_js'
+        '@SymBBCoreForumBundle/Resources/public/js/bbcodeeditor.js' filter='?yui_js'
      %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -31,7 +31,9 @@
         {{ symbBBForumTopicMacro.showPostList(topic) }}
     </div>
     
-    {{ getSymcodeBBCodeEditor() }}
+    {{ render(controller('SymBBCoreForumBundle:FrontendTopic:createPost', {
+        'topic': topic
+    })) }}
     
 {% endblock %}
 
