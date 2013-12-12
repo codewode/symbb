@@ -42,6 +42,8 @@ Aktueller Plan
     -  Editieren von Beiträgen/Themen
     -  Löschen von Beiträgen/Themen
     -  BBCode
+    -  Foren makieren als "uninteresant" ( keine "neu" markierung bei neuen Beiträgen )
+    -  als gelesen markieren
 - Beiträge
     -  Normale Ansicht
     -  Bewertung von Beiträgen ( Daumen hoch/runter )
