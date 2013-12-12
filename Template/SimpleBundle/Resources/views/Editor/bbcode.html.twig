@@ -13,18 +13,18 @@
             <div class="col-md-3 userblock">
 
             </div>
-            <div class="col-md-9 textblock">
+                <div class="col-md-9 textblock">
                 {% for key, groups in bbcodes %}
                         
                     <div class="btn-group">
                     <button type="button" class="btn btn-info btn-sm">{{ key }}</button>
                     {% for bbcode in groups %}
-                        <button type="button" class="btn btn-default btn-sm">{{ bbcode }}</button>
+                        <button type="button" data-tag="{{ bbcode.tag }}" class="btn btn-default btn-sm symbb_bbcode_code">{{ bbcode.name }}</button>
                     {% endfor %}
                     </div>
                 {% endfor %}
                 <div class="text_input">
-                    <textarea id="symbb_bbcode_editor_textarea"></textarea>
+                    <textarea class="symbb_bbcode_editor_textarea"></textarea>
                 </div>
             </div>
         </div>

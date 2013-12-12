@@ -11,6 +11,15 @@
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
+    
+{% block javascripts %} 
+    {{ parent() }}
+    {% javascripts 
+        '@SymBBCoreEditorBundle/Resources/public/js/bbcodeeditor.js' filter='?yui_js'
+     %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
 
 {% block symbb_breadcrumb %}
     {{ getSymbbBreadcrumb(topic) }}

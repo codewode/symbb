@@ -55,7 +55,7 @@ class BBCodeEditorExtension extends \Twig_Extension
                     // double bbcode...
                     continue;
                 }
-                $params['bbcodes'][$groupName][] = $tag;
+                $params['bbcodes'][$groupName][] = array('tag' => $tag, 'name' => $tag);
             }
         }
         return $this->render('bbcode.html.twig', $params);
