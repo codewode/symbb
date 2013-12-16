@@ -27,10 +27,9 @@ class FrontendTopicController  extends Controller
         $em     = $this->get('doctrine')->getManager('symbb');
         $qb     = $em->createQueryBuilder();
         $qb     ->select('p')
-                ->from('Post', 'p')
-                ->where('p.topic = ?1')
-                ->orderBy('p.created', 'ASC')
-                ->setParameter(1, $topic);
+                ->from('SymBB\Core\ForumBundle\Entity\Post', 'p')
+                ->where('p.topic = '.$topic->getId())
+                ->orderBy('p.created', 'ASC');
         $dql    = $qb->getDql();
         $query  = $em->createQuery($dql);
 
@@ -40,6 +39,7 @@ class FrontendTopicController  extends Controller
             $this->get('request')->query->get('page', 1)/*page number*/,
             20/*limit per page*/
         );
+        $pagination->setTemplate($this->getTemplateBundleName('forum').':Pagination:pagination.html.twig');
         
         $params                 = array();
         $params['topic']        = $topic;

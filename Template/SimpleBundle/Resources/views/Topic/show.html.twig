@@ -28,12 +28,15 @@
 
 {% block symbb_body %}
 
+    {{ knp_pagination_render(pagination) }}
+    
     <div class="symbb_topic">
         {{ symbBBForumTopicMacro.showPostList(topic, pagination) }}
     </div>
     
     {% include getSymbbTemplateConfig('forum') ~ ':Post:new.html.twig' with {'form': form, 'bbcodes': bbcodes, 'topic': topic, 'saved': false} %}
 
+    {{ knp_pagination_render(pagination) }}
     
 {% endblock %}
 
