@@ -1,8 +1,8 @@
 {% trans_default_domain "symbb_frontend" %}
 
-{% macro showPostList(object) %}
+{% macro showPostList(object, pagination) %}
 
-    {% for post in object.getPosts() %}
+    {% for post in pagination %}
         <div class="row symbb_header_bg {% if loop.first %} header {% else %} subheader {% endif %}">
             <div class="col-md-12">{{post.getName()}}
                 <div class="f-right">

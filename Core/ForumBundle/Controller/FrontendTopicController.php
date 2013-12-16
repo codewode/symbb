@@ -24,10 +24,28 @@ class FrontendTopicController  extends Controller
         $post   = null;
         $form   = $this->getPostForm($topic, $post); 
         
-        $params             = array();
-        $params['topic']    = $topic;
-        $params['form']     = $form->createView();
-        $params['bbcodes']  = $this->getBBCodes();
+        $em     = $this->get('doctrine')->getManager('symbb');
+        $qb     = $em->createQueryBuilder();
+        $qb     ->select('p')
+                ->from('Post', 'p')
+                ->where('p.topic = ?1')
+                ->orderBy('p.created', 'ASC')
+                ->setParameter(1, $topic);
+        $dql    = $qb->getDql();
+        $query  = $em->createQuery($dql);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1)/*page number*/,
+            20/*limit per page*/
+        );
+        
+        $params                 = array();
+        $params['topic']        = $topic;
+        $params['form']         = $form->createView();
+        $params['bbcodes']      = $this->getBBCodes();
+        $params['pagination']   = $pagination;
 
         return $this->render($this->getTemplateBundleName('forum').':Topic:show.html.twig', $params);
     }

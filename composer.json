@@ -20,7 +20,7 @@
         "friendsofsymfony/rest-bundle": ">=0.13",
         "friendsofsymfony/jsrouting-bundle": ">=1.1",
         "knplabs/knp-menu-bundle": ">=2.0",
-        "knplabs/knp-paginator-bundle": ">=2.3",
+        "knplabs/knp-paginator-bundle": ">=2.3@dev",
         "sonata-project/intl-bundle": "2.2.*@dev",
         "helios-ag/fm-bbcode-bundle": "6.2"
     },

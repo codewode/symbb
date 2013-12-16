@@ -4,7 +4,6 @@
     {
         var elem    = $(element);
         
-    console.debug(elem);
         elem.click(function() {
             var text = '[quote=\"'+elem.data('user')+'\"]'+elem.data('quote')+'[/quote]';
             document.getElementById('form_text').innerHTML = text; 

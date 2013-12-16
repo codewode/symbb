@@ -29,7 +29,7 @@
 {% block symbb_body %}
 
     <div class="symbb_topic">
-        {{ symbBBForumTopicMacro.showPostList(topic) }}
+        {{ symbBBForumTopicMacro.showPostList(topic, pagination) }}
     </div>
     
     {% include getSymbbTemplateConfig('forum') ~ ':Post:new.html.twig' with {'form': form, 'bbcodes': bbcodes, 'topic': topic, 'saved': false} %}
