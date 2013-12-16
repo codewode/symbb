@@ -1,0 +1,28 @@
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+        <div class="panel panel-danger">
+          <div class="panel-body">
+            {% trans %}There was an error{% endtrans %}
+          </div>
+          <div class="panel-footer">
+              <ul>
+                {% for error in errors %}
+                  <li>{{ error.message }}</li>
+                {% endfor %}
+              </ul>
+          </div>
+        </div>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+{% block button_widget %}
+{% spaceless %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }} class="btn btn-default">{{ label|trans({}, translation_domain) }}</button>
+{% endspaceless %}
+{% endblock button_widget %}

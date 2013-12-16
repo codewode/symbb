@@ -1,5 +1,18 @@
 {% trans_default_domain "symbb_frontend" %}
 
+{% form_theme form 'SymBBTemplateSimpleBundle::form.html.twig' %}
+
+{% if saved %}
+<div class="alert alert-success">
+    {% trans %}Your post has been saved successfully. You will now be redirected ...{% endtrans %}
+    <script type="text/javascript">
+    <!--
+    window.location = "{{ path('_symbb_forum_topic_show', {'name': post.getTopic.getSeoName(), 'id': post.getTopic.getId()} ) }}";
+    //–>
+    </script>
+</div>
+{% endif %}
+
 <div id="symbb_bbcode_editor" class="symbb_editor bbcode">
     <div class="preview">
 
@@ -16,8 +29,6 @@
             <div class="col-md-9 textblock">
                 {{ form_start(form) }}
                     
-                    {{ form_errors(form) }}
-                    
                     {% for key, groups in bbcodes %}
 
                     <div class="btn-group">
@@ -27,6 +38,8 @@
                         {% endfor %}
                     </div>
                     {% endfor %}
+                    
+                    {{ form_errors(form) }}
                     
                     <div class="text_input">
                         {{ form_widget(form.text) }}

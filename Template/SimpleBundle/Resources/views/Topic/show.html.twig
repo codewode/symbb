@@ -31,9 +31,8 @@
         {{ symbBBForumTopicMacro.showPostList(topic) }}
     </div>
     
-    {{ render(controller('SymBBCoreForumBundle:FrontendTopic:createPost', {
-        'topic': topic
-    })) }}
+    {% include getSymbbTemplateConfig('forum') ~ ':Post:new.html.twig' with {'form': form, 'bbcodes': bbcodes, 'topic': topic, 'saved': false} %}
+
     
 {% endblock %}
 

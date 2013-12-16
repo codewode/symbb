@@ -1,0 +1,7 @@
+{% extends getSymbbTemplateConfig('forum') ~ ':Topic:show.html.twig' %}
+
+{% block symbb_body %}
+
+    {% include getSymbbTemplateConfig('forum') ~ ':Post:new.html.twig' with {'form': form, 'bbcodes': bbcodes, 'topic': topic} %}
+
+{% endblock %}
