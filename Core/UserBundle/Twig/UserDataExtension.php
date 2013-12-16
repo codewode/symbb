@@ -22,7 +22,6 @@ class UserDataExtension extends \Twig_Extension
     public function getSymbbUserSignature(\SymBB\Core\UserBundle\Entity\UserInterface $user)
     {
         $data = $user->getSymbbData();
-        // TODO BBCODE
         return $data->getSignature();
     }
     
