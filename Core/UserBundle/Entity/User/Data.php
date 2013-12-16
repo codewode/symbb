@@ -36,6 +36,12 @@ class Data
      */
     private $avatar;
     
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $gravatar = false;
+
+
     ############################################################################
     # Default Get and Set
     ############################################################################
@@ -45,6 +51,8 @@ class Data
     public function setAvatarUrl($value){ $this->avatar = $value;}
     public function getUser(){return $this->user;}
     public function setUser($value){ $this->user = $value;}
+    public function hasGravatar(){return $this->gravatar;}
+    public function setGravatar($value){$this->gravatar = $value;}
     ############################################################################
     
     public function hasSignature(){
@@ -54,4 +62,5 @@ class Data
         }
         return true;
     }
+    
 }
