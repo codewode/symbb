@@ -64,7 +64,14 @@ Macro to generate the structure of the forum/Category name Row
 {% macro nameRow(object) %}
 <a href="{{ path('_symbb_forum_show', {'id': object.getId(), 'name': object.getSeoName()}) }}">
     <div class="icon"></div>
-    <div class="name">{{object.getName()}}</div>
+    <div class="name">{{object.getName()}}
+    {% if checkSymbbForAnsweredPostFlag(object) %}
+        <span class="label label-info">{% trans %}answered{% endtrans %}</span>
+    {% endif %}
+    {% if checkSymbbForNewPostFlag(object) %}
+        <span class="label label-success">{% trans %}new{% endtrans %}</span>
+    {% endif %}
+    </div>
     <div class="description">{{object.getDescription()}}</div>
 </a>
 {% if object.hasShowSubForumList() %}

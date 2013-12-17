@@ -55,6 +55,30 @@ class NewPostCheckExtension extends \Twig_Extension
                 if($result !== null){
                     $check = true;
                 }
+            } else if($element instanceof \SymBB\Core\ForumBundle\Entity\Forum){
+                
+                $check = false;
+                    
+                $topics = $element->getTopics();
+
+                foreach($topics as $topic){
+                    $check = $this->checkSymbbForNewPostFlag($topic, $flag);
+                    if($check){
+                        break;
+                    }
+                }
+                
+                if(!$check){
+                    $childs = $element->getChildren();
+                    foreach($childs as $child){
+
+                        $check = $this->checkSymbbForNewPostFlag($child, $flag);
+                        if($check){
+                            break;
+                        }
+                    }
+                }
+                
             } else {
                 throw new Exception('checkSymbbForNewPosts don´t know the object');
             }

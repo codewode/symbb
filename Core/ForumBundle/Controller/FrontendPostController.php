@@ -41,6 +41,7 @@ class FrontendPostController  extends Controller
         $currUser   = $this->getUser();
         $em         = $this->getDoctrine()->getManager('symbb');
         
+        // @TODO for performance save the flags into memcache and dont use database ;)
         if(is_object($currUser)){
             // adding user topic flags
             $users      = $this->get('doctrine')->getRepository('SymBBCoreUserBundle:User', 'symbb')->findAll();
@@ -48,17 +49,33 @@ class FrontendPostController  extends Controller
             $postCount  = $topic->getPostCount();
             foreach($users as $user){
                 if($user->getId() != $currUser->getId()){
-                    $flag = new \SymBB\Core\ForumBundle\Entity\Topic\Flag();
-                    $flag->setTopic($topic);
-                    $flag->setUser($user);
-                    $flag->setFlag('new');
-                    $em->persist($flag);
-                } else if($postCount > 1) {
-                    $flag = new \SymBB\Core\ForumBundle\Entity\Topic\Flag();
-                    $flag->setTopic($topic);
-                    $flag->setUser($user);
-                    $flag->setFlag('answered');
-                    $em->persist($flag);
+                    $flag      = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Topic\Flag', 'symbb')->findOneBy(array(
+                        'topic' => $topic,
+                        'user' => $user,
+                        'flag' => 'new'
+                    ));
+                    if(!is_object($flag)){
+                        $flag = new \SymBB\Core\ForumBundle\Entity\Topic\Flag();
+                        $flag->setTopic($topic);
+                        $flag->setUser($user);
+                        $flag->setFlag('new');
+                        $em->persist($flag);
+                    }
+                // if we are at the current user ( it can be only once )
+                // than insert not a "new" tag. we only need a "answered" tag
+                } else {
+                    $flag      = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Topic\Flag', 'symbb')->findOneBy(array(
+                        'topic' => $topic,
+                        'user' => $user,
+                        'flag' => 'answered'
+                    ));
+                    if(!is_object($flag)){
+                        $flag = new \SymBB\Core\ForumBundle\Entity\Topic\Flag();
+                        $flag->setTopic($topic);
+                        $flag->setUser($user);
+                        $flag->setFlag('answered');
+                        $em->persist($flag);
+                    }
                 }
             }
             $em->flush();
