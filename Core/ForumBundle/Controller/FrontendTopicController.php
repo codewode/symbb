@@ -11,6 +11,7 @@ class FrontendTopicController  extends Controller
     protected $templateBundle = null;
     protected $topic = null;
     protected $post = null;
+    protected $forum = null;
 
 
     /**
@@ -49,6 +50,19 @@ class FrontendTopicController  extends Controller
         $params['pagination']   = $pagination;
 
         return $this->render($this->getTemplateBundleName('forum').':Topic:show.html.twig', $params);
+    }
+    
+    public function newAction($name, $id){
+        $forum      = $this->getForumById($id);
+        $form       = null;
+        $saved      = $this->handleTopicRequest($form, $forum);
+        
+        $params = array('forum' => $forum);
+        $params['form']     = $form->createView();
+        $params['bbcodes']  = $this->getBBCodes();
+        $params['saved']    = $saved;
+        
+        return $this->render($this->getTemplateBundleName('forum').':Topic:new.html.twig', $params);
     }
     
     /**
@@ -129,6 +143,18 @@ class FrontendTopicController  extends Controller
     /**
      * 
      * @param type $topic
+     * @return \SymBB\Core\ForumBundle\Entity\Forum
+     */
+    protected function getForumById($forum){
+        if($this->forum === null){
+            $this->forum      = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Forum', 'symbb')->find($forum);
+        }
+        return $this->forum;
+    }
+    
+    /**
+     * 
+     * @param type $topic
      * @return \SymBB\Core\ForumBundle\Entity\Topic
      */
     protected function getTopicById($topic){
@@ -150,7 +176,40 @@ class FrontendTopicController  extends Controller
         return $this->post;
     }
 
+    /**
+     * handle the Post Request and save it
+     * @param type $form
+     * @param \SymBB\Core\ForumBundle\Entity\Topic $topic
+     * @param type $post
+     * @return type
+     */
+    protected function handleTopicRequest(&$form, \SymBB\Core\ForumBundle\Entity\Forum &$forum){
+        
+        
+        $post   = new \SymBB\Core\ForumBundle\Entity\Post();
+        $post->setAuthor($this->getUser());
+        
+        $form   = $this->getTopicForm($forum, $post);
 
+        $form->handleRequest($this->get('request'));
+        
+        if ($form->isValid()) {
+        
+            $topic  = new \SymBB\Core\ForumBundle\Entity\Topic();
+            $topic->setAuthor($this->getUser());
+            $topic->setName($post->getName());
+            $topic->setForum($forum);
+            $post->setTopic($topic);
+            
+            $em = $this->getDoctrine()->getManager('symbb');
+            $em->persist($topic);
+            $em->persist($post);
+            $em->flush();
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * handle the Post Request and save it
      * @param type $form
@@ -178,6 +237,21 @@ class FrontendTopicController  extends Controller
      * @param type $post
      * @return type
      */
+    protected function getTopicForm($forum, &$post){
+        
+        // check if form was submited
+        $url    = $this->generateUrl('_symbb_forum_topic_new', array('name' => $forum->getSeoName(), 'id' => $forum->getId()));
+        $form   = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\TopicType($url), $post);
+   
+        return $form;
+    }
+    
+    /**
+     * generate a new Form object
+     * @param type $topic
+     * @param type $post
+     * @return type
+     */
     protected function getPostForm($topic, &$post){
         
         // check if form was submited
@@ -194,14 +268,9 @@ class FrontendTopicController  extends Controller
             $post->setName($topic->getName());
         }
         
-        // create form
-        $form = $this->createFormBuilder($post)
-            ->add('text', 'textarea', array('attr' => array('class' => 'symbb_bbcode_editor_textarea')))
-            ->add('save', 'submit')
-            ->add('id', 'hidden')
-            ->setAction($this->generateUrl('_symbb_new_post', array('name' => $topic->getSeoName(), 'topic' => $topic->getId())))
-            ->getForm();
-
+        $url    = $this->generateUrl('_symbb_new_post', array('name' => $topic->getSeoName(), 'topic' => $topic->getId()));
+        $form   = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\PostType($url), $post);
+        
         return $form;
     }
 

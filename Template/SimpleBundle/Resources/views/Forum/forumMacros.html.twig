@@ -110,6 +110,7 @@ Macro to generate a list of all topics
 -->
 
 {% macro showTopicList(object) %}
+
     {{ _self.showEmptyTopicHeader() }}
 
     {% for topic in object.getTopics() %}
@@ -142,7 +143,7 @@ Macro to generate a list of all topics
     <div class="row topic">
         <div class="col-md-12">
             <div class="btn-group btn-group-xs">
-                <button type="button" class="btn btn-default btn-primary">{% trans %}new Topic{% endtrans %}</button>
+                <button type="button" class="btn btn-default btn-primary" onclick="window.location.href='{{ path('_symbb_forum_topic_new', {'name': object.getSeoName(), 'id': object.getId()}) }}'">{% trans %}new Topic{% endtrans %}</button>
             </div>
         </div>
     </div>

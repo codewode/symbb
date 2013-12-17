@@ -57,8 +57,6 @@ class Topic
     ############################################################################
     public function getId(){return $this->id;}
     public function setId($value){$this->id = $value;}
-    public function getName(){return $this->getPosts()->first()->getName();}
-    public function setName($value){$this->getPosts()->first()->setName($value);}
     public function setForum($object){$this->forum = $object;}
     public function getForum(){return $this->forum;}
     public function setAuthor($object){$this->author = $object;}
@@ -86,6 +84,25 @@ class Topic
     }
     
     
+    public function getName(){
+        $name = '';
+        $posts  = $this->getPosts();
+        $post   = $posts->first();
+        if(is_object($post)){
+            $name = $post->getName();
+        }
+        return $name;
+       
+    }
+    public function setName($value){
+        $posts  = $this->getPosts();
+        $post   = $posts->first();
+        if(!is_object($post)){
+            $post = new Post();
+            $post->setName($value);
+            $post->setTopic($this);
+        }
+    }
     
     public function hasPosts(){
         $posts = $this->getPosts();
@@ -109,5 +126,10 @@ class Topic
     public function getPostCount(){
         $count = $this->getPosts()->count() - 1;
         return $count;
+    }
+    
+    public function addPost($post){
+        $post->setTopic($this);
+        $this->posts->add($post);
     }
 }
