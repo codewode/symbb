@@ -15,14 +15,14 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
         login:
-            pattern:  ^/(login$|register|resetting)  
+            pattern:  ^/forum/(login$|register|resetting)  
             anonymous: true
         symbb:
-            pattern: ^/
+            pattern: ^/forum/
             remember_me:
               key:      "%secret%"
               lifetime: 31536000 # 365 days in seconds
-              path:     /forum
+              path:     /forum/
               domain:   ~ # Defaults to the current domain from $_SERVER
             form_login:
                 check_path: /forum/login_check
@@ -32,13 +32,13 @@ security:
                 remember_me: true
             logout:
                 path:   /forum/logout
-                target: /forum
+                target: /forum/
             anonymous: ~
 
     access_control:
-        - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/acp/, role: ROLE_ADMIN }
-        - { path: ^/ucp/, role: ROLE_USER }
+        - { path: ^/forum/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/forum/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/forum/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/forum/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/forum/acp/, role: ROLE_ADMIN }
+        - { path: ^/forum/ucp/, role: ROLE_USER }

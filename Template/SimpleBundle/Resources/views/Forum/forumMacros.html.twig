@@ -127,6 +127,9 @@ Macro to generate a list of all topics
             <a href="{{ path('_symbb_forum_topic_show', {'id': topic.getId(), 'name': topic.getSeoName()}) }}">
                 <div class="icon"></div>
                 <div class="name">{{topic.getName()}}
+                    {% if app.user and app.user.getId() == topic.getAuthor().getId() %}
+                    <span class="label label-default">{% trans %}author{% endtrans %}</span>
+                {% endif %}
                 {% if checkSymbbForAnsweredPostFlag(topic) %}
                     <span class="label label-info">{% trans %}answered{% endtrans %}</span>
                 {% endif %}

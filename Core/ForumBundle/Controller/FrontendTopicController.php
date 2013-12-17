@@ -3,6 +3,7 @@
 namespace SymBB\Core\ForumBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 class FrontendTopicController  extends Controller 
@@ -24,7 +25,12 @@ class FrontendTopicController  extends Controller
         
         $topic  = $this->getTopicById($id);
         $post   = null;
-        $form   = $this->getPostForm($topic, $post); 
+        $form   = null;
+        $view   = null;
+        if(is_object($this->getUser())){
+            $form   = $this->getPostForm($topic, $post); 
+            $view   = $form->createView();
+        }
         
         $em     = $this->get('doctrine')->getManager('symbb');
         $qb     = $em->createQueryBuilder();
@@ -45,7 +51,7 @@ class FrontendTopicController  extends Controller
         
         $params                 = array();
         $params['topic']        = $topic;
-        $params['form']         = $form->createView();
+        $params['form']         = $view;
         $params['bbcodes']      = $this->getBBCodes();
         $params['pagination']   = $pagination;
 
@@ -53,6 +59,12 @@ class FrontendTopicController  extends Controller
     }
     
     public function newAction($name, $id){
+        
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+        
+        
         $forum      = $this->getForumById($id);
         $form       = null;
         $saved      = $this->handleTopicRequest($form, $forum);
@@ -66,6 +78,11 @@ class FrontendTopicController  extends Controller
     }
     
     public function removeAction($topic){
+        
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+        
         $em         = $this->getDoctrine()->getManager('symbb');
         $topic      = $this->getTopicById($topic);
         $forum      = $topic->getForum();

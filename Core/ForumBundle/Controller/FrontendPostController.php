@@ -3,6 +3,7 @@
 namespace SymBB\Core\ForumBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 class FrontendPostController  extends Controller 
@@ -21,6 +22,11 @@ class FrontendPostController  extends Controller
      * @return type
      */
     public function editAction($name, $topic, $post){
+        
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+        
         $topic      = $this->getTopicById($topic);
         $post       = $this->getPostById($post);
         
@@ -36,7 +42,17 @@ class FrontendPostController  extends Controller
         return $this->render($this->getTemplateBundleName('forum').':Post:edit.html.twig', $params);
     }
     
+    /**
+     * @param type $name
+     * @param type $topic
+     * @return type
+     */
     public function newAction($name, $topic){
+        
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+        
         $response   = $this->editAction($name, $topic, 0);
         $currUser   = $this->getUser();
         $em         = $this->getDoctrine()->getManager('symbb');
@@ -84,7 +100,17 @@ class FrontendPostController  extends Controller
         return $response;
     }
     
+    /**
+     * 
+     * @param \SymBB\Core\ForumBundle\Entity\Post $post
+     * @return type
+     */
     public function deleteAction(\SymBB\Core\ForumBundle\Entity\Post $post){
+        
+        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException();
+        }
+        
         $em         = $this->getDoctrine()->getManager('symbb');
         $topic      = $post->getTopic();
         $firstPost  = $topic->getPosts()->first();

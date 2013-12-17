@@ -34,8 +34,12 @@
         {{ symbBBForumTopicMacro.showPostList(topic, pagination) }}
     </div>
     
+    {% if is_granted('ROLE_USER') %}
+    
     {% include getSymbbTemplateConfig('forum') ~ ':Post:new.html.twig' with {'form': form, 'bbcodes': bbcodes, 'topic': topic, 'saved': false} %}
 
+    {% endif %}
+    
     {{ knp_pagination_render(pagination) }}
     
 {% endblock %}
