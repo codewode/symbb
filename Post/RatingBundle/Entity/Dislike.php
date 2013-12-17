@@ -20,13 +20,13 @@ class Dislike
 
     /**
      * @ORM\ManyToOne(targetEntity="SymBB\Core\ForumBundle\Entity\Post")
-     * @ORM\JoinColumn(name="post_id", referencedColumnName="id", unique=true)
+     * @ORM\JoinColumn(name="post_id", referencedColumnName="id", unique=true, onDelete="cascade")
      */
     private $post;
 
     /**
      * @ORM\ManyToOne(targetEntity="SymBB\Core\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="cascade")
      */
     private $user;
     

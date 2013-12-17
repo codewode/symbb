@@ -10,7 +10,7 @@
                         <button type="button" class="btn btn-default" onclick="window.location.href='#symbb_bbcode_editor';">{% trans %}Answer{% endtrans %}</button>
                         <button type="button" class="btn btn-default quote" data-user="{{post.getAuthor().getUsername()}}" data-quote="{{post.getText()}}" >{% trans %}Quote{% endtrans %}</button>
                         <button type="button" class="btn btn-default btn-primary" onclick="window.location.href='{{ path('_symbb_edit_post', {'name': post.getTopic().getSeoName(), 'topic': post.getTopic().getId(), 'post': post.getId()}) }}'">{% trans %}Edit{% endtrans %}</button>
-                        <button type="button" class="btn btn-default btn-danger">{% trans %}Delete{% endtrans %}</button>
+                        <button type="button" class="btn btn-default btn-danger" onclick="if (confirm('{% trans %}you really want to delete the entry?{% endtrans %}')) { window.location.href='{{ path('_symbb_delete_post', {'post': post.getId()}) }}' };" >{% trans %}Delete{% endtrans %}</button>
                     </div>
                 </div>
             </div>

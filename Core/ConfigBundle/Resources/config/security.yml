@@ -22,17 +22,17 @@ security:
             remember_me:
               key:      "%secret%"
               lifetime: 31536000 # 365 days in seconds
-              path:     /
+              path:     /forum
               domain:   ~ # Defaults to the current domain from $_SERVER
             form_login:
-                check_path: /login_check
-                login_path: /login
+                check_path: /forum/login_check
+                login_path: /forum/login
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
                 remember_me: true
             logout:
-                path:   /logout
-                target: /
+                path:   /forum/logout
+                target: /forum
             anonymous: ~
 
     access_control:

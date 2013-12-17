@@ -22,4 +22,8 @@ _symbb_edit_post:
     pattern:  /t-{name}/{topic}/{post}
     defaults: { _controller: SymBBCoreForumBundle:FrontendTopic:editPost}
     
+_symbb_delete_post:
+    pattern:  /p-{post}/delete
+    defaults: { _controller: SymBBCoreForumBundle:FrontendTopic:deletePost}
+    
     

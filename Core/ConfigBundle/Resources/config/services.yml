@@ -14,20 +14,8 @@ services:
         arguments: ['@service_container']
         tags:
             - { name: twig.extension }
-    symbb.core.forum.breadcrumb:
-        twig.extension.symbb.core.forum.breadcrumb:
-        class: SymBB\Core\ForumBundle\Twig\BreadcrumbExtension
-        arguments: ['@service_container']
-        tags:
-            - { name: twig.extension } 
     symbb.core.user.data:
         twig.extension.symbb.core.user.data:
         class: SymBB\Core\UserBundle\Twig\UserDataExtension
-        tags:
-            - { name: twig.extension } 
-    symbb.core.event.forum:
-        twig.extension.symbb.core.event.forum:
-        class: SymBB\Core\ForumBundle\Twig\EventExtension
-        arguments: ['@service_container']
         tags:
             - { name: twig.extension } 

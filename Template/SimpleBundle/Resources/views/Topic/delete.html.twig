@@ -1,0 +1,14 @@
+{% trans_default_domain "symbb_frontend" %}
+
+{% extends getSymbbTemplateConfig('forum') ~ ':Forum:layout.html.twig' %}
+
+{% block symbb_body %}
+<div class="alert alert-success">
+    {% trans %}Your post has been deleted successfully. You will now be redirected ...{% endtrans %}
+    <script type="text/javascript">
+    <!--
+    window.location = "{{ path('_symbb_forum_show', {'name': forum.getSeoName(), 'id': forum.getId()} ) }}";
+    //–>
+    </script>
+</div>
+{% endblock %}

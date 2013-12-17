@@ -9,7 +9,10 @@ class FrontendTopicController  extends Controller
 {
     
     protected $templateBundle = null;
-    
+    protected $topic = null;
+    protected $post = null;
+
+
     /**
      * show a Topic
      * @param type $name
@@ -18,9 +21,7 @@ class FrontendTopicController  extends Controller
      */
     public function showAction($name, $id){
         
-        $topic = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Topic', 'symbb')
-            ->find($id);
-        
+        $topic  = $this->getTopicById($id);
         $post   = null;
         $form   = $this->getPostForm($topic, $post); 
         
@@ -58,8 +59,8 @@ class FrontendTopicController  extends Controller
      * @return type
      */
     public function editPostAction($name, $topic, $post){
-        $topic      = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Topic', 'symbb')->find($topic);
-        $post       = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Post', 'symbb')->find($post);
+        $topic      = $this->getTopicById($topic);
+        $post       = $this->getPostById($post);
         
         $form       = null;
         $saved      = $this->handlePostRequest($form, $topic, $post);
@@ -74,9 +75,82 @@ class FrontendTopicController  extends Controller
     }
     
     public function newPostAction($name, $topic){
-        return $this->editPostAction($name, $topic, 0);
+        $response   = $this->editPostAction($name, $topic, 0);
+        $currUser   = $this->getUser();
+        $em         = $this->getDoctrine()->getManager('symbb');
+        
+        if(is_object($currUser)){
+            // adding user topic flags
+            $users      = $this->get('doctrine')->getRepository('SymBBCoreUserBundle:User', 'symbb')->findAll();
+            $topic      = $this->getTopicById($topic);
+            $postCount  = $topic->getPostCount();
+            foreach($users as $user){
+                if($user->getId() != $currUser->getId()){
+                    $flag = new \SymBB\Core\ForumBundle\Entity\Topic\Flag();
+                    $flag->setTopic($topic);
+                    $flag->setUser();
+                    $flag->setFlag('new');
+                    $em->persist($flag);
+                } else if($postCount > 1) {
+                    $flag = new \SymBB\Core\ForumBundle\Entity\Topic\Flag();
+                    $flag->setTopic($topic);
+                    $flag->setUser();
+                    $flag->setFlag('answered');
+                    $em->persist($flag);
+                }
+            }
+            $em->flush();
+        }
+        
+        return $response;
     }
     
+    public function deletePostAction(\SymBB\Core\ForumBundle\Entity\Post $post){
+        $em         = $this->getDoctrine()->getManager('symbb');
+        $topic      = $post->getTopic();
+        $firstPost  = $topic->getPosts()->first();
+        if($firstPost->getId() == $post->getId()){
+            return $this->removeAction($topic->getId());
+        }
+        $em->remove($post);
+        $em->flush();
+        return $this->render($this->getTemplateBundleName('forum').':Post:delete.html.twig', array('topic' => $topic));
+    }
+    
+    public function removeAction($topic){
+        $em         = $this->getDoctrine()->getManager('symbb');
+        $topic      = $this->getTopicById($topic);
+        $forum      = $topic->getForum();
+        $em->remove($topic);
+        $em->flush();
+        return $this->render($this->getTemplateBundleName('forum').':Topic:delete.html.twig', array('forum' => $forum));
+    }
+    
+    /**
+     * 
+     * @param type $topic
+     * @return \SymBB\Core\ForumBundle\Entity\Topic
+     */
+    protected function getTopicById($topic){
+        if($this->topic === null){
+            $this->topic      = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Topic', 'symbb')->find($topic);
+        }
+        return $this->topic;
+    }
+    
+    /**
+     * 
+     * @param type $post
+     * @return \SymBB\Core\ForumBundle\Entity\Post
+     */
+    protected function getPostById($post){
+        if($this->post === null){
+            $this->post      = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Post', 'symbb')->find($post);
+        }
+        return $this->post;
+    }
+
+
     /**
      * handle the Post Request and save it
      * @param type $form
@@ -109,7 +183,7 @@ class FrontendTopicController  extends Controller
         // check if form was submited
         $postId = $this->get('request')->get('form_id');
         if($postId > 0){
-            $post   = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Post', 'symbb')->find($postId);
+            $post   = $this->getPostById($postId);
         }
    
         // if no post information than create an new empty one

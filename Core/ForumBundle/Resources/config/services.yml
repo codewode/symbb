@@ -1,0 +1,19 @@
+services:
+    symbb.core.forum.breadcrumb:
+        twig.extension.symbb.core.forum.breadcrumb:
+        class: SymBB\Core\ForumBundle\Twig\BreadcrumbExtension
+        arguments: ['@service_container']
+        tags:
+            - { name: twig.extension } 
+    symbb.core.forum.newpostcheck:
+        twig.extension.symbb.core.forum.newpostcheck:
+        class: SymBB\Core\ForumBundle\Twig\NewPostCheckExtension
+        arguments: ['@security.context', '@doctrine.orm.symbb_entity_manager']
+        tags:
+            - { name: twig.extension } 
+    symbb.core.event.forum:
+        twig.extension.symbb.core.event.forum:
+        class: SymBB\Core\ForumBundle\Twig\EventExtension
+        arguments: ['@service_container']
+        tags:
+            - { name: twig.extension } 

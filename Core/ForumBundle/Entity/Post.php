@@ -41,7 +41,7 @@ class Post
 
     /**
      * @ORM\ManyToOne(targetEntity="Topic", inversedBy="posts")
-     * @ORM\JoinColumn(name="topic_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="topic_id", referencedColumnName="id", onDelete="cascade")
      */
     private $topic;
 
@@ -68,6 +68,10 @@ class Post
     public function getText(){return $this->text;}
     public function setText($value){$this->text = $value;}
     public function setTopic($object){$this->topic = $object;}
+    /**
+     * 
+     * @return Topic
+     */
     public function getTopic(){return $this->topic;}
     public function setAuthor($object){$this->author = $object;}
     public function getAuthor(){return $this->author;}
