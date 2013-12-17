@@ -20,14 +20,14 @@ _symbb_forum_topic_show:
     
 _symbb_new_post:
     pattern:  /t-{name}/{topic}/new
-    defaults: { _controller: SymBBCoreForumBundle:FrontendTopic:newPost}
+    defaults: { _controller: SymBBCoreForumBundle:FrontendPost:new}
     
 _symbb_edit_post:
     pattern:  /t-{name}/{topic}/{post}
-    defaults: { _controller: SymBBCoreForumBundle:FrontendTopic:editPost}
+    defaults: { _controller: SymBBCoreForumBundle:FrontendPost:edit}
     
 _symbb_delete_post:
     pattern:  /p-{post}/delete
-    defaults: { _controller: SymBBCoreForumBundle:FrontendTopic:deletePost}
+    defaults: { _controller: SymBBCoreForumBundle:FrontendPost:delete}
     
     

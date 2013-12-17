@@ -5,73 +5,80 @@ namespace SymBB\Core\ForumBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
-class FrontendTopicController  extends Controller 
+class FrontendPostController  extends Controller 
 {
     
     protected $templateBundle = null;
     protected $topic = null;
     protected $post = null;
     protected $forum = null;
-
-
+    
     /**
-     * show a Topic
+     * edit a post
      * @param type $name
-     * @param type $id
+     * @param type $topic
+     * @param type $post
      * @return type
      */
-    public function showAction($name, $id){
+    public function editAction($name, $topic, $post){
+        $topic      = $this->getTopicById($topic);
+        $post       = $this->getPostById($post);
         
-        $topic  = $this->getTopicById($id);
-        $post   = null;
-        $form   = $this->getPostForm($topic, $post); 
-        
-        $em     = $this->get('doctrine')->getManager('symbb');
-        $qb     = $em->createQueryBuilder();
-        $qb     ->select('p')
-                ->from('SymBB\Core\ForumBundle\Entity\Post', 'p')
-                ->where('p.topic = '.$topic->getId())
-                ->orderBy('p.created', 'ASC');
-        $dql    = $qb->getDql();
-        $query  = $em->createQuery($dql);
-
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query,
-            $this->get('request')->query->get('page', 1)/*page number*/,
-            20/*limit per page*/
-        );
-        $pagination->setTemplate($this->getTemplateBundleName('forum').':Pagination:pagination.html.twig');
-        
-        $params                 = array();
-        $params['topic']        = $topic;
-        $params['form']         = $form->createView();
-        $params['bbcodes']      = $this->getBBCodes();
-        $params['pagination']   = $pagination;
-
-        return $this->render($this->getTemplateBundleName('forum').':Topic:show.html.twig', $params);
-    }
-    
-    public function newAction($name, $id){
-        $forum      = $this->getForumById($id);
         $form       = null;
-        $saved      = $this->handleTopicRequest($form, $forum);
+        $saved      = $this->handlePostRequest($form, $topic, $post);
         
-        $params = array('forum' => $forum);
+        $params = array('topic' => $topic);
         $params['form']     = $form->createView();
         $params['bbcodes']  = $this->getBBCodes();
         $params['saved']    = $saved;
+        $params['post']     = $post;
         
-        return $this->render($this->getTemplateBundleName('forum').':Topic:new.html.twig', $params);
+        return $this->render($this->getTemplateBundleName('forum').':Post:edit.html.twig', $params);
     }
     
-    public function removeAction($topic){
+    public function newAction($name, $topic){
+        $response   = $this->editAction($name, $topic, 0);
+        $currUser   = $this->getUser();
         $em         = $this->getDoctrine()->getManager('symbb');
-        $topic      = $this->getTopicById($topic);
-        $forum      = $topic->getForum();
-        $em->remove($topic);
+        
+        if(is_object($currUser)){
+            // adding user topic flags
+            $users      = $this->get('doctrine')->getRepository('SymBBCoreUserBundle:User', 'symbb')->findAll();
+            $topic      = $this->getTopicById($topic);
+            $postCount  = $topic->getPostCount();
+            foreach($users as $user){
+                if($user->getId() != $currUser->getId()){
+                    $flag = new \SymBB\Core\ForumBundle\Entity\Topic\Flag();
+                    $flag->setTopic($topic);
+                    $flag->setUser($user);
+                    $flag->setFlag('new');
+                    $em->persist($flag);
+                } else if($postCount > 1) {
+                    $flag = new \SymBB\Core\ForumBundle\Entity\Topic\Flag();
+                    $flag->setTopic($topic);
+                    $flag->setUser($user);
+                    $flag->setFlag('answered');
+                    $em->persist($flag);
+                }
+            }
+            $em->flush();
+        }
+        
+        return $response;
+    }
+    
+    public function deleteAction(\SymBB\Core\ForumBundle\Entity\Post $post){
+        $em         = $this->getDoctrine()->getManager('symbb');
+        $topic      = $post->getTopic();
+        $firstPost  = $topic->getPosts()->first();
+        if($firstPost->getId() == $post->getId()){
+            return $this->forward('SymBBCoreForumBundle:FrontendTopic:remove', array(
+                'id'  => $topic->getId()
+            ));
+        }
+        $em->remove($post);
         $em->flush();
-        return $this->render($this->getTemplateBundleName('forum').':Topic:delete.html.twig', array('forum' => $forum));
+        return $this->render($this->getTemplateBundleName('forum').':Post:delete.html.twig', array('topic' => $topic));
     }
     
     /**
@@ -110,6 +117,7 @@ class FrontendTopicController  extends Controller
         return $this->post;
     }
 
+    
     /**
      * handle the Post Request and save it
      * @param type $form
@@ -117,26 +125,13 @@ class FrontendTopicController  extends Controller
      * @param type $post
      * @return type
      */
-    protected function handleTopicRequest(&$form, \SymBB\Core\ForumBundle\Entity\Forum &$forum){
+    protected function handlePostRequest(&$form, \SymBB\Core\ForumBundle\Entity\Topic &$topic, &$post){
         
-        
-        $post   = new \SymBB\Core\ForumBundle\Entity\Post();
-        $post->setAuthor($this->getUser());
-        
-        $form   = $this->getTopicForm($forum, $post);
+        $form   = $this->getPostForm($topic, $post);
 
         $form->handleRequest($this->get('request'));
-        
         if ($form->isValid()) {
-        
-            $topic  = new \SymBB\Core\ForumBundle\Entity\Topic();
-            $topic->setAuthor($this->getUser());
-            $topic->setName($post->getName());
-            $topic->setForum($forum);
-            $post->setTopic($topic);
-            
             $em = $this->getDoctrine()->getManager('symbb');
-            $em->persist($topic);
             $em->persist($post);
             $em->flush();
             return true;
@@ -144,31 +139,26 @@ class FrontendTopicController  extends Controller
         return false;
     }
 
+    
     /**
      * generate a new Form object
      * @param type $topic
      * @param type $post
      * @return type
      */
-    protected function getTopicForm($forum, &$post){
+    protected function getPostForm($topic, &$post){
         
         // check if form was submited
-        $url    = $this->generateUrl('_symbb_forum_topic_new', array('name' => $forum->getSeoName(), 'id' => $forum->getId()));
-        $form   = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\TopicType($url), $post);
+        $postId = $this->get('request')->get('form_id');
+        if($postId > 0){
+            $post   = $this->getPostById($postId);
+        }
    
-        return $form;
-    }
-    
-    
-    /**
-     * generate a new Form object
-     * @param type $topic
-     * @param type $post
-     * @return type
-     */
-    protected function getPostForm($topic){
+        // if no post information than create an new empty one
+        if($post === null){
+            $post = \SymBB\Core\ForumBundle\Entity\Post::createNew($topic, $this->getUser());
+        }
         
-        $post = \SymBB\Core\ForumBundle\Entity\Post::createNew($topic, $this->getUser());
         $url    = $this->generateUrl('_symbb_new_post', array('name' => $topic->getSeoName(), 'topic' => $topic->getId()));
         $form   = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\PostType($url), $post);
         

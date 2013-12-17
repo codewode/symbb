@@ -102,4 +102,12 @@ class Post
         $name = strtolower(trim($name, '-'));
         return $name;
     }
+    
+    public static function createNew(Topic $topic, \SymBB\Core\UserBundle\Entity\UserInterface $user){
+        $post = new self();
+        $post->setTopic($topic);
+        $post->setAuthor($user);
+        $post->setName($topic->getName());
+        return $post;
+    }
 }
