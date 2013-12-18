@@ -4,6 +4,8 @@ namespace SymBB\Core\ForumBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use SymBB\Core\UserBundle\Acl\PermissionMap;
+use SymBB\Core\UserBundle\Acl\MaskBuilder;
 
 
 class FrontendTopicController  extends Controller 
@@ -23,7 +25,13 @@ class FrontendTopicController  extends Controller
      */
     public function showAction($name, $id){
         
-        $topic  = $this->getTopicById($id);
+        $topic          = $this->getTopicById($id);
+        
+        $accessService  = $this->get('symbb.core.user.access');
+        $accessService->addAccessCheck(PermissionMap::PERMISSION_VIEW, $topic);
+        $accessService->addAccessCheck(PermissionMap::PERMISSION_VIEW, $topic->getForum());
+        $accessService->checkAccess();
+        
         $post   = null;
         $form   = null;
         $view   = null;
@@ -60,12 +68,13 @@ class FrontendTopicController  extends Controller
     
     public function newAction($name, $id){
         
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException();
-        }
+        $forum          = $this->getForumById($id);
+        
+        $accessService  = $this->get('symbb.core.user.access');
+        $accessService->addAccessCheck(PermissionMap::PERMISSION_CREATE, $forum);
+        $accessService->checkAccess();
         
         
-        $forum      = $this->getForumById($id);
         $form       = null;
         $saved      = $this->handleTopicRequest($form, $forum);
         
@@ -79,9 +88,10 @@ class FrontendTopicController  extends Controller
     
     public function removeAction($topic){
         
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException();
-        }
+        $accessService  = $this->get('symbb.core.user.access');
+        $accessService->addAccessCheck(PermissionMap::PERMISSION_DELETE, $topic);
+        $accessService->addAccessCheck(PermissionMap::PERMISSION_DELETE, $topic->getForum());
+        $accessService->checkAccess();
         
         $em         = $this->getDoctrine()->getManager('symbb');
         $topic      = $this->getTopicById($topic);
@@ -156,6 +166,11 @@ class FrontendTopicController  extends Controller
             $em->persist($topic);
             $em->persist($post);
             $em->flush();
+            
+            $accessService  = $this->get('symbb.core.user.access');
+            $accessService->grantAccess(MaskBuilder::MASK_OWNER, $topic);
+            $accessService->grantAccess(MaskBuilder::MASK_OWNER, $post);
+            
             return true;
         }
         return false;

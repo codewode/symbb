@@ -1,4 +1,6 @@
 security:
+    acl:
+        connection: symbb
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
 

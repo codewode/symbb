@@ -4,7 +4,8 @@ namespace SymBB\Core\ForumBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
+use SymBB\Core\UserBundle\Acl\PermissionMap;
+use SymBB\Core\UserBundle\Acl\MaskBuilder;
 
 class FrontendPostController  extends Controller 
 {
@@ -23,12 +24,22 @@ class FrontendPostController  extends Controller
      */
     public function editAction($name, $topic, $post){
         
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException();
-        }
-        
-        $topic      = $this->getTopicById($topic);
         $post       = $this->getPostById($post);
+        $topic      = $this->getTopicById($topic);
+        
+        // check only for "edit" case
+        if(is_object($post) && $post->getId() > 0){
+            $accessService  = $this->get('symbb.core.user.access');
+            // check if you have access to edit the post
+            $accessService->addAccessCheck(PermissionMap::PERMISSION_EDIT, $post);
+            // or if you have the access to edit the forum
+            $accessService->addAccessCheck(PermissionMap::PERMISSION_EDIT, $topic->getForum());
+            $accessService->checkAccess();
+        } else {
+            $accessService  = $this->get('symbb.core.user.access');
+            $accessService->addAccessCheck(PermissionMap::PERMISSION_CREATE, $topic->getForum());
+            $accessService->checkAccess();
+        }
         
         $form       = null;
         $saved      = $this->handlePostRequest($form, $topic, $post);
@@ -49,10 +60,6 @@ class FrontendPostController  extends Controller
      */
     public function newAction($name, $topic){
         
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException();
-        }
-        
         $response   = $this->editAction($name, $topic, 0);
         $currUser   = $this->getUser();
         $em         = $this->getDoctrine()->getManager('symbb');
@@ -62,7 +69,6 @@ class FrontendPostController  extends Controller
             // adding user topic flags
             $users      = $this->get('doctrine')->getRepository('SymBBCoreUserBundle:User', 'symbb')->findAll();
             $topic      = $this->getTopicById($topic);
-            $postCount  = $topic->getPostCount();
             foreach($users as $user){
                 if($user->getId() != $currUser->getId()){
                     $flag      = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Topic\Flag', 'symbb')->findOneBy(array(
@@ -107,9 +113,10 @@ class FrontendPostController  extends Controller
      */
     public function deleteAction(\SymBB\Core\ForumBundle\Entity\Post $post){
         
-        if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException();
-        }
+        $accessService  = $this->get('symbb.core.user.access');
+        $accessService->addAccessCheck(PermissionMap::PERMISSION_DELETE, $post);
+        $accessService->addAccessCheck(PermissionMap::PERMISSION_DELETE, $post->getTopic()->getForum());
+        $accessService->checkAccess();
         
         $em         = $this->getDoctrine()->getManager('symbb');
         $topic      = $post->getTopic();
@@ -170,13 +177,24 @@ class FrontendPostController  extends Controller
      */
     protected function handlePostRequest(&$form, \SymBB\Core\ForumBundle\Entity\Topic &$topic, &$post){
         
+        
         $form   = $this->getPostForm($topic, $post);
+        $oldId  = $post->getId();
 
         $form->handleRequest($this->get('request'));
+        
         if ($form->isValid()) {
+            
             $em = $this->getDoctrine()->getManager('symbb');
             $em->persist($post);
             $em->flush();
+            
+            //only if the id was "0" ( only by "new" )
+            if($oldId === null){
+                $accessService  = $this->get('symbb.core.user.access');
+                $accessService->grantAccess(MaskBuilder::MASK_OWNER, $post);
+            }
+            
             return true;
         }
         return false;

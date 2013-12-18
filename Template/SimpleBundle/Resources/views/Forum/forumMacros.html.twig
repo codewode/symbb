@@ -63,11 +63,7 @@ Macro to generate the structure of the forum/Category name Row
 
 {% macro nameRow(object) %}
 <a href="{{ path('_symbb_forum_show', {'id': object.getId(), 'name': object.getSeoName()}) }}">
-    <div class="icon"></div>
     <div class="name">{{object.getName()}}
-    {% if checkSymbbForAnsweredPostFlag(object) %}
-        <span class="label label-info">{% trans %}answered{% endtrans %}</span>
-    {% endif %}
     {% if checkSymbbForNewPostFlag(object) %}
         <span class="label label-success">{% trans %}new{% endtrans %}</span>
     {% endif %}
@@ -125,7 +121,6 @@ Macro to generate a list of all topics
     <div class="row topic">
         <div class="col-md-7 nameBlock">
             <a href="{{ path('_symbb_forum_topic_show', {'id': topic.getId(), 'name': topic.getSeoName()}) }}">
-                <div class="icon"></div>
                 <div class="name">{{topic.getName()}}
                     {% if app.user and app.user.getId() == topic.getAuthor().getId() %}
                     <span class="label label-default">{% trans %}author{% endtrans %}</span>
