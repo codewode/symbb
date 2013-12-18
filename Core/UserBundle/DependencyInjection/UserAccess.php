@@ -102,16 +102,20 @@ class UserAccess
     public function addAccessCheck($permission, $object, SecurityIdentityInterface $indentity = null){
         
         if(!is_object($indentity)){
+            
             $user               = $this->getUser();
-            $indentity          = UserSecurityIdentity::fromAccount($user);
-            $groups             = $user->getGroups();
-            if(is_object($indentity)){
-                $this->addAccessCheck($permission, $object, $indentity);
-            }
-            foreach($groups as $group){
-                $indentity          = $this->getUserGroupIdentity($group);
+            
+            if(is_object($user)){
+                $indentity          = UserSecurityIdentity::fromAccount($user);
+                $groups             = $user->getGroups();
                 if(is_object($indentity)){
                     $this->addAccessCheck($permission, $object, $indentity);
+                }
+                foreach($groups as $group){
+                    $indentity          = $this->getUserGroupIdentity($group);
+                    if(is_object($indentity)){
+                        $this->addAccessCheck($permission, $object, $indentity);
+                    }
                 }
             }
             
