@@ -168,6 +168,6 @@ class UserAccess
     }
     
     public function throwExceptionForLastCheck(){
-        throw new \Exception('no access');
+        throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
     }
 }
