@@ -8,7 +8,9 @@ use \Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use \Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use \Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use \Symfony\Component\Security\Acl\Exception\NoAceFoundException;
-use SymBB\Core\UserBundle\Acl\PermissionMap;
+use \SymBB\Core\UserBundle\Acl\PermissionMap;
+use \Symfony\Component\Security\Core\Util\ClassUtils;
+use \Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
 
 class UserAccess
 {
@@ -64,15 +66,28 @@ class UserAccess
         return false;
     }
     
-    public function grantAccess($mask, $object, UserInterface $user = null){
+    public function grantAccess($mask, $object, UserInterface $identity = null){
+        
         $objectIdentity     = ObjectIdentity::fromDomainObject($object);
+        
         try {
             $acl            = $this->aclProvider->findAcl($objectIdentity);
         } catch (AclNotFoundException $exc) {
             $acl            = $this->aclProvider->createAcl($objectIdentity);
         }
-        $user               = $this->getUser($user);
-        $securityIdentity   = UserSecurityIdentity::fromAccount($user);
+        
+        if($identity === null){
+            $identity               = $this->getUser();
+        }
+        
+        if($identity instanceof UserInterface){
+            $securityIdentity   = UserSecurityIdentity::fromAccount($identity);
+        } else if($identity instanceof \SymBB\Core\UserBundle\Entity\Group){
+            $securityIdentity   = $this->getUserGroupIdentity($identity);
+        } else {
+            throw new Exception('Unknown Security Indentity for '.ClassUtils::getRealClass($identity));
+        }
+        
         // or class with SecurityIdentityInterface implementation...
         $acl->insertObjectAce($securityIdentity, $mask);
         $this->aclProvider->updateAcl($acl);
@@ -82,14 +97,25 @@ class UserAccess
      * 
      * @param object $object
      * @param int $mask PermissionMap::PERMISSION_EDIT, MaskBuilder::PERMISSION_VIEW,...
-     * @param \SymBB\Core\UserBundle\DependencyInjection\SecurityIdentityInterface $indentity
+     * @param SecurityIdentityInterface $indentity
      */
     public function addAccessCheck($permission, $object, SecurityIdentityInterface $indentity = null){
+        
         if(!is_object($indentity)){
             $user               = $this->getUser();
             $indentity          = UserSecurityIdentity::fromAccount($user);
-        }
-        if(is_object($indentity)){
+            $groups             = $user->getGroups();
+            if(is_object($indentity)){
+                $this->addAccessCheck($permission, $object, $indentity);
+            }
+            foreach($groups as $group){
+                $indentity          = $this->getUserGroupIdentity($group);
+                if(is_object($indentity)){
+                    $this->addAccessCheck($permission, $object, $indentity);
+                }
+            }
+            
+        } else {
             $this->accessChecks[] = array(
                 'object'        => $object,
                 'permission'    => $permission,
@@ -98,6 +124,12 @@ class UserAccess
         }
     }
     
+    protected function getUserGroupIdentity($group){
+        $indentity          = new UserSecurityIdentity($group->getId(), ClassUtils::getRealClass($group));
+        return $indentity;
+    }
+
+
     public function hasAccess(){
         $access             = false;
         foreach($this->accessChecks as $data){

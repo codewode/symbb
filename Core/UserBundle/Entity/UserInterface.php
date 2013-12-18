@@ -9,6 +9,7 @@ interface UserInterface {
     public function getEmail();
     public function getTopics();
     public function getPosts();
+    public function getGroups();
     
     /**
      * @return \SymBB\Core\UserBundle\Entity\User\Data 

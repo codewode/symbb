@@ -61,5 +61,7 @@ class User extends BaseUser implements UserInterface
     public function getEmail() {return parent::getEmail();}
     public function getId() {return parent::getId();}
     public function getUsername() {return parent::getUsername();}
+    public function getGroups(){return $this->groups;}
+    public function setGroups($value){$this->groups = $value;}
     ############################################################################
 }

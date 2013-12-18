@@ -23,7 +23,7 @@ class FrontendPostController  extends Controller
      * @return type
      */
     public function editAction($name, $topic, $post){
-        
+
         $post       = $this->getPostById($post);
         $topic      = $this->getTopicById($topic);
         
@@ -211,6 +211,7 @@ class FrontendPostController  extends Controller
         
         // check if form was submited
         $postId = $this->get('request')->get('form_id');
+        
         if($postId > 0){
             $post   = $this->getPostById($postId);
         }
@@ -220,7 +221,12 @@ class FrontendPostController  extends Controller
             $post = \SymBB\Core\ForumBundle\Entity\Post::createNew($topic, $this->getUser());
         }
         
-        $url    = $this->generateUrl('_symbb_new_post', array('name' => $topic->getSeoName(), 'topic' => $topic->getId()));
+        if($post->getId() > 0){
+            $url    = $this->generateUrl('_symbb_edit_post', array('name' => $topic->getSeoName(), 'topic' => $topic->getId(), 'post' => $post->getId()));
+        } else {
+            $url    = $this->generateUrl('_symbb_new_post', array('name' => $topic->getSeoName(), 'topic' => $topic->getId()));
+        }
+        
         $form   = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\PostType($url), $post);
         
         return $form;
