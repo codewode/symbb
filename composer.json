@@ -23,7 +23,8 @@
         "knplabs/knp-menu-bundle": "2.0.*@dev",
         "knplabs/knp-paginator-bundle": "2.3.*@dev",
         "sonata-project/intl-bundle": "2.2.*@dev",
-        "helios-ag/fm-bbcode-bundle": "6.2"
+        "helios-ag/fm-bbcode-bundle": "6.2",
+        "leaseweb/memcache-bundle": "*",
     },
     "autoload": {
         "psr-0": { "SymBB\\": "" }
