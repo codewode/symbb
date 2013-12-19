@@ -1,8 +1,8 @@
-symbb
-==
+SymBB Forum System
+=============
 
 Currently only in German
-===
+
 Ein Symfony 2 basiertes BB Forum
 Dieses Bundle ist derzeit noch in Entwicklung!!
 
@@ -12,25 +12,21 @@ Wenn ihr bereits andere Einstellungen habt kann es passieren das diese Überschr
 In diesem Fall müsst ihr entweder das CoreConfigBundle überschreiben oder deaktivieren und alle YML Dateien bei euch manuell anpassen!
 
 Folgende Einstellungen müssen derzeit manuell vorgenommen werden!
-====
+-------------
 - security.yml ( siehe YML Datei in CoreConfigBundle )
 - AppKernel ( siehe Sandbox )
 
 
 Die nächsten TODOs
-==
+-------------
 
-- SF2 Service schreiben welcher einen Post speichern/löscht
--- Events einfügen um informationen zu manipulieren
--- User Objekt manipulieren und Post hoch/runterzählen (User Event Listener)
 
-- Userdaten im Beiträgen anzeigen und ein System überlegen wodurch die Elemente erweitert/manipuliert werden können ohne das Template abzuleiten
-
-- Beitrag schreiben in einfacher form ( ohne editor )
-
+- [x] Userdaten im Beiträgen anzeigen und ein System überlegen wodurch die Elemente erweitert/manipuliert werden können ohne das Template abzuleiten
+- [x] Beitrag schreiben in einfacher form ( ohne editor )
+- [ ] SF2 Service schreiben welcher einen Post speichern/löscht incl. Events
 
 Aktueller Plan
-==
+-------------
 
 - normale Foren Funktion
     -  Foren
@@ -115,7 +111,7 @@ Aktueller Plan
 
 
 Bei Verwendung einer eigenen FOS User Klasse
-==
+-------------
 Generell ist es möglich die User Entity aus dem SymBB Bundle durch eine eigene zu ersetzen. 
 Jedoch muss auf folgendes geachtet werden:
 - implementiert das SymBB\Core\UserBundle\Entity\UserInterface
@@ -125,7 +121,7 @@ Jedoch muss auf folgendes geachtet werden:
 - Die FOS User Entity muss über den Entitymanager "symbb" laufen und ggf. müssen wir einpaar Bundles anpassen... da evt. an ein paar stellen der SymbbUser Bundle name benutzt wird
 
 Initalisieren der Beispieldaten solange es keinen Installer gibt
-==
+-------------
 
 Mit folgendem Befehlt könnt ihr die Beispieldaten importieren 
 
