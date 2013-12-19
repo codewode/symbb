@@ -116,7 +116,7 @@ Macro to generate a list of all topics
 
     {{ _self.showEmptyTopicHeader() }}
 
-    {% set topicPagination in getTopicPagination(object) %}
+    {% set topicPagination = getTopicPagination(object) %}
 
     {% for topic in topicPagination %}
 

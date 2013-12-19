@@ -66,7 +66,14 @@ class UserAccess
         return false;
     }
     
-    public function grantAccess($mask, $object, UserInterface $identity = null){
+    /**
+     * 
+     * @param array|int $mask
+     * @param object $object
+     * @param \SymBB\Core\UserBundle\Entity\UserInterface $identity
+     * @throws Exception
+     */
+    public function grantAccess($mask, $object, $identity = null){
         
         $objectIdentity     = ObjectIdentity::fromDomainObject($object);
         
@@ -89,7 +96,9 @@ class UserAccess
         }
         
         // or class with SecurityIdentityInterface implementation...
-        $acl->insertObjectAce($securityIdentity, $mask);
+        foreach((array)$mask as $currMask){
+            $acl->insertObjectAce($securityIdentity, $currMask);
+        }
         $this->aclProvider->updateAcl($acl);
     }
     

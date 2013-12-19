@@ -35,25 +35,27 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $userManager    = $this->container->get('fos_user.user_manager');
         
         $userGuest      = $userManager->createUser();
-        $userGuest->setLocked(1);
         $userGuest->setUsername($guestName);
         $userGuest->setType('guest');
         $userGuest->addGroup($this->getReference('guest-group'));
-        $userGuest->setPassword('guest');
+        $userGuest->setPlainPassword('guest');
+        $userGuest->setEnabled(false);
         $userGuest->setEmail('guest@no-email.com');
         
         $userUser       = $userManager->createUser();
         $userUser->setUsername($userName);
         $userUser->setType('user');
-        $userUser->setPassword('user');
+        $userUser->setPlainPassword('user');
         $userUser->setEmail('user@no-email.com');
+        $userUser->setEnabled(true);
         $userUser->addGroup($this->getReference('user-group'));
         
         $userAdmin      = $userManager->createUser();
         $userAdmin->setUsername($adminName);
         $userAdmin->setType('user'); // admin is also "user" only the group is different
-        $userAdmin->setPassword('admin');
+        $userAdmin->setPlainPassword('admin');
         $userAdmin->setEmail('admin-email.com');
+        $userAdmin->setEnabled(true);
         $userAdmin->addGroup($this->getReference('admin-group'));
        
         $userManager->updateUser($userGuest);

@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use SymBB\Core\UserBundle\Acl\MaskBuilder;
 
 class LoadForumExampleData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
@@ -88,6 +89,93 @@ class LoadForumExampleData extends AbstractFixture implements OrderedFixtureInte
         $manager->persist($forum6);
         $manager->flush();
         
+        
+        
+        
+        $accessService  = $this->container->get('symbb.core.user.access');
+        
+        //GUEST Access
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_VIEW
+        ), $forum, $this->getReference('guest-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_VIEW
+        ), $forum2, $this->getReference('guest-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_VIEW
+        ), $forum3, $this->getReference('guest-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_VIEW
+        ), $forum4, $this->getReference('guest-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_VIEW
+        ), $forum5, $this->getReference('guest-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_VIEW
+        ), $forum6, $this->getReference('guest-group'));
+        
+        
+        // USER ACCESS
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_VIEW,
+            MaskBuilder::MASK_CREATE
+        ), $forum, $this->getReference('user-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_VIEW,
+            MaskBuilder::MASK_CREATE
+        ), $forum2, $this->getReference('user-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_VIEW,
+            MaskBuilder::MASK_CREATE
+        ), $forum3, $this->getReference('user-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_VIEW,
+            MaskBuilder::MASK_CREATE
+        ), $forum4, $this->getReference('user-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_VIEW,
+            MaskBuilder::MASK_CREATE
+        ), $forum5, $this->getReference('user-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_VIEW,
+            MaskBuilder::MASK_CREATE
+        ), $forum6, $this->getReference('user-group'));
+        
+        
+        // ADMIN ACCESS
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_OPERATOR
+        ), $forum, $this->getReference('user-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_OPERATOR
+        ), $forum2, $this->getReference('user-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_OPERATOR
+        ), $forum3, $this->getReference('user-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_OPERATOR
+        ), $forum4, $this->getReference('user-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_OPERATOR
+        ), $forum5, $this->getReference('user-group'));
+        
+        $accessService->grantAccess(array(
+            MaskBuilder::MASK_OPERATOR
+        ), $forum6, $this->getReference('user-group'));
         
     }
 
