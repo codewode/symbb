@@ -17,4 +17,13 @@ class Group extends BaseGroup
      * @ORM\GeneratedValue(strategy="AUTO")
      */
      protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=10))
+     */
+    protected $type = 'custom';
+    
+    
+    public function setType($value){$this->type = $value;}
+    public function getType(){return $this->type;}
 }

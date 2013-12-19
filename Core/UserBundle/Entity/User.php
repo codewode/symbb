@@ -18,6 +18,11 @@ class User extends BaseUser implements UserInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(name="type", type="string", length=10))
+     */
+    protected $symbbType = 'custom';
     
      /**
      * @ORM\ManyToMany(targetEntity="\SymBB\Core\UserBundle\Entity\Group")
@@ -63,5 +68,7 @@ class User extends BaseUser implements UserInterface
     public function getUsername() {return parent::getUsername();}
     public function getGroups(){return $this->groups;}
     public function setGroups($value){$this->groups = $value;}
+    public function setType($value){$this->type = $value;}
+    public function getType(){return $this->type;}
     ############################################################################
 }

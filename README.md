@@ -111,3 +111,13 @@ Aktueller Plan
     -  Über ein socket.io chat https://github.com/seyon/NodeJsChat
     -  Moderatorfunktionen müssen erweitert werden
     -  Benachrichtigung wenn Meldungen reinkommen
+
+
+
+Bei Verwendung einer eigenen FOS User Klasse
+==
+Generell ist es möglich die User Entity aus dem SymBB Bundle durch eine eigene zu ersetzen. 
+Jedoch muss auf folgendes geachtet werden:
+- implementiert das SymBB\Core\UserBundle\Entity\UserInterface
+- es muss ein Attribute mit dem Namen "symbbType" geben. Es genügt nicht! Nur die get Methode zu definieren da über dieses Feld gesucht wird!
+- die Userklasse muss die normale FOS Gruppen implementation haben. Falls jemand was eigenes dafür baut kann es sein das die Fixturen beim Installer nicht klappen

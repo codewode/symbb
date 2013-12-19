@@ -1,3 +1,7 @@
+fos_user_group:
+    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
+    prefix: /acp/group
+
 _symbb_acp:
     pattern:  /acp/
     defaults: { _controller: SymBBCoreForumBundle:Acp:list }

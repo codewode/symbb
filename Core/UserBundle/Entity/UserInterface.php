@@ -4,12 +4,14 @@ namespace SymBB\Core\UserBundle\Entity;
 
 interface UserInterface {
     
+
     public function getId();
     public function getUsername();
     public function getEmail();
     public function getTopics();
     public function getPosts();
     public function getGroups();
+    public function getType();
     
     /**
      * @return \SymBB\Core\UserBundle\Entity\User\Data 
