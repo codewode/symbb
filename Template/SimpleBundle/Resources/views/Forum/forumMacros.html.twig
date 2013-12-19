@@ -116,7 +116,9 @@ Macro to generate a list of all topics
 
     {{ _self.showEmptyTopicHeader() }}
 
-    {% for topic in getTopicPagination(object) %}
+    {% set topicPagination in getTopicPagination(object) %}
+
+    {% for topic in topicPagination %}
 
     <div class="row topic">
         <div class="col-md-7 nameBlock">
@@ -142,6 +144,8 @@ Macro to generate a list of all topics
             {% endif %}
         </div>
     </div>
+
+    {{ knp_pagination_render(topicPagination) }}
 
     {% endfor %}
 
