@@ -121,3 +121,4 @@ Jedoch muss auf folgendes geachtet werden:
 - implementiert das SymBB\Core\UserBundle\Entity\UserInterface
 - es muss ein Attribute mit dem Namen "symbbType" geben. Es genügt nicht! Nur die get Methode zu definieren da über dieses Feld gesucht wird!
 - die Userklasse muss die normale FOS Gruppen implementation haben. Falls jemand was eigenes dafür baut kann es sein das die Fixturen beim Installer nicht klappen
+- die getSymbbData Methode muss IMMER ein Object zurückliefern! Auch wenn noch keins in der DB gespeichert wurde.
