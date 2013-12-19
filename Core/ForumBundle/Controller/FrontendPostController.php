@@ -67,8 +67,9 @@ class FrontendPostController  extends Controller
         // @TODO for performance save the flags into memcache and dont use database ;)
         if(is_object($currUser)){
             // adding user topic flags
-            $users      = $this->get('doctrine')->getRepository('SymBBCoreUserBundle:User', 'symbb')->findAll();
-            $topic      = $this->getTopicById($topic);
+            $userManager    = $this->get('fos_user.user_manager');
+            $users          = $userManager->findUsers();
+            $topic          = $this->getTopicById($topic);
             foreach($users as $user){
                 if($user->getId() != $currUser->getId()){
                     $flag      = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Topic\Flag', 'symbb')->findOneBy(array(

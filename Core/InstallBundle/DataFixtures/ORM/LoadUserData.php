@@ -61,11 +61,6 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $userManager->updateUser($userGuest);
         $userManager->updateUser($userUser);
         $userManager->updateUser($userAdmin);
-        
-        $manager->persist($userGuest);
-        $manager->persist($userUser);
-        $manager->persist($userAdmin);
-        $manager->flush();
     }
 
     /**
