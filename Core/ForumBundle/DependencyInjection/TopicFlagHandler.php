@@ -176,8 +176,8 @@ class TopicFlagHandler
         ));
         
         $finalFlags = array();
-        foreach($flags as $flag){
-           $finalFlags[] = $flag->getUser()->getId(); 
+        foreach($flags as $flagObject){
+           $finalFlags[] = $flagObject->getUser()->getId(); 
         }
         
         $key = $this->getMemcacheKey($flag, $topic);
@@ -187,7 +187,7 @@ class TopicFlagHandler
     protected function getUsersForFlag($flag, Topic $topic){
         $key    = $this->getMemcacheKey($flag, $topic);
         $users  = $this->memcache->get($key);
-        if($users === null){
+        if($users === false){
             $this->fillMemcache($flag, $topic);
             $users = (array)$this->memcache->get($key);
         }
