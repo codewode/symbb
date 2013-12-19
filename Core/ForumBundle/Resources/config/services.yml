@@ -20,6 +20,6 @@ services:
     symbb.core.forum.topic.data:
         twig.extension.symbb.core.forum.topic.data:
         class: SymBB\Core\ForumBundle\Twig\TopicDataExtension
-        arguments: ['@doctrine.orm.symbb_entity_manager', '@knp_paginator']
+        arguments: ['@doctrine.orm.symbb_entity_manager', '@knp_paginator', '@service_container']
         tags:
             - { name: twig.extension } 
