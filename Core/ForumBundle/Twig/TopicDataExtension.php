@@ -6,18 +6,22 @@ class TopicDataExtension extends \Twig_Extension
 
     protected $paginator;
     protected $em;
-    protected $container;
+    protected $topicFlagHandler;
 
-    public function __construct($em, $paginator, $container) {
-        $this->paginator  = $paginator;
-        $this->em         = $em;
-        $this->container    = $container;
+    public function __construct($em, $paginator, $container, $topicFlagHandler) {
+        $this->paginator        = $paginator;
+        $this->em               = $em;
+        $this->container        = $container;
+        $this->topicFlagHandler = $topicFlagHandler;
     }
 
     public function getFunctions()
     {
         return array(
             new \Twig_SimpleFunction('getTopicPagination', array($this, 'getTopicPagination')),
+            new \Twig_SimpleFunction('checkSymbbForNewPostFlag', array($this, 'checkSymbbForNewPostFlag')),
+            new \Twig_SimpleFunction('checkSymbbForAnsweredPostFlag', array($this, 'checkSymbbForAnsweredPostFlag')),
+            new \Twig_SimpleFunction('checkSymbbForFlag', array($this, 'checkForFlag')),
         );
     }
     
@@ -40,6 +44,21 @@ class TopicDataExtension extends \Twig_Extension
         $pagination->setTemplate($this->getTemplateBundleName('forum').':Pagination:pagination.html.twig');
 
         return $pagination;
+    }
+    
+    public function checkSymbbForNewPostFlag($element)
+    {
+        return $this->checkForFlag($element, 'new');
+    }
+    
+    public function checkSymbbForAnsweredPostFlag($element)
+    {
+        return $this->checkForFlag($element, 'answered');
+    }
+    
+    public function checkForFlag($element, $flag)
+    {
+        return $this->topicFlagHandler->checkFlag($element, $flag);
     }
     
     protected function getTemplateBundleName($for = 'forum'){

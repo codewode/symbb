@@ -154,28 +154,28 @@ class LoadForumExampleData extends AbstractFixture implements OrderedFixtureInte
         
         // ADMIN ACCESS
         $accessService->grantAccess(array(
-            MaskBuilder::MASK_OPERATOR
-        ), $forum, $this->getReference('user-group'));
+            MaskBuilder::MASK_MASTER
+        ), $forum, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-            MaskBuilder::MASK_OPERATOR
-        ), $forum2, $this->getReference('user-group'));
+            MaskBuilder::MASK_MASTER
+        ), $forum2, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-            MaskBuilder::MASK_OPERATOR
-        ), $forum3, $this->getReference('user-group'));
+            MaskBuilder::MASK_MASTER
+        ), $forum3, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-            MaskBuilder::MASK_OPERATOR
-        ), $forum4, $this->getReference('user-group'));
+            MaskBuilder::MASK_MASTER
+        ), $forum4, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-            MaskBuilder::MASK_OPERATOR
-        ), $forum5, $this->getReference('user-group'));
+            MaskBuilder::MASK_MASTER
+        ), $forum5, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-            MaskBuilder::MASK_OPERATOR
-        ), $forum6, $this->getReference('user-group'));
+            MaskBuilder::MASK_MASTER
+        ), $forum6, $this->getReference('admin-group'));
         
     }
 

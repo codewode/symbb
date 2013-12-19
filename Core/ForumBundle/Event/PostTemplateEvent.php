@@ -1,6 +1,6 @@
 <?
 
-namespace SymBB\Core\ForumBundle\DependencyInjection;
+namespace SymBB\Core\ForumBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use \SymBB\Core\UserBundle\Entity\UserInterface;

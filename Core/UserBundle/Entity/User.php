@@ -22,7 +22,7 @@ class User extends BaseUser implements UserInterface
     /**
      * @ORM\Column(name="type", type="string", length=10))
      */
-    protected $symbbType = 'custom';
+    protected $symbbType = 'user';
     
      /**
      * @ORM\ManyToMany(targetEntity="\SymBB\Core\UserBundle\Entity\Group")

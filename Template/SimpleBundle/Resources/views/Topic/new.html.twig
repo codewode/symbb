@@ -9,7 +9,7 @@
     {% trans %}Your post has been saved successfully. You will now be redirected ...{% endtrans %}
     <script type="text/javascript">
     <!--
-    window.location = "{{ path('_symbb_forum_show', {'name': forum.getSeoName(), 'id': forum.getId()} ) }}";
+    window.location = "{{ path('_symbb_forum_topic_show', {'name': topic.getSeoName(), 'id': topic.getId()} ) }}";
     //–>
     </script>
 </div>

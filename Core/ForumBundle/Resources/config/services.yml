@@ -5,12 +5,6 @@ services:
         arguments: ['@service_container']
         tags:
             - { name: twig.extension } 
-    symbb.core.forum.newpostcheck:
-        twig.extension.symbb.core.forum.newpostcheck:
-        class: SymBB\Core\ForumBundle\Twig\NewPostCheckExtension
-        arguments: ['@security.context', '@doctrine.orm.symbb_entity_manager']
-        tags:
-            - { name: twig.extension } 
     symbb.core.event.forum:
         twig.extension.symbb.core.event.forum:
         class: SymBB\Core\ForumBundle\Twig\EventExtension
@@ -20,6 +14,10 @@ services:
     symbb.core.forum.topic.data:
         twig.extension.symbb.core.forum.topic.data:
         class: SymBB\Core\ForumBundle\Twig\TopicDataExtension
-        arguments: ['@doctrine.orm.symbb_entity_manager', '@knp_paginator', '@service_container']
+        arguments: ['@doctrine.orm.symbb_entity_manager', '@knp_paginator', '@service_container', '@symbb.core.forum.topic.flag']
         tags:
             - { name: twig.extension } 
+    symbb.core.forum.topic.flag:
+        twig.extension.symbb.core.forum.topic.flag:
+        class: SymBB\Core\ForumBundle\DependencyInjection\TopicFlagHandler
+        arguments: ['@doctrine.orm.symbb_entity_manager', '@fos_user.user_manager', '@security.context']

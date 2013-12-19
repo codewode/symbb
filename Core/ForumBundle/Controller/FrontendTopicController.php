@@ -57,6 +57,8 @@ class FrontendTopicController  extends Controller
         );
         $pagination->setTemplate($this->getTemplateBundleName('forum').':Pagination:pagination.html.twig');
         
+        $this->get('symbb.core.forum.topic.flag')->removeFlag($topic, 'new');
+        
         $params                 = array();
         $params['topic']        = $topic;
         $params['form']         = $view;
@@ -76,9 +78,10 @@ class FrontendTopicController  extends Controller
         
         
         $form       = null;
-        $saved      = $this->handleTopicRequest($form, $forum);
-        
-        $params = array('forum' => $forum);
+        $topic      = null;
+        $saved      = $this->handleTopicRequest($form, $forum, $topic);
+
+        $params = array('forum' => $forum, 'topic' => $topic);
         $params['form']     = $form->createView();
         $params['bbcodes']  = $this->getBBCodes();
         $params['saved']    = $saved;
@@ -144,7 +147,7 @@ class FrontendTopicController  extends Controller
      * @param type $post
      * @return type
      */
-    protected function handleTopicRequest(&$form, \SymBB\Core\ForumBundle\Entity\Forum &$forum){
+    protected function handleTopicRequest(&$form, \SymBB\Core\ForumBundle\Entity\Forum &$forum, &$topic){
         
         
         $post   = new \SymBB\Core\ForumBundle\Entity\Post();
@@ -161,6 +164,7 @@ class FrontendTopicController  extends Controller
             $topic->setName($post->getName());
             $topic->setForum($forum);
             $post->setTopic($topic);
+            $topic->addPost($post);
             
             $em = $this->getDoctrine()->getManager('symbb');
             $em->persist($topic);
@@ -170,6 +174,8 @@ class FrontendTopicController  extends Controller
             $accessService  = $this->get('symbb.core.user.access');
             $accessService->grantAccess(MaskBuilder::MASK_OWNER, $topic);
             $accessService->grantAccess(MaskBuilder::MASK_OWNER, $post);
+            
+            $this->get('symbb.core.forum.topic.flag')->insertFlags($topic, 'new');
             
             return true;
         }

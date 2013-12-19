@@ -1,7 +1,7 @@
 <?
 namespace SymBB\Core\ForumBundle\Twig;
 
-use \SymBB\Core\ForumBundle\DependencyInjection\PostTemplateEvent;
+use \SymBB\Core\ForumBundle\Event\PostTemplateEvent;
 
 class EventExtension extends \Twig_Extension
 {
