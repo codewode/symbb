@@ -37,13 +37,13 @@ class Topic
 
     /**
      * @ORM\ManyToOne(targetEntity="SymBB\Core\ForumBundle\Entity\Forum", inversedBy="topics")
-     * @ORM\JoinColumn(name="forum_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="forum_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $forum;
 
     /**
      * @ORM\ManyToOne(targetEntity="SymBB\Core\UserBundle\Entity\User", inversedBy="topics")
-     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", onDelete="NO ACTION")
      */
     private $author;
 

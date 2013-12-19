@@ -4,9 +4,10 @@ namespace SymBB\Core\InstallBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Acme\HelloBundle\Entity\Group;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadUserGroupData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -39,17 +40,20 @@ class LoadUserGroupData extends AbstractFixture implements OrderedFixtureInterfa
         $userGuest->setType('guest');
         $userGuest->addGroup($this->getReference('guest-group'));
         $userGuest->setPassword('guest');
+        $userGuest->setEmail('guest@no-email.com');
         
         $userUser       = $userManager->createUser();
         $userUser->setUsername($userName);
         $userUser->setType('user');
         $userUser->setPassword('user');
+        $userUser->setEmail('user@no-email.com');
         $userUser->addGroup($this->getReference('user-group'));
         
         $userAdmin      = $userManager->createUser();
         $userAdmin->setUsername($adminName);
         $userAdmin->setType('user'); // admin is also "user" only the group is different
-        $userUser->setPassword('admin');
+        $userAdmin->setPassword('admin');
+        $userAdmin->setEmail('admin-email.com');
         $userAdmin->addGroup($this->getReference('admin-group'));
        
         $userManager->updateUser($userGuest);

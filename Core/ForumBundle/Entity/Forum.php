@@ -51,7 +51,7 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
 
     /**
      * @ORM\ManyToOne(targetEntity="Forum", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     protected $parent;
     

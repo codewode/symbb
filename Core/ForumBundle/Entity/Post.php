@@ -47,7 +47,7 @@ class Post
 
     /**
      * @ORM\ManyToOne(targetEntity="SymBB\Core\UserBundle\Entity\User", inversedBy="posts")
-     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", onDelete="NO ACTION")
      */
     private $author;
 

@@ -45,7 +45,7 @@ class User extends BaseUser implements UserInterface
 
     /**
      * @ORM\OneToOne(targetEntity="\SymBB\Core\UserBundle\Entity\User\Data")
-     * @ORM\JoinColumn(name="data_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="data_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $symbbData;
 
@@ -54,6 +54,7 @@ class User extends BaseUser implements UserInterface
         parent::__construct();
         $this->topics = new ArrayCollection();
         $this->posts = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
     
     ############################################################################

@@ -4,7 +4,8 @@ namespace SymBB\Core\InstallBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Acme\HelloBundle\Entity\Group;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadUserGroupData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
@@ -31,28 +32,28 @@ class LoadUserGroupData extends AbstractFixture implements OrderedFixtureInterfa
         $adminName  = $this->container->get('translator')->trans('Admin');
         $userName   = $this->container->get('translator')->trans('User');
         
-        $groupGuest = new \SymBB\Core\UserBundle\Entity\Group();
+        
+        $groupManager    = $this->container->get('fos_user.group_manager');
+        
+        $groupGuest = $groupManager->createGroup($guestName);
         $groupGuest->setType('guest');
         $groupGuest->addRole('ROLE_GUEST');
-        $groupGuest->setName($guestName);
         
-        $groupUser = new \SymBB\Core\UserBundle\Entity\Group();
+        $groupUser = $groupManager->createGroup($userName);
         $groupUser->setType('user');
         $groupUser->addRole('ROLE_GUEST');
         $groupUser->addRole('ROLE_USER');
-        $groupUser->setName($userName);
         
-        $groupAdmin = new \SymBB\Core\UserBundle\Entity\Group();
+        $groupAdmin = $groupManager->createGroup($adminName);
         $groupAdmin->setType('admin');
         $groupAdmin->addRole('ROLE_GUEST');
         $groupAdmin->addRole('ROLE_USER');
         $groupAdmin->addRole('ROLE_ADMIN');
-        $groupAdmin->setName($adminName);
-
-        $manager->persist($groupGuest);
-        $manager->persist($groupUser);
-        $manager->persist($groupAdmin);
-        $manager->flush();
+        
+        
+        $groupManager->updateGroup($groupGuest);
+        $groupManager->updateGroup($groupUser);
+        $groupManager->updateGroup($groupAdmin);
 
         $this->addReference('guest-group', $groupGuest);
         $this->addReference('user-group', $groupUser);

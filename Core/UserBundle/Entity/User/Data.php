@@ -22,7 +22,7 @@ class Data
     
     /**
      * @ORM\OneToOne(targetEntity="SymBB\Core\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="cascade")
      */
     private $user;
 

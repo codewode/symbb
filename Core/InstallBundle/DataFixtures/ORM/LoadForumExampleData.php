@@ -4,7 +4,8 @@ namespace SymBB\Core\InstallBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Acme\HelloBundle\Entity\Group;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadForumExampleData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
@@ -33,7 +34,7 @@ class LoadForumExampleData extends AbstractFixture implements OrderedFixtureInte
         $forum->setDescription('This is a Example Kategorie');
         $forum->setPosition(1);
         $forum->setType('category');
-        $forum->setShowSubForumList(1);
+        $forum->setShowSubForumList(0);
         
         $forum2 = new \SymBB\Core\ForumBundle\Entity\Forum();
         $forum2->setActive(1);
