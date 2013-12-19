@@ -1,0 +1,7 @@
+lsw_memcache:
+    session:
+        client: default
+    clients:
+        default:
+            hosts:
+              - { dsn: localhost, port: 11211 }

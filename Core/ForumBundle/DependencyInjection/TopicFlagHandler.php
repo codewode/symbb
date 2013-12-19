@@ -14,6 +14,7 @@ class TopicFlagHandler
     protected $em;
     protected $userManager;
     protected $securityContext;
+    protected $memcache;
     
     /**
      *
@@ -21,10 +22,11 @@ class TopicFlagHandler
      */
     protected $user;
 
-    public function __construct($em, $userManager, $securityContext) {
+    public function __construct($em, $userManager, $securityContext, $memcache) {
         $this->em               = $em;
         $this->userManager      = $userManager;
         $this->securityContext  = $securityContext;
+        $this->memcache         = $memcache;
     }
     
     public function getUser(){
@@ -73,10 +75,13 @@ class TopicFlagHandler
                 }
             }
             $this->em->flush();  
+            
+            $this->fillMemcache($flag);
+            
         }
         
     }
-    
+
     /**
      * 
      * @param \SymBB\Core\ForumBundle\Entity\Topic $topic
@@ -114,17 +119,17 @@ class TopicFlagHandler
         if($this->getUser() instanceof \SymBB\Core\UserBundle\Entity\UserInterface){
 
             if($element instanceof \SymBB\Core\ForumBundle\Entity\Topic){
-                $qb     = $this->em->createQueryBuilder();
-                $qb     ->select('f')
-                        ->from('SymBB\Core\ForumBundle\Entity\Topic\Flag', 'f')
-                        ->where("f.topic = ".$element->getId()." AND f.user = ".$this->getUser()->getId()." AND f.flag = '".$flag."'");
-                $dql    = $qb->getDql();
-                $query  = $this->em->createQuery($dql);
-                $result = $query->getOneOrNullResult();
-        
-                if($result !== null){
-                    $check = true;
+                
+                $users  = $this->getUsersForFlag($flag, $element);
+                foreach($users as $userId){
+                    if(
+                        $userId == $this->getUser()->getId()
+                    ){
+                        $check = true;
+                        break;
+                    }
                 }
+                
             } else if($element instanceof \SymBB\Core\ForumBundle\Entity\Forum){
                 
                 $check = false;
@@ -155,5 +160,37 @@ class TopicFlagHandler
         }
         
         return $check;
+    }
+    
+    protected function getMemcacheKey($flag, Topic $topic){
+        $key = 'symbb.topic.'.$topic->getId().'.flag.'.$flag;
+        return $key;
+    }
+
+
+    protected function fillMemcache($flag, Topic $topic){
+        
+        $flags = $this->em->getRepository('SymBBCoreForumBundle:Topic\Flag', 'symbb')->findBy(array(
+            'flag' => $flag,
+            'topic' => $topic
+        ));
+        
+        $finalFlags = array();
+        foreach($flags as $flag){
+           $finalFlags[] = $flag->getUser()->getId(); 
+        }
+        
+        $key = $this->getMemcacheKey($flag, $topic);
+        $this->memcache->set($key, $finalFlags, 144);
+    }
+    
+    protected function getUsersForFlag($flag, Topic $topic){
+        $key    = $this->getMemcacheKey($flag, $topic);
+        $users  = $this->memcache->get($key);
+        if($users === null){
+            $this->fillMemcache($flag, $topic);
+            $users = (array)$this->memcache->get($key);
+        }
+        return $users;
     }
 }
