@@ -11,7 +11,7 @@ interface UserInterface {
     public function getTopics();
     public function getPosts();
     public function getGroups();
-    public function getType();
+    public function getSymbbType();
     
     /**
      * @return \SymBB\Core\UserBundle\Entity\User\Data 

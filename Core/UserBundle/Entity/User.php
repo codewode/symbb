@@ -68,8 +68,8 @@ class User extends BaseUser implements UserInterface
     public function getUsername() {return parent::getUsername();}
     public function getGroups(){return $this->groups;}
     public function setGroups($value){$this->groups = $value;}
-    public function setType($value){$this->type = $value;}
-    public function getType(){return $this->type;}
+    public function setSymbbType($value){$this->symbbType = $value;}
+    public function getSymbbType(){return $this->symbbType;}
     ############################################################################
     
     public function getSymbbData(){ 

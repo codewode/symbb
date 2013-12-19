@@ -36,7 +36,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         
         $userGuest      = $userManager->createUser();
         $userGuest->setUsername($guestName);
-        $userGuest->setType('guest');
+        $userGuest->setSymbbType('guest');
         $userGuest->addGroup($this->getReference('guest-group'));
         $userGuest->setPlainPassword('guest');
         $userGuest->setEnabled(false);
@@ -44,7 +44,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         
         $userUser       = $userManager->createUser();
         $userUser->setUsername($userName);
-        $userUser->setType('user');
+        $userUser->setSymbbType('user');
         $userUser->setPlainPassword('user');
         $userUser->setEmail('user@no-email.com');
         $userUser->setEnabled(true);
@@ -52,7 +52,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         
         $userAdmin      = $userManager->createUser();
         $userAdmin->setUsername($adminName);
-        $userAdmin->setType('user'); // admin is also "user" only the group is different
+        $userAdmin->setSymbbType('user'); // admin is also "user" only the group is different
         $userAdmin->setPlainPassword('admin');
         $userAdmin->setEmail('admin-email.com');
         $userAdmin->setEnabled(true);
@@ -61,6 +61,11 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $userManager->updateUser($userGuest);
         $userManager->updateUser($userUser);
         $userManager->updateUser($userAdmin);
+        
+        $manager->persist($userGuest);
+        $manager->persist($userUser);
+        $manager->persist($userAdmin);
+        $manager->flush();
     }
 
     /**
