@@ -74,7 +74,7 @@ class UserAccess
      * @throws Exception
      */
     public function grantAccess($mask, $object, $identity = null){
-        
+  
         $objectIdentity     = ObjectIdentity::fromDomainObject($object);
         
         try {
@@ -99,6 +99,7 @@ class UserAccess
         foreach((array)$mask as $currMask){
             $acl->insertObjectAce($securityIdentity, $currMask);
         }
+        
         $this->aclProvider->updateAcl($acl);
     }
     
@@ -108,32 +109,38 @@ class UserAccess
      * @param int $mask PermissionMap::PERMISSION_EDIT, MaskBuilder::PERMISSION_VIEW,...
      * @param SecurityIdentityInterface $indentity
      */
-    public function addAccessCheck($permission, $object, SecurityIdentityInterface $indentity = null){
+    public function addAccessCheck($permission, $object, $indentityObject = null){
         
-        if(!is_object($indentity)){
-            
-            $user               = $this->getUser();
-            
-            if(is_object($user)){
-                $indentity          = UserSecurityIdentity::fromAccount($user);
-                $groups             = $user->getGroups();
-                if(is_object($indentity)){
-                    $this->addAccessCheck($permission, $object, $indentity);
-                }
-                foreach($groups as $group){
-                    $indentity          = $this->getUserGroupIdentity($group);
-                    if(is_object($indentity)){
-                        $this->addAccessCheck($permission, $object, $indentity);
-                    }
-                }
+        $indentity = null;
+        
+        if(!is_object($indentityObject)){
+            $indentityObject    = $this->getUser();
+        }
+        
+        if($indentityObject instanceof UserInterface){
+            $indentity          = UserSecurityIdentity::fromAccount($indentityObject);
+            $groups             = $indentityObject->getGroups();
+            foreach($groups as $group){
+                $this->addAccessCheck($permission, $object, $group);
             }
-            
-        } else {
+        } else if($indentityObject instanceof \SymBB\Core\UserBundle\Entity\Group){
+            $indentity          = $this->getUserGroupIdentity($indentityObject);
+        }
+        
+        if(is_object($indentity)){
             $this->accessChecks[] = array(
                 'object'        => $object,
                 'permission'    => $permission,
                 'indentity'     => $indentity
             );
+        }
+        
+        // If we check a "post" than we must also check the "forum" because a MOD can have acces to "edit" / "delete" the Forum 
+        // is he has also acces to the "posts"
+        if(
+            $object instanceof \SymBB\Core\ForumBundle\Entity\Post
+        ){
+            $this->addAccessCheck($permission, $object->getTopic()->getForum(), $indentityObject);
         }
     }
     
@@ -156,9 +163,9 @@ class UserAccess
                 $acl                = $this->aclProvider->findAcl($objectIdentity);
                 $access             = $acl->isGranted($masks, array($indentity)); 
             } catch (NoAceFoundException $exc) {
-                $access             = false;
+                //$access             = false;
             } catch (AclNotFoundException $exc) {
-                $access             = false;
+                //$access             = false;
             }
             if($access === true){
                 break;

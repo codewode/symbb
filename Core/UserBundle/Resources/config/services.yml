@@ -7,3 +7,9 @@ services:
     symbb.core.user.access:
         class: SymBB\Core\UserBundle\DependencyInjection\UserAccess
         arguments: ["@doctrine.orm.symbb_entity_manager", "@security.context", "@security.acl.provider"]
+    symbb.core.user.access.twig:
+        twig.extension.symbb.core.user.access:
+        class: SymBB\Core\UserBundle\Twig\AccessExtension
+        arguments: ['@symbb.core.user.access']
+        tags:
+            - { name: twig.extension } 

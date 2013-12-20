@@ -147,6 +147,7 @@ Macro to generate a list of all topics
 
     {% endfor %}
 
+    {% if hasSymbbAccess('create', object) %}
     <div class="row topic">
         <div class="col-md-12">
             <div class="btn-group btn-group-xs">
@@ -154,6 +155,7 @@ Macro to generate a list of all topics
             </div>
         </div>
     </div>
+    {% endif %}
 
     {{ knp_pagination_render(topicPagination) }}
 
