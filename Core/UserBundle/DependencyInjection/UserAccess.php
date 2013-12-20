@@ -11,6 +11,7 @@ use \Symfony\Component\Security\Acl\Exception\NoAceFoundException;
 use \SymBB\Core\UserBundle\Acl\PermissionMap;
 use \Symfony\Component\Security\Core\Util\ClassUtils;
 use \Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
+use \SymBB\Core\UserBundle\Acl\MaskBuilder;
 
 class UserAccess
 {
@@ -68,7 +69,7 @@ class UserAccess
     
     /**
      * 
-     * @param array|int $mask
+     * @param array $mask
      * @param object $object
      * @param \SymBB\Core\UserBundle\Entity\UserInterface $identity
      * @throws Exception
@@ -95,10 +96,12 @@ class UserAccess
             throw new Exception('Unknown Security Indentity for '.ClassUtils::getRealClass($identity));
         }
         
-        // or class with SecurityIdentityInterface implementation...
+        $builder = new MaskBuilder();
         foreach((array)$mask as $currMask){
-            $acl->insertObjectAce($securityIdentity, $currMask);
+            $builder->add($currMask);
         }
+        $mask = $builder->get();
+        $acl->insertObjectAce($securityIdentity, $mask);
         
         $this->aclProvider->updateAcl($acl);
     }
@@ -155,7 +158,7 @@ class UserAccess
         foreach($this->accessChecks as $data){
             $object             = $data['object'];
             $indentity          = $data['indentity'];
-            $permission         = $data['permission'];
+            $permission         = strtoupper($data['permission']);
             $objectIdentity     = ObjectIdentity::fromDomainObject($object);
             try {
                 $permissionMap      = new PermissionMap();

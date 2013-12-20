@@ -28,8 +28,8 @@ class FrontendTopicController  extends Controller
         $topic          = $this->getTopicById($id);
         
         $accessService  = $this->get('symbb.core.user.access');
-        $accessService->addAccessCheck(PermissionMap::PERMISSION_VIEW, $topic);
-        $accessService->addAccessCheck(PermissionMap::PERMISSION_VIEW, $topic->getForum());
+        $accessService->addAccessCheck('view', $topic);
+        $accessService->addAccessCheck('view', $topic->getForum());
         $accessService->checkAccess();
         
         $post   = null;
@@ -73,7 +73,7 @@ class FrontendTopicController  extends Controller
         $forum          = $this->getForumById($id);
         
         $accessService  = $this->get('symbb.core.user.access');
-        $accessService->addAccessCheck(PermissionMap::PERMISSION_CREATE, $forum);
+        $accessService->addAccessCheck('write', $forum);
         $accessService->checkAccess();
         
         
@@ -92,8 +92,8 @@ class FrontendTopicController  extends Controller
     public function removeAction($topic){
         
         $accessService  = $this->get('symbb.core.user.access');
-        $accessService->addAccessCheck(PermissionMap::PERMISSION_DELETE, $topic);
-        $accessService->addAccessCheck(PermissionMap::PERMISSION_DELETE, $topic->getForum());
+        $accessService->addAccessCheck('delete', $topic);
+        $accessService->addAccessCheck('delete', $topic->getForum());
         $accessService->checkAccess();
         
         $em         = $this->getDoctrine()->getManager('symbb');
@@ -172,8 +172,8 @@ class FrontendTopicController  extends Controller
             $em->flush();
             
             $accessService  = $this->get('symbb.core.user.access');
-            $accessService->grantAccess(MaskBuilder::MASK_OWNER, $topic);
-            $accessService->grantAccess(MaskBuilder::MASK_OWNER, $post);
+            $accessService->grantAccess('owner', $topic);
+            $accessService->grantAccess('owner', $post);
             
             $this->get('symbb.core.forum.topic.flag')->insertFlags($topic, 'new');
             

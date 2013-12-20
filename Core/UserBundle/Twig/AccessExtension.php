@@ -24,10 +24,7 @@ class AccessExtension extends \Twig_Extension
     
     public function hasSymbbAccess($permissionString, $element)
     {
-        $permissionString   = strtoupper($permissionString);
-        $permission         = '\SymBB\Core\UserBundle\Acl\PermissionMap::PERMISSION_'.$permissionString;
-        $permission         = constant($permission);
-        $this->userAccess->addAccessCheck($permission, $element);
+        $this->userAccess->addAccessCheck($permissionString, $element);
         $access             = $this->userAccess->hasAccess();
         return $access;
     }

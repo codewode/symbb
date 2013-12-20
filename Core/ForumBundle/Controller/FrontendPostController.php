@@ -31,13 +31,13 @@ class FrontendPostController  extends Controller
         if(is_object($post) && $post->getId() > 0){
             $accessService  = $this->get('symbb.core.user.access');
             // check if you have access to edit the post
-            $accessService->addAccessCheck(PermissionMap::PERMISSION_EDIT, $post);
+            $accessService->addAccessCheck('edit', $post);
             // or if you have the access to edit the forum
-            $accessService->addAccessCheck(PermissionMap::PERMISSION_EDIT, $topic->getForum());
+            $accessService->addAccessCheck('edit', $topic->getForum());
             $accessService->checkAccess();
         } else {
             $accessService  = $this->get('symbb.core.user.access');
-            $accessService->addAccessCheck(PermissionMap::PERMISSION_CREATE, $topic->getForum());
+            $accessService->addAccessCheck('write', $topic->getForum());
             $accessService->checkAccess();
         }
         
@@ -76,8 +76,8 @@ class FrontendPostController  extends Controller
     public function deleteAction(\SymBB\Core\ForumBundle\Entity\Post $post){
         
         $accessService  = $this->get('symbb.core.user.access');
-        $accessService->addAccessCheck(PermissionMap::PERMISSION_DELETE, $post);
-        $accessService->addAccessCheck(PermissionMap::PERMISSION_DELETE, $post->getTopic()->getForum());
+        $accessService->addAccessCheck('delete', $post);
+        $accessService->addAccessCheck('delete', $post->getTopic()->getForum());
         $accessService->checkAccess();
         
         $em         = $this->getDoctrine()->getManager('symbb');
@@ -155,7 +155,7 @@ class FrontendPostController  extends Controller
             if($oldId === null){
                 // set access to owner
                 $accessService  = $this->get('symbb.core.user.access');
-                $accessService->grantAccess(MaskBuilder::MASK_OWNER, $post);
+                $accessService->grantAccess('owner', $post);
                 // adding new flags to all user and a answered flag for the current user
                 $this->get('symbb.core.forum.topic.flag')->insertFlags($topic, 'new');
                 $this->get('symbb.core.forum.topic.flag')->insertFlag($topic, 'answered', $post->getAuthor());
