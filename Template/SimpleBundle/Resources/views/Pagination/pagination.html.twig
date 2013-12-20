@@ -1,7 +1,7 @@
 {% trans_default_domain "symbb_frontend_pagination" %}
 
 {% if pageCount > 1 %}
-    <ul class="pagination">
+    <ul class="f-right pagination">
 
     {% if previous is defined %}
         <li>
@@ -69,3 +69,5 @@
     {% endif %}
     </ul>
 {% endif %}
+    
+<div class="clear"></div>

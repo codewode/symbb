@@ -59,3 +59,7 @@ root, body, html {
 .f-left {
     float: left;
 }
+
+.clear {
+    clear: both;
+}

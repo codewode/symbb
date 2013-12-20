@@ -27,12 +27,28 @@
 {% endblock %}
 
 {% block symbb_body %}
-
+ 
+    <ul class="f-left pagination">
+        <li>
+            <a href="#symbb_bbcode_editor">{{ 'Answer'|trans }}</a>
+        </li>
+        <li>
+            <a href="#symbb_bbcode_editor">{{ 'Bottom'|trans }}</a>
+        </li>
+    </ul>
+ 
     {{ knp_pagination_render(pagination) }}
-    
+   
     <div class="symbb_topic">
         {{ symbBBForumTopicMacro.showPostList(topic, pagination) }}
     </div>
+    
+    
+    <ul class="f-left pagination">
+        <li>
+            <a href="#top">{{ 'Top'|trans }}</a>
+        </li>
+    </ul>
     
     {{ knp_pagination_render(pagination) }}
     

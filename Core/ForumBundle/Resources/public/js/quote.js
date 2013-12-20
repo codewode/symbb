@@ -6,7 +6,7 @@
         
         elem.click(function() {
             var text = '[quote=\"'+elem.data('user')+'\"]'+elem.data('quote')+'[/quote]';
-            document.getElementById('form_text').innerHTML = text; 
+            document.getElementById('post_text').innerHTML = text; 
             window.location.href='#symbb_bbcode_editor';
         });
 
