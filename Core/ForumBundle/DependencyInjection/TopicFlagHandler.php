@@ -16,6 +16,9 @@ class TopicFlagHandler
     protected $securityContext;
     protected $memcache;
     
+    const LIFETIME = 144;
+
+
     /**
      *
      * @var UserInterface
@@ -51,6 +54,7 @@ class TopicFlagHandler
         if(is_object($flagObject)){
             $this->em->remove($flagObject);  
             $this->em->flush();  
+            $this->removeFromMemchache($flag, $topic, $user);
         }
         
     }
@@ -76,7 +80,7 @@ class TopicFlagHandler
             }
             $this->em->flush();  
             
-            $this->fillMemcache($flag);
+            $this->fillMemcache($flag, $topic);
             
         }
         
@@ -105,6 +109,9 @@ class TopicFlagHandler
                 $flagObject->setUser($user);
                 $flagObject->setFlag($flag);
                 $this->em->persist($flagObject);
+                if($flushEm){
+                    $this->fillMemcache($flag, $topic);
+                }
             }
         }
         if($flushEm){
@@ -170,6 +177,12 @@ class TopicFlagHandler
 
     protected function fillMemcache($flag, Topic $topic){
         
+        $finalFlags = $this->prepareForMemcache($flag, $topic);
+        $key        = $this->getMemcacheKey($flag, $topic);
+        $this->memcache->set($key, $finalFlags, TopicFlagHandler::LIFETIME);
+    }
+    
+    protected function prepareForMemcache($flag, Topic $topic){
         $flags = $this->em->getRepository('SymBBCoreForumBundle:Topic\Flag', 'symbb')->findBy(array(
             'flag' => $flag,
             'topic' => $topic
@@ -177,13 +190,24 @@ class TopicFlagHandler
         
         $finalFlags = array();
         foreach($flags as $flagObject){
-           $finalFlags[] = $flagObject->getUser()->getId(); 
+            $userId = $flagObject->getUser()->getId();
+            $finalFlags[$userId] = $userId;
         }
-        
-        $key = $this->getMemcacheKey($flag, $topic);
-        $this->memcache->set($key, $finalFlags, 144);
+        return $finalFlags;
     }
     
+    protected function removeFromMemchache($flag, Topic $topic, UserInterface $user){
+        $key    = $this->getMemcacheKey($flag, $topic);
+        $users  = $this->getUsersForFlag($flag, $topic);
+        $userId = $this->getUser()->getId();
+        if(isset($users[$userId])){
+            unset($users[$userId]);
+            $key    = $this->getMemcacheKey($flag, $topic);
+            $this->memcache->set($key, $users, TopicFlagHandler::LIFETIME);
+        }
+    }
+
+
     protected function getUsersForFlag($flag, Topic $topic){
         $key    = $this->getMemcacheKey($flag, $topic);
         $users  = $this->memcache->get($key);
