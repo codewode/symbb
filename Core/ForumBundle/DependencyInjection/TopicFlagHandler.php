@@ -16,7 +16,7 @@ class TopicFlagHandler
     protected $securityContext;
     protected $memcache;
     
-    const LIFETIME = 144;
+    const LIFETIME = 86400; // 1day
 
 
     /**
