@@ -30,15 +30,15 @@ class LoadForumExampleData extends AbstractFixture implements OrderedFixtureInte
         
         $forum = new \SymBB\Core\ForumBundle\Entity\Forum();
         $forum->setActive(1);
-        $forum->setName('Main Kategorie');
-        $forum->setDescription('This is a Example Kategorie');
+        $forum->setName('Main Category');
+        $forum->setDescription('This is a Example Category');
         $forum->setPosition(1);
         $forum->setType('category');
         $forum->setShowSubForumList(0);
         
         $forum2 = new \SymBB\Core\ForumBundle\Entity\Forum();
         $forum2->setActive(1);
-        $forum2->setName('Sub Forum 1 of Main Kategorie');
+        $forum2->setName('Sub Forum 1 of Main Category');
         $forum2->setDescription('This is a Example Forum at Position 1');
         $forum2->setPosition(1);
         $forum2->setParent($forum);
@@ -47,7 +47,7 @@ class LoadForumExampleData extends AbstractFixture implements OrderedFixtureInte
         
         $forum3 = new \SymBB\Core\ForumBundle\Entity\Forum();
         $forum3->setActive(1);
-        $forum3->setName('Sub Forum 2 of Main Kategorie');
+        $forum3->setName('Sub Forum 2 of Main Category');
         $forum3->setDescription('This is a Example Forum at Position 2');
         $forum3->setPosition(2);
         $forum3->setParent($forum);
