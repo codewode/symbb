@@ -58,6 +58,10 @@ class Topic
     public function getId(){return $this->id;}
     public function setId($value){$this->id = $value;}
     public function setForum($object){$this->forum = $object;}
+    /**
+     * 
+     * @return Forum
+     */
     public function getForum(){return $this->forum;}
     public function setAuthor($object){$this->author = $object;}
     public function getAuthor(){return $this->author;}

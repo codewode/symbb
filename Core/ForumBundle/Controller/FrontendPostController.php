@@ -158,9 +158,8 @@ class FrontendPostController  extends Controller
                 $accessService->grantAccess('owner', $post);
                 // adding new flags to all user and a answered flag for the current user
                 $this->get('symbb.core.forum.topic.flag')->insertFlags($topic, 'new');
-                $this->get('symbb.core.forum.topic.flag')->insertFlag($topic, 'answered', $post->getAuthor());
+                $this->get('symbb.core.forum.topic.flag')->insertFlag($topic, 'answered');
             }
-            
             return true;
         }
         return false;

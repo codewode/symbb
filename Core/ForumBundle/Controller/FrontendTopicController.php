@@ -16,7 +16,6 @@ class FrontendTopicController  extends Controller
     protected $post = null;
     protected $forum = null;
 
-
     /**
      * show a Topic
      * @param type $name
@@ -49,12 +48,35 @@ class FrontendTopicController  extends Controller
         $dql    = $qb->getDql();
         $query  = $em->createQuery($dql);
 
+        $page = $this->get('request')->query->get('page', 1);
+        
+        $lastPageFirst = false;
+        if($page == 'last'){
+            $page = 1;
+            $lastPageFirst = true;
+        }
+        
+        
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
             $this->get('request')->query->get('page', 1)/*page number*/,
-            20/*limit per page*/
+            $topic->getForum()->getEntriesPerPage()
         );
+        
+        // TODO optimizer but try to not use plain doctrine query "count" because we will net
+        // other database implementation of knp paginator... eventually we will insert later a elasticsearch or so...
+        if($lastPageFirst){
+            $paginationData = $pagination->getPaginationData();
+            $lastPage = $paginationData['endPage'];
+            $query  = $em->createQuery($dql);
+            $pagination = $paginator->paginate(
+                $query,
+                $lastPage,
+                $topic->getForum()->getEntriesPerPage()
+            );
+        }
+        
         $pagination->setTemplate($this->getTemplateBundleName('forum').':Pagination:pagination.html.twig');
         
         $this->get('symbb.core.forum.topic.flag')->removeFlag($topic, 'new');

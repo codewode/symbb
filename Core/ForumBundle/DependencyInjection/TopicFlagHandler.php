@@ -71,16 +71,17 @@ class TopicFlagHandler
             $users          = $this->userManager->findUsers();
             foreach($users as $user){
                 if(
-                    $flag !== 'new' ||
-                    $user->getId() != $this->getUser()->getId() // new flag only by "other" users
+                    $user->getSymbbType() === 'user' &&
+                    (
+                        $flag !== 'new' ||
+                        $user->getId() != $this->getUser()->getId() // new flag only by "other" users
+                    )
                 ){
-
                     $this->insertFlag($topic, $flag, $user, false);
                 }
             }
-            $this->em->flush();  
             
-            $this->fillMemcache($flag, $topic);
+            $this->em->flush();  
             
         }
         
@@ -93,32 +94,36 @@ class TopicFlagHandler
      * @param \SymBB\Core\UserBundle\Entity\UserInterface $user
      */
     public function insertFlag(Topic $topic, $flag, UserInterface $user = null, $flushEm = true){
+
         if($user === null){
             $user = $this->getUser();
         }
         // only for real "users"
         if($user->getSymbbType() == 'user'){
-            $flagObject = $this->em->getRepository('SymBBCoreForumBundle:Topic\Flag', 'symbb')->findOneBy(array(
-                'topic' => $topic,
-                'user' => $user,
-                'flag' => $flag
-            ));
-            if(!is_object($flagObject)){
+            
+            $users  = $this->getUsersForFlag($flag, $topic);
+            $userId = $user->getId();
+            if(!isset($users[$userId])){
+                
+                // save into database
                 $flagObject = new \SymBB\Core\ForumBundle\Entity\Topic\Flag();
                 $flagObject->setTopic($topic);
                 $flagObject->setUser($user);
                 $flagObject->setFlag($flag);
                 $this->em->persist($flagObject);
-                if($flushEm){
-                    $this->fillMemcache($flag, $topic);
-                }
+                
+                // save into memcache
+                $users[$userId] = $userId;
+                $key = $this->getMemcacheKey($flag, $topic);
+                $this->memcache->set($key, $users, TopicFlagHandler::LIFETIME);
             }
         }
         if($flushEm){
             $this->em->flush();
         }
     }
-    
+
+
     public function checkFlag($element, $flag){
         $check = false;
 
