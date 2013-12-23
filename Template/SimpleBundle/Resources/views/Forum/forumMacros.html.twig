@@ -8,7 +8,7 @@ Macro to generate the row of a forum
 
 {% macro forumRow(object) %}
 <div class="row forum"> 
-        <div class="col-md-6 nameBlock">{{_self.nameRow(object)}}</div>
+        <div class="col-md-6 nameBlock">{{_self.nameRow(object, true, true)}}</div>
         <div class="col-md-1 topicCountBlock">{{object.getTopicCount()}}</div>
         <div class="col-md-1 postCountBlock">{{object.getPostCount()}}</div>
         <div class="col-md-4 lastPostBlock">{{_self.lastPostRow(object)}}</div>
@@ -61,11 +61,16 @@ Macro to generate the structure of the forum/Category name Row
 
 -->
 
-{% macro nameRow(object) %}
+{% macro nameRow(object, showIcon, showLabels) %}
 <a href="{{ path('_symbb_forum_show', {'id': object.getId(), 'name': object.getSeoName()}) }}">
+    {% if showIcon %}
+    <i class="f-left glyphicon glyphicon-list"></i>
+    {% endif %}
     <div class="name">{{object.getName()}}
-    {% if checkSymbbForNewPostFlag(object) %}
-        <span class="label label-success">{% trans %}new{% endtrans %}</span>
+    {% if showLabels %}
+        {% if checkSymbbForNewPostFlag(object) %}
+            <span class="label label-success">{% trans %}new{% endtrans %}</span>
+        {% endif %}
     {% endif %}
     </div>
     <div class="description">{{object.getDescription()}}</div>
@@ -123,6 +128,7 @@ Macro to generate a list of all topics
     <div class="row topic">
         <div class="col-md-7 nameBlock">
             <a href="{{ path('_symbb_forum_topic_show', {'id': topic.getId(), 'name': topic.getSeoName()}) }}">
+                <i class="f-left glyphicon glyphicon-th-list"></i>
                 <div class="name">{{topic.getName()}}
                     {% if app.user and app.user.getId() == topic.getAuthor().getId() %}
                     <span class="label label-default">{% trans %}author{% endtrans %}</span>

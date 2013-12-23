@@ -86,6 +86,10 @@
     min-height: 3em;
 }
 
+.symbb_list .row .glyphicon {
+    margin-right: 0.8em;
+}
+
 .symbb_list  .topicCountBlock ,
 .symbb_list  .postCountBlock {
     text-align: right;
