@@ -75,21 +75,22 @@ Macro to generate the structure of the forum/Category name Row
         </div>
     {% endif %}
     <div class="clear"></div>
+    {% if object.hasShowSubForumList() %}
+        <div class="subForumList">
+            {% if object.getChildren()|length > 0 %}
+            {% trans %}subforums{% endtrans %}: 
+            {% endif %}
+            {% for subobject in object.getChildren() if subobject.isActive() %}
+                <a href="{{ path('_symbb_forum_show', {'id': subobject.getId(), 'name': subobject.getSeoName()}) }}">
+                {{subobject.getName()}}
+                </a>
+                {% if loop.index <  object.getChildren()|length %}, {% endif %}
+            {% endfor %}
+        </div>
+        <div class="clear"></div>
+    {% endif %}
     <div class="description">{{object.getDescription()}}</div>
 </a>
-{% if object.hasShowSubForumList() %}
-    <div class="subForumList">
-        {% if object.getChildren()|length > 0 %}
-        {% trans %}subforums{% endtrans %}: 
-        {% endif %}
-        {% for subobject in object.getChildren() if subobject.isActive() %}
-            <a href="{{ path('_symbb_forum_show', {'id': subobject.getId(), 'name': subobject.getSeoName()}) }}">
-            {{subobject.getName()}}
-            </a>
-            {% if loop.index <  object.getChildren()|length %}, {% endif %}
-        {% endfor %}
-    </div>
-{% endif %}
 
 {% endmacro %}
 

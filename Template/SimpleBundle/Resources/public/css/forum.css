@@ -60,7 +60,11 @@
 }
 
 .symbb_list .row.forum .subForumList {
+    float: left;
     font-size: 0.8em;
+    margin-left: 2.2em;
+    margin-top: -0.5em;
+    font-style: italic;
 }
 
 
