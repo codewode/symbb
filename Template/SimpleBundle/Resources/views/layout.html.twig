@@ -45,9 +45,14 @@
         {% endblock %}
         
         <div class="symbb_body">
-        {% block symbb_body %}
+            
+            {% if app.getUser.getSymbbType() == 'guest' %}
+                <div class="alert alert-info">{% trans %}You are not currently logged.{% endtrans %}</div>
+            {% endif %}
+            
+            {% block symbb_body %}
 
-        {% endblock %}
+            {% endblock %}
         </div>
     </body>
 </html>

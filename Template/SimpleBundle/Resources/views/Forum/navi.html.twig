@@ -28,7 +28,8 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if app.user.getSymbbType == 'guest' %}
-                <li><a href="{{ path('fos_user_security_login') }}">{% trans %}Login{% endtrans %}</a></li>
+                <li><a href="{{ path('fos_user_security_login') }}">{% trans %}Sign in{% endtrans %}</a></li>
+                <li><a href="{{ path('fos_user_registration_register') }}">{% trans %}Sign up{% endtrans %}</a></li>
                 {% else %}
                 <li><a href="{{ path('fos_user_security_logout') }}">{% trans %}Logout{% endtrans %}</a></li>
                 {% endif %}
