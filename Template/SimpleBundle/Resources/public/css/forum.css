@@ -90,6 +90,18 @@
     margin-right: 0.8em;
 }
 
+.symbb_list .row .name {
+    margin-bottom: 0.5em;
+    margin-right: 0.5em;
+    float: left;
+}
+.symbb_list .row .labels {
+    float: right;
+    margin-top: -0.3em;
+}
+
+
+
 .symbb_list  .topicCountBlock ,
 .symbb_list  .postCountBlock {
     text-align: right;
