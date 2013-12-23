@@ -1,4 +1,11 @@
 <?
+/**
+*
+* @package symBB
+* @copyright (c) 2013 Christian Wielath
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+*/
 namespace SymBB\Core\EventBundle\Twig;
 
 use \SymBB\Core\EventBundle\Event\PostTemplateEvent;
@@ -38,7 +45,7 @@ class EventExtension extends \Twig_Extension
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->container->get('event_dispatcher');
         $event      = new PostTemplateEvent($this->env, $post);
-        $dispatcher->dispatch('symbb.forum.template.'.$eventName, $event);
+        $dispatcher->dispatch('symbb.topic.template.'.$eventName, $event);
         $html       = $event->getHtml();
         return $html;
     }
