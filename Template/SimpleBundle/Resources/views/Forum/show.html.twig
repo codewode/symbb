@@ -14,7 +14,7 @@
         {{ symbBBForumMacro.showForumList(forum.getChildren(), 1) }}
         {% if forum.getType() == 'forum' %}
             {% set topicPagination = getTopicPagination(forum) %}
-            {{ symbBBForumMacro.showTopicList(topicPagination, true) }}
+            {{ symbBBForumMacro.showTopicList(topicPagination, forum) }}
         {% endif %}
     </div>
 {% endblock %}

@@ -119,12 +119,10 @@ Macro to generate a list of all topics
 
 -->
 
-{% macro showTopicList(topicPagination, newButton) %}
+{% macro showTopicList(topicPagination, forum) %}
 
     {{ _self.showEmptyTopicHeader() }}
     
-    {% set forum = null %}
-
     {% for topic in topicPagination %}
 
     <div class="row topic">
@@ -155,22 +153,17 @@ Macro to generate a list of all topics
         </div>
     </div>
 
-    
-    {% set forum = topic.getForum() %}
-
     {% endfor %}
 
-    {% if newButton %}
-        {% if forum %}
-            {% if hasSymbbAccess('write', forum) %}
-            <div class="row topic">
-                <div class="col-md-12">
-                    <div class="btn-group btn-group-xs">
-                        <button type="button" class="btn btn-default btn-primary" onclick="window.location.href='{{ path('_symbb_forum_topic_new', {'name': forum.getSeoName(), 'id': forum.getId()}) }}'">{% trans %}new Topic{% endtrans %}</button>
-                    </div>
+    {% if forum %}
+        {% if hasSymbbAccess('write', forum) %}
+        <div class="row topic">
+            <div class="col-md-12">
+                <div class="btn-group btn-group-xs">
+                    <button type="button" class="btn btn-default btn-primary" onclick="window.location.href='{{ path('_symbb_forum_topic_new', {'name': forum.getSeoName(), 'id': forum.getId()}) }}'">{% trans %}new Topic{% endtrans %}</button>
                 </div>
             </div>
-            {% endif %}
+        </div>
         {% endif %}
     {% endif %}
 
