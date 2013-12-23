@@ -30,16 +30,16 @@
                     {{post.getAuthor().getUsername()}}
                 </div>
                 {{ executeSymbbPostEvent('after.username', post) }}
+                {{ executeSymbbPostEvent('before.userdata', post) }}
                 <div class="userdata">
-                    {{ executeSymbbPostEvent('before.userdata', post) }}
                     <div class="text">{% trans %}posts{% endtrans %}:</div>
                     <div class="data">{{post.getAuthor().getPosts().count()}}</div>
                     <div class="clear"></div>
                     <div class="text">{% trans %}Join Date{% endtrans %}:</div>
                     <div class="data">{{post.getAuthor().getCreated()|format_date}}</div>
                     <div class="clear"></div>
-                    {{ executeSymbbPostEvent('after.userdata', post) }}
                 </div>
+                {{ executeSymbbPostEvent('after.userdata', post) }}
             </div>
             <div class="textblock">
                 <div class="date">
