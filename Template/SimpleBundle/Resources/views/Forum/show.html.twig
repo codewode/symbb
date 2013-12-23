@@ -12,7 +12,9 @@
 
     <div class="symbb_list">
         {{ symbBBForumMacro.showForumList(forum.getChildren(), 1) }}
-        {{ symbBBForumMacro.showTopicList(forum) }}
+        {% if forum.getType() == 'forum' %}
+            {{ symbBBForumMacro.showTopicList(forum) }}
+        {% endif %}
     </div>
 {% endblock %}
 

@@ -2,7 +2,7 @@ services:
     symbb.listener.post.rating:
         class: SymBB\Post\RatingBundle\EventListener\TemplateListener
         tags:
-            - { name: kernel.event_listener, event: symbb.forum.after.text, method: afterText }
+            - { name: kernel.event_listener, event: symbb.forum.template.after.text, method: afterText }
    
     symbb.post.rating.util:
         twig.extension.symbb.post.rating.util:

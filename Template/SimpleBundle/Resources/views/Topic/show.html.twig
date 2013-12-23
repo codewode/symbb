@@ -6,7 +6,6 @@
     {{ parent() }}
     {% stylesheets 
         '@SymBBTemplateSimpleBundle/Resources/public/css/topic.css' filter='?yui_css'
-        '@SymBBTemplateSimpleBundle/Resources/public/css/bbeditor.css' filter='?yui_css'
      %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -15,7 +14,6 @@
 {% block javascripts %} 
     {{ parent() }}
     {% javascripts 
-        '@SymBBCoreForumBundle/Resources/public/js/bbcodeeditor.js' filter='?yui_js'
         '@SymBBCoreForumBundle/Resources/public/js/quote.js' filter='?yui_js'
      %}
     <script src="{{ asset_url }}"></script>
@@ -54,7 +52,7 @@
     
     {% if hasSymbbAccess('write', topic.getForum()) %}
     
-        {% include getSymbbTemplateConfig('forum') ~ ':Post:new.html.twig' with {'form': form, 'bbcodes': bbcodes, 'topic': topic, 'saved': false} %}
+        {% include getSymbbTemplateConfig('forum') ~ ':Post:new.html.twig' with {'form': form, 'topic': topic, 'saved': false} %}
 
     {% endif %}
     

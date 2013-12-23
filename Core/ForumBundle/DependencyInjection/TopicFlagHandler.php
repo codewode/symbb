@@ -45,18 +45,20 @@ class TopicFlagHandler
             $user = $this->getUser();
         }
         
-        $flagObject = $this->em->getRepository('SymBBCoreForumBundle:Topic\Flag', 'symbb')->findOneBy(array(
-            'topic' => $topic,
-            'user' => $user,
-            'flag' => $flag
-        ));
-        
-        if(is_object($flagObject)){
-            $this->em->remove($flagObject);  
-            $this->em->flush();  
-            $this->removeFromMemchache($flag, $topic, $user);
+        // only if the user is a real "user" and not a guest or bot
+        if($user->getSymbbType() === 'user'){
+           $flagObject = $this->em->getRepository('SymBBCoreForumBundle:Topic\Flag', 'symbb')->findOneBy(array(
+                'topic' => $topic,
+                'user' => $user,
+                'flag' => $flag
+            ));
+
+            if(is_object($flagObject)){
+                $this->em->remove($flagObject);  
+                $this->em->flush();  
+                $this->removeFromMemchache($flag, $topic, $user);
+            } 
         }
-        
     }
     
     
@@ -99,7 +101,7 @@ class TopicFlagHandler
             $user = $this->getUser();
         }
         // only for real "users"
-        if($user->getSymbbType() == 'user'){
+        if($user->getSymbbType() === 'user'){
             
             $users  = $this->getUsersForFlag($flag, $topic);
             $userId = $user->getId();
@@ -128,7 +130,10 @@ class TopicFlagHandler
         $check = false;
 
         
-        if($this->getUser() instanceof \SymBB\Core\UserBundle\Entity\UserInterface){
+        if(
+           $this->getUser() instanceof \SymBB\Core\UserBundle\Entity\UserInterface && 
+           $this->getUser()->getSymbbType() === 'user'
+        ){
 
             if($element instanceof \SymBB\Core\ForumBundle\Entity\Topic){
                 

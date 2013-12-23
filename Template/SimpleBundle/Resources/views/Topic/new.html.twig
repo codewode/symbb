@@ -1,6 +1,6 @@
 {% trans_default_domain "symbb_frontend" %}
 
-{% extends getSymbbTemplateConfig('forum') ~ '::layoutEditor.html.twig' %}
+{% extends getSymbbTemplateConfig('forum') ~ ':Forum:layout.html.twig' %}
 
 {% block symbb_body %}
 
@@ -30,16 +30,6 @@
             </div>
             <div class="col-md-9 textblock">
                 {{ form_start(form) }}
-                    
-                    {% for key, groups in bbcodes %}
-
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-info btn-sm">{{ key }}</button>
-                        {% for bbcode in groups %}
-                        <button type="button" data-tag="{{ bbcode.tag }}" class="btn btn-default btn-sm symbb_bbcode_code">{{ bbcode.name }}</button>
-                        {% endfor %}
-                    </div>
-                    {% endfor %}
                     
                     {{ form_errors(form) }}
                     

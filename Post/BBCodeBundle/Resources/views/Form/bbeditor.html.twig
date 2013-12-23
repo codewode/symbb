@@ -1,0 +1,14 @@
+{% block bbeditor_widget %}
+    {% spaceless %}
+        {% for key, groups in getSymbbBBCodes() %}
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-info btn-sm">{{ key }}</button>
+            {% for bbcode in groups %}
+            <button type="button" data-tag="{{ bbcode.tag }}" class="btn btn-default btn-sm symbb_bbcode_code">{{ bbcode.name }}</button>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        {{ block('textarea_widget') }}
+    {% endspaceless %}
+{% endblock %}

@@ -5,12 +5,6 @@ services:
         arguments: ['@service_container']
         tags:
             - { name: twig.extension } 
-    symbb.core.event.forum:
-        twig.extension.symbb.core.event.forum:
-        class: SymBB\Core\ForumBundle\Twig\EventExtension
-        arguments: ['@service_container']
-        tags:
-            - { name: twig.extension } 
     symbb.core.forum.topic.data:
         twig.extension.symbb.core.forum.topic.data:
         class: SymBB\Core\ForumBundle\Twig\TopicDataExtension
@@ -18,6 +12,5 @@ services:
         tags:
             - { name: twig.extension } 
     symbb.core.forum.topic.flag:
-        twig.extension.symbb.core.forum.topic.flag:
         class: SymBB\Core\ForumBundle\DependencyInjection\TopicFlagHandler
         arguments: ['@doctrine.orm.symbb_entity_manager', '@fos_user.user_manager', '@security.context', '@memcache.default']

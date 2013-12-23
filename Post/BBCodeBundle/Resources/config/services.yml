@@ -1,0 +1,21 @@
+services:
+    symbb.listener.post.bbcode.editor:
+        class: SymBB\Post\BBCodeBundle\EventListener\TemplateListener
+        tags:
+            - { name: kernel.event_listener, event: symbb.forum.template.layout.editor.stylesheets, method: stylesheets }
+            - { name: kernel.event_listener, event: symbb.forum.template.layout.editor.javascripts, method: javascripts }
+    symbb.listener.post.bbcode.form:
+        class: SymBB\Post\BBCodeBundle\EventListener\FormListener
+        tags:
+            - { name: kernel.event_listener, event: symbb.forum.post.form, method: getFormType }
+    symbb.post.bbcode.manager:
+        class: SymBB\Post\BBCodeBundle\DependencyInjection\BBCodeManager
+        arguments: ['@fm_bbcode.decoda_manager', '@translator']
+    symbb.post.bbcode.manager.twig:
+        twig.extension.symbb.post.bbcode.manager.twig:
+        class: SymBB\Post\BBCodeBundle\Twig\BBCodeManagerExtension
+        arguments: ['@symbb.post.bbcode.manager']
+        tags:
+            - { name: twig.extension } 
+            
+            

@@ -1,29 +1,20 @@
 <?
 
-namespace SymBB\Core\ForumBundle\Event;
+namespace SymBB\Core\EventBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use \SymBB\Core\UserBundle\Entity\UserInterface;
 use \SymBB\Core\ForumBundle\Entity\Post;
 
-class PostTemplateEvent extends Event
+class DefaultTemplateEvent extends Event
 {
     
-    /**
-     * @var Post 
-     */
-    protected $post;
     protected $env;
     protected $html = '';
 
 
-    public function __construct($env, Post $post) {
-        $this->post = $post;
+    public function __construct($env) {
         $this->env = $env;
-    }
-    
-    public function getPost(){
-        return $this->post;
     }
     
     public function render($templateName, $params){
@@ -31,6 +22,10 @@ class PostTemplateEvent extends Event
             $templateName,
             $params
         );
+        $this->html = $html;
+    }
+    
+    public function setHtml($html){
         $this->html = $html;
     }
     

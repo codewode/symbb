@@ -84,7 +84,6 @@ class FrontendTopicController  extends Controller
         $params                 = array();
         $params['topic']        = $topic;
         $params['form']         = $view;
-        $params['bbcodes']      = $this->getBBCodes();
         $params['pagination']   = $pagination;
 
         return $this->render($this->getTemplateBundleName('forum').':Topic:show.html.twig', $params);
@@ -93,6 +92,14 @@ class FrontendTopicController  extends Controller
     public function newAction($name, $id){
         
         $forum          = $this->getForumById($id);
+        
+        // user can only create new topic in "forum" not in "category" or "link"
+        if($forum->getType() !== 'forum'){
+            return $this->forward('SymBBCoreForumBundle:Frontend:forumShow', array(
+                'name' => $forum->getSeoName(),
+                'id'  => $forum->getId()
+            ));
+        }
         
         $accessService  = $this->get('symbb.core.user.access');
         $accessService->addAccessCheck('write', $forum);
@@ -105,7 +112,6 @@ class FrontendTopicController  extends Controller
 
         $params = array('forum' => $forum, 'topic' => $topic);
         $params['form']     = $form->createView();
-        $params['bbcodes']  = $this->getBBCodes();
         $params['saved']    = $saved;
         
         return $this->render($this->getTemplateBundleName('forum').':Topic:new.html.twig', $params);
@@ -228,44 +234,14 @@ class FrontendTopicController  extends Controller
      */
     protected function getPostForm($topic){
         
-        $post = \SymBB\Core\ForumBundle\Entity\Post::createNew($topic, $this->getUser());
-        $url    = $this->generateUrl('_symbb_new_post', array('name' => $topic->getSeoName(), 'topic' => $topic->getId()));
-        $form   = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\PostType($url), $post);
+        $post       = \SymBB\Core\ForumBundle\Entity\Post::createNew($topic, $this->getUser());
+        $url        = $this->generateUrl('_symbb_new_post', array('name' => $topic->getSeoName(), 'topic' => $topic->getId()));
+        $dispatcher = $this->get('event_dispatcher');
+        $form       = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\PostType($url, $post, $dispatcher), $post);
         
         return $form;
     }
 
-    /**
-     * get a list of grouped BBCodes
-     * @return array
-     */
-    protected function getBBCodes(){
-        $bbcodes     = array();
-        $decoda    = $this->get('fm_bbcode.decoda_manager')->get('filters', 'default');
-        $filters    = $decoda->getFilters();
-        foreach($filters as $filterKey => $filter){
-            $tags = $filter->getTags();
-            $groupName = $this->get('translator')->trans($filterKey, array(), 'symbb_bbcode_groups');
-            foreach($tags as $tag => $conf){
-                if(
-                    (
-                        $filterKey == 'email' && $tag == 'mail'
-                    ) ||
-                    (
-                        $filterKey == 'url' && $tag == 'link'
-                    ) ||
-                    (
-                        $filterKey == 'image' && $tag == 'img'
-                    )
-                ){
-                    // double bbcode...
-                    continue;
-                }
-                $bbcodes[$groupName][] = array('tag' => $tag, 'name' => $tag);
-            }
-        }
-        return $bbcodes;
-    }
     
     /**
      * get the Template Bundle name

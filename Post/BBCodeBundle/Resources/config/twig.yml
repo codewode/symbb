@@ -1,0 +1,4 @@
+twig:
+    form:
+        resources:
+            - 'SymBBPostBBCodeBundle:Form:bbeditor.html.twig'

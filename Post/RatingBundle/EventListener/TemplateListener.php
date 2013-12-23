@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\HttpKernel;
 
 class TemplateListener
 {
-    public function afterText(\SymBB\Core\ForumBundle\Event\PostTemplateEvent $event)
+    public function afterText(\SymBB\Core\EventBundle\Event\PostTemplateEvent $event)
     {
         $post = $event->getPost();
         $event->render('SymBBPostRatingBundle:Post:rating.html.twig', array('object' => $post));

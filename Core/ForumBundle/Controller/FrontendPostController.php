@@ -192,7 +192,11 @@ class FrontendPostController  extends Controller
             $url    = $this->generateUrl('_symbb_new_post', array('name' => $topic->getSeoName(), 'topic' => $topic->getId()));
         }
         
-        $form   = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\PostType($url), $post);
+        $dispatcher = $this->get('event_dispatcher');
+        $formType   = new \SymBB\Core\ForumBundle\Form\Type\PostType($url, $post, $dispatcher);
+        
+        
+        $form   = $this->createForm($formType, $post);
         
         return $form;
     }
