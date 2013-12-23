@@ -101,6 +101,10 @@
 }
 
 
+.symbb_list .row .user {
+    clear: both;
+}
+
 
 .symbb_list  .topicCountBlock ,
 .symbb_list  .postCountBlock {
