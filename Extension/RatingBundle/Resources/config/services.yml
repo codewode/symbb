@@ -1,0 +1,12 @@
+services:
+    symbb.listener.post.rating:
+        class: SymBB\Extension\RatingBundle\EventListener\TemplateListener
+        tags:
+            - { name: kernel.event_listener, event: symbb.topic.template.after.text, method: afterText }
+   
+    symbb.extensionrating.util:
+        twig.extension.symbb.extensionrating.util:
+        class: SymBB\Extension\RatingBundle\Twig\UtilExtension
+        arguments: ['@doctrine', '@security.context']
+        tags:
+            - { name: twig.extension } 
