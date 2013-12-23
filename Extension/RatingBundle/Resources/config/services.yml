@@ -3,6 +3,7 @@ services:
         class: SymBB\Extension\RatingBundle\EventListener\TemplateListener
         tags:
             - { name: kernel.event_listener, event: symbb.topic.template.after.text, method: afterText }
+            - { name: kernel.event_listener, event: symbb.forum.template.layout.topic.stylesheets, method: topicStylesheets }
    
     symbb.extensionrating.util:
         twig.extension.symbb.extensionrating.util:
