@@ -154,8 +154,11 @@ class FrontendPostController  extends Controller
         
         if ($form->isValid()) {
             
+            $topic->setChangedValue(new \DateTime());
+            
             $em = $this->getDoctrine()->getManager('symbb');
             $em->persist($post);
+            $em->persist($topic);
             $em->flush();
             
             //only if the id was "0" ( only by "new" )

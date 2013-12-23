@@ -43,6 +43,45 @@ class FrontendController  extends Controller
         return $this->render($this->getTemplateBundleName('forum').':Forum:show.html.twig', $params);
     }
     
+    public function newestAction(){
+        
+        if($this->getUser()->getSymbbType() !== 'user'){
+            return $this->render($this->getTemplateBundleName('forum').':Exception:noGuest.html.twig');
+        } 
+        
+        $em     = $this->get('doctrine')->getManager('symbb');
+        $qb     = $em->createQueryBuilder();
+        
+        $dql    = "SELECT 
+                        t 
+                    FROM 
+                        SymBB\Core\ForumBundle\Entity\Topic t 
+                    WHERE
+                        ( 
+                            SELECT 
+                                count(f)
+                            FROM 
+                                SymBB\Core\ForumBundle\Entity\Topic\Flag f
+                            WHERE 
+                                f.topic = t.id AND
+                                f.flag = 'new' AND
+                                f.user = ".(int)$this->getUser()->getId()."
+                        ) > 0
+                    ORDER BY
+                        t.changed DESC"; 
+        
+        $query  = $em->createQuery($dql);
+        
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1)/*page number*/,
+            20
+        );
+        
+        return $this->render($this->getTemplateBundleName('forum').':Forum:newest.html.twig', array('topicPagination' => $pagination));
+    }
+    
     
     protected function getTemplateBundleName($for = 'forum'){
         if($this->templateBundle === null){

@@ -41,6 +41,11 @@ class Topic
      * @ORM\OrderBy({"changed" = "ASC", "created" = "ASC"})
      */
     private $posts;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="SymBB\Core\ForumBundle\Entity\Topic\Flag", mappedBy="topic")
+     */
+    private $flags;
 
     /**
      * @ORM\ManyToOne(targetEntity="SymBB\Core\ForumBundle\Entity\Forum", inversedBy="topics")
@@ -73,6 +78,7 @@ class Topic
     public function setAuthor($object){$this->author = $object;}
     public function getAuthor(){return $this->author;}
     public function getPosts(){return $this->posts;}
+    public function getFlags(){return $this->flags;}
     public function getCreated(){return $this->created;}
     public function getChanged(){return $this->changed;}
     ############################################################################

@@ -21,7 +21,7 @@ class Flag
 {
     /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="SymBB\Core\ForumBundle\Entity\Topic", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="SymBB\Core\ForumBundle\Entity\Topic", inversedBy="flags")
      * @ORM\JoinColumn(name="topic_id", referencedColumnName="id", onDelete="cascade")
      */
     private $topic;

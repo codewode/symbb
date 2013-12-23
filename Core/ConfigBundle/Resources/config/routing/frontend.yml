@@ -10,6 +10,10 @@ _symbb_forum_show:
     pattern:  /f-{name}/{id}
     defaults: { _controller: SymBBCoreForumBundle:Frontend:forumShow }
     
+_symbb_forum_newest:
+    pattern:  /newest
+    defaults: { _controller: SymBBCoreForumBundle:Frontend:newest }
+    
 _symbb_forum_topic_new:
     pattern:  /f-{name}/{id}/new
     defaults: { _controller: SymBBCoreForumBundle:FrontendTopic:new }

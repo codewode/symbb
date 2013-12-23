@@ -38,7 +38,7 @@ class TopicDataExtension extends \Twig_Extension
         $qb     ->select('t')
                 ->from('SymBB\Core\ForumBundle\Entity\Topic', 't')
                 ->where('t.forum = '.$forum->getId())
-                ->orderBy('t.created', 'ASC');
+                ->orderBy('t.changed', 'DESC');
         $dql    = $qb->getDql(); 
         $query  = $this->em->createQuery($dql);
 
