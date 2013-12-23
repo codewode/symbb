@@ -70,3 +70,29 @@
     padding-top: 0.5em;
     margin-right: 1em;
 }
+
+.symbb_topic .userblock {
+    width: 15em;
+    float: left;
+    margin-top: 3em;    
+    margin-left: 1em;
+}
+
+.symbb_topic .textblock {
+    width: auto;
+}
+
+.symbb_topic .userblock .username {
+   font-size: 1em;
+   font-weight: bold;
+   text-decoration: underline;
+   margin-top: 0.5em;
+}
+
+.symbb_topic .userblock .userdata .text {
+   float: left;
+}
+
+.symbb_topic .userblock .userdata .data {
+    margin-left: 8em;
+}

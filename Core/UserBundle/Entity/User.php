@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User extends BaseUser implements UserInterface
 {
@@ -56,12 +57,18 @@ class User extends BaseUser implements UserInterface
      */
     private $symbbData;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
     public function __construct()
     {
         parent::__construct();
-        $this->topics = new ArrayCollection();
-        $this->posts = new ArrayCollection();
-        $this->groups = new ArrayCollection();
+        $this->topics   = new ArrayCollection();
+        $this->posts    = new ArrayCollection();
+        $this->groups   = new ArrayCollection();
+        $this->created  = new \DateTime();
     }
     
     ############################################################################
@@ -77,7 +84,16 @@ class User extends BaseUser implements UserInterface
     public function setGroups($value){$this->groups = $value;}
     public function setSymbbType($value){$this->symbbType = $value;}
     public function getSymbbType(){return $this->symbbType;}
+    public function getCreated(){return $this->created;}
     ############################################################################
+    
+    /**
+    * @ORM\PrePersist
+    */
+    public function setCreatedValue()
+    {
+       $this->created = new \DateTime();
+    }
     
     public function getSymbbData(){ 
         $data = $this->symbbData; 

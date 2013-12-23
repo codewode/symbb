@@ -19,17 +19,27 @@
             </div>
         </div>
         <div class="row body">
-            <div class="col-md-3 userblock">
+            <div class="userblock">
                 {{ executeSymbbPostEvent('before.avatar', post) }}
                 <div class="avatar">
                     <img src="{{getSymbbUserAvatar(post.getAuthor())}}" />
                 </div>
                 {{ executeSymbbPostEvent('after.avatar', post) }}
                 {{ executeSymbbPostEvent('before.username', post) }}
-                {{post.getAuthor().getUsername()}}
+                <div class="username">
+                    {{post.getAuthor().getUsername()}}
+                </div>
                 {{ executeSymbbPostEvent('after.username', post) }}
+                <div class="userdata">
+                    <div class="text">{% trans %}posts{% endtrans %}:</div>
+                    <div class="data">{{post.getAuthor().getPosts().count()}}</div>
+                    <div class="clear"></div>
+                    <div class="text">{% trans %}Join Date{% endtrans %}:</div>
+                    <div class="data">{{post.getAuthor().getCreated()|format_date}}</div>
+                    <div class="clear"></div>
+                </div>
             </div>
-            <div class="col-md-9 textblock">
+            <div class="textblock">
                 <div class="date">
                     {% trans with {'%user%': post.getAuthor().getUsername(), '%date%': post.getChanged()|format_date, '%time%': post.getChanged()|date('H:i')} %}%user% wrote on %date% at %time%{% endtrans %}
                 </div>
