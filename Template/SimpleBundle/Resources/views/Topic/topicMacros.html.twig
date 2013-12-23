@@ -31,12 +31,14 @@
                 </div>
                 {{ executeSymbbPostEvent('after.username', post) }}
                 <div class="userdata">
+                    {{ executeSymbbPostEvent('before.userdata', post) }}
                     <div class="text">{% trans %}posts{% endtrans %}:</div>
                     <div class="data">{{post.getAuthor().getPosts().count()}}</div>
                     <div class="clear"></div>
                     <div class="text">{% trans %}Join Date{% endtrans %}:</div>
                     <div class="data">{{post.getAuthor().getCreated()|format_date}}</div>
                     <div class="clear"></div>
+                    {{ executeSymbbPostEvent('after.userdata', post) }}
                 </div>
             </div>
             <div class="textblock">
