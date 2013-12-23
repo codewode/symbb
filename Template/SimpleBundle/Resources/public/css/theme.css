@@ -63,3 +63,8 @@ root, body, html {
 .clear {
     clear: both;
 }
+
+.fos_user_content {
+    width: 20em;
+    margin: 0 auto;
+}
