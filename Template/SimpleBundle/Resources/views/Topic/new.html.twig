@@ -1,6 +1,16 @@
 {% trans_default_domain "symbb_frontend" %}
 
-{% extends getSymbbTemplateConfig('forum') ~ ':Forum:layout.html.twig' %}
+{% extends getSymbbTemplateConfig('forum') ~ ':Topic:show.html.twig' %}
+
+{% block stylesheets %} 
+    {{ parent() }}
+    {{ executeSymbbTemplateEvent('layout.editor.stylesheets') }}
+{% endblock %}
+    
+{% block javascripts %} 
+    {{ parent() }}
+    {{ executeSymbbTemplateEvent('layout.editor.javascripts') }}
+{% endblock %}
 
 {% block symbb_body %}
 

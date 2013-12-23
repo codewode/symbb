@@ -219,8 +219,9 @@ class FrontendTopicController  extends Controller
     protected function getTopicForm($forum, &$post){
         
         // check if form was submited
-        $url    = $this->generateUrl('_symbb_forum_topic_new', array('name' => $forum->getSeoName(), 'id' => $forum->getId()));
-        $form   = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\TopicType($url), $post);
+        $url        = $this->generateUrl('_symbb_forum_topic_new', array('name' => $forum->getSeoName(), 'id' => $forum->getId()));
+        $dispatcher = $this->get('event_dispatcher');
+        $form       = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\TopicType($url, $post, $dispatcher), $post);
    
         return $form;
     }

@@ -7,7 +7,8 @@ services:
     symbb.listener.post.bbcode.form:
         class: SymBB\Post\BBCodeBundle\EventListener\FormListener
         tags:
-            - { name: kernel.event_listener, event: symbb.forum.post.form, method: getFormType }
+            - { name: kernel.event_listener, event: symbb.forum.post.form, method: getPostFormType }
+            - { name: kernel.event_listener, event: symbb.forum.topic.form, method: getTopicFormType }
     symbb.post.bbcode.manager:
         class: SymBB\Post\BBCodeBundle\DependencyInjection\BBCodeManager
         arguments: ['@fm_bbcode.decoda_manager', '@translator']

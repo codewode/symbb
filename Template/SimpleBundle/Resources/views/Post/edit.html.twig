@@ -1,5 +1,15 @@
 {% extends getSymbbTemplateConfig('forum') ~ ':Topic:show.html.twig' %}
 
+{% block stylesheets %} 
+    {{ parent() }}
+    {{ executeSymbbTemplateEvent('layout.editor.stylesheets') }}
+{% endblock %}
+    
+{% block javascripts %} 
+    {{ parent() }}
+    {{ executeSymbbTemplateEvent('layout.editor.javascripts') }}
+{% endblock %}
+
 {% block symbb_body %}
 
     {% include getSymbbTemplateConfig('forum') ~ ':Post:new.html.twig' with {'form': form, 'bbcodes': bbcodes, 'topic': topic} %}

@@ -10,17 +10,29 @@ class TopicType extends AbstractType
 {
     protected $url;
     
-    public function __construct($url = '') {
+    /**
+     * @var \SymBB\Core\ForumBundle\Entity\Post 
+     */
+    protected $post;
+    protected $dispatcher;
+    
+    public function __construct($url, \SymBB\Core\ForumBundle\Entity\Post $post, $dispatcher) {
         $this->url = $url;
+        $this->post = $post;
+        $this->dispatcher = $dispatcher;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name')
-                ->add('text', 'textarea', array('attr' => array('class' => 'symbb_bbcode_editor_textarea')))
+                ->add('text', 'textarea')
                 ->add('save', 'submit')
                 ->add('id', 'hidden')
                 ->setAction($this->url);
+        
+        // create Event to manipulate Post Form
+        $event      = new \SymBB\Core\EventBundle\Event\PostFormEvent($this->post, $builder);
+        $this->dispatcher->dispatch('symbb.forum.topic.form', $event);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
