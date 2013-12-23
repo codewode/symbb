@@ -66,13 +66,15 @@ Macro to generate the structure of the forum/Category name Row
     {% if showIcon %}
     <i class="f-left glyphicon glyphicon-list"></i>
     {% endif %}
-    <div class="name">{{object.getName()}}
+    <div class="name">{{object.getName()}}</div>
     {% if showLabels %}
+        <div class="labels">
         {% if checkSymbbForNewPostFlag(object) %}
             <span class="label label-success">{% trans %}new{% endtrans %}</span>
         {% endif %}
+        </div>
     {% endif %}
-    </div>
+    <div class="clear"></div>
     <div class="description">{{object.getDescription()}}</div>
 </a>
 {% if object.hasShowSubForumList() %}
