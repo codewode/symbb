@@ -129,11 +129,6 @@ Macro to generate a list of all topics
     <div class="row topic">
         <div class="col-md-7 nameBlock">
             <a href="{{ path('_symbb_forum_topic_show', {'id': topic.getId(), 'name': topic.getSeoName()}) }}">
-                {% if not topic.isLocked() %}
-                <i class="f-left glyphicon glyphicon-th-list"></i>
-                {% else %}
-                <i class="f-left glyphicon glyphicon-ban-circle"></i>
-                {% endif %}
                 <div class="name">{{topic.getName()}}</div>
                 <div class="labels">
                 {% if app.user and app.user.getId() == topic.getAuthor().getId() %}
@@ -144,6 +139,9 @@ Macro to generate a list of all topics
                 {% endif %}
                 {% if checkSymbbForNewPostFlag(topic) %}
                     <span class="label label-success">{% trans %}new{% endtrans %}</span>
+                {% endif %}
+                {% if topic.isLocked() %}
+                    <span class="label label-warning">{% trans %}locked{% endtrans %}</span>
                 {% endif %}
                 </div>
                 <div class="clear"></div>

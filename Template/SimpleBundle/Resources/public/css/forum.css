@@ -5,21 +5,21 @@
 .symbb_body {
     display: block;
     width: 95%;
-    margin: 1em auto;
+    margin: 14px auto;
 }
 
 .symbb_list .row.space {
-    height: 1em;
+    height: 14px;
 }
 
 .symbb_list .row.category {
-    padding: 0.5em;
+    padding: 7px;
     color: #FFF;
-    padding-top: 0.8em;
+    padding-top: 10px;
 }
 
 .symbb_list .row.category {
-    margin-top: 1em;
+    margin-top: 14px;
     border-radius: 5px 5px 0 0;
 }
 
@@ -27,18 +27,24 @@
 .symbb_list .row.subcategory, 
 .symbb_list .row.topic {
     background-color: #EEE;
-    padding: 0.3em;
-    padding-top: 0.8em;
+    padding: 4px;
+    padding-top: 10px;
     margin-bottom: 1px;
     border-bottom: 1px solid #CCC;
     border-left: 1px solid #CCC;
     border-right: 1px solid #CCC;
-    font-size: 1.2em;
+    font-size: 12px;
 }
 
 .symbb_list .row .nameBlock .user,
-.symbb_list .row .lastPostBlock .user {
-    font-size: 0.8em;
+.symbb_list .row .lastPostBlock .user,
+.symbb_list .row .nameBlock .description {
+    font-size: 11px;
+    color: #2E5F75;
+}
+
+.symbb_header_bg .nameBlock .description{
+    color: #FFF !important;
 }
 
 .symbb_list .row.category a, 
@@ -56,14 +62,13 @@
 
 
 .symbb_list .row.forum .description {
-    font-size: 0.8em;
+    font-size: 11px;
 }
 
 .symbb_list .row.forum .subForumList {
     float: left;
-    font-size: 0.8em;
-    margin-left: 2.2em;
-    margin-top: -0.5em;
+    font-size: 11px;
+    margin-left: 20px;
     font-style: italic;
 }
 
@@ -81,27 +86,25 @@
 }
 
 .symbb_list .padding1em {
-    padding: 1em;
+    padding: 14px;
 }
 
 .symbb_list .row {
     margin-left: 0;
     margin-right: 0;
-    min-height: 3em;
 }
 
 .symbb_list .row .glyphicon {
-    margin-right: 0.8em;
+    margin-right: 10px;
 }
 
 .symbb_list .row .name {
-    margin-bottom: 0.5em;
-    margin-right: 0.5em;
+    margin-right: 7px;
     float: left;
 }
 .symbb_list .row .labels {
     float: right;
-    margin-top: -0.3em;
+    margin-top: -4px;
 }
 
 
@@ -109,7 +112,7 @@
     clear: both;
 }
 
-
+.symbb_list .row.forum .subForumList
 .symbb_list  .topicCountBlock ,
 .symbb_list  .postCountBlock {
     text-align: right;

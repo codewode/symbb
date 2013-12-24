@@ -23,16 +23,16 @@ root, body, html {
 .symbb_header .content {
     width: 100%;
     margin: 0 auto;
-    padding-top: 0.6em;
+    padding-top: 5px;
 }
 
 .symbb_header .logo {
-    height: 3em;
+    height: 45px;
     width: 100%;
 }
 
 .symbb_header .border_bottom {
-    height: 0.5em;
+    height: 5px;
     width: 100%;
     background-color: #FAA51B;
     position: absolute;
@@ -65,7 +65,7 @@ root, body, html {
 }
 
 .fos_user_content {
-    width: 20em;
+    width: 250px;
     margin: 0 auto;
 }
 
