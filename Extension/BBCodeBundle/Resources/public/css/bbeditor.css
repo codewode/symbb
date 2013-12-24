@@ -1,6 +1,6 @@
-.bbcode_list .btn-group {
-    margin-bottom: 1em;
-    margin-right: 1em;
+.bbcode_list button {
+    width: 100%;
+    margin-top: 5px;
 }
 
 .bbcode_list textarea{

@@ -22,6 +22,9 @@ class BBCodeManager {
         $this->config           = $container->getParameter('symbb_extension_bbcode');
     }
     
+    public function getEmoticons(){
+    }
+    
     /**
      * get a list of grouped BBCodes
      * @return array

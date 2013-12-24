@@ -26,31 +26,21 @@
     </script>
 </div>
 {% endif %}
-
+<div id="symbb_bottom"></div>
 <div id="symbb_bbcode_editor" class="symbb_editor bbcode">
     <div class="preview">
 
     </div> 
     <div class="bbcode_list symbb_topic ">
 
-        <div class="row symbb_header_bg subheader">
-            <div class="col-md-12">{% trans %}new Topic{% endtrans %}</div>
-        </div>
-        <div class="row body">
-            <div class="textblock">
-                {{ form_start(form) }}
-                    
-                    {{ form_errors(form) }}
-                    
-                    {{ form_row(form.name) }}
-                    
-                    <div class="text_input">
-                        {{ form_widget(form.text) }}
-                    </div>
-                    
-                {{ form_end(form) }}
+        {{ form_start(form) }}
+
+            {{ form_errors(form) }}
+
+            <div class="text_input">
+                {{ form_widget(form.text) }}
             </div>
-        </div>
+        {{ form_end(form) }}
     </div>
 </div>
 

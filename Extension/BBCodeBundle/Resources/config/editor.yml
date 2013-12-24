@@ -14,10 +14,6 @@ sym_bb_extension_bb_code:
         hr: 
           code: "[hr]"
           image: /bundles/symbbextensionbbcode/images/text_horizontalrule.png
-      -
-        color:
-          code: "[color={1}]{0}[/color]"
-          image: /bundles/symbbextensionbbcode/images/color_wheel.png
         h1:
           code: "[h1]{0}[/h1]"
           image: /bundles/symbbextensionbbcode/images/text_heading_1.png
@@ -41,15 +37,15 @@ sym_bb_extension_bb_code:
         link: 
           code: "[link]{0}[/link]"
           image: /bundles/symbbextensionbbcode/images/link_add.png
+        email: 
+          code: "[email]{0}[/email]"
+          image: /bundles/symbbextensionbbcode/images/email_link.png
         code: 
           code: "[code]{0}[/code]"
           image: /bundles/symbbextensionbbcode/images/script_code.png
         quote: 
           code: "[quote]{0}[/quote]"
           image: /bundles/symbbextensionbbcode/images/comment.png
-        email: 
-          code: "[email]{0}[/email]"
-          image: /bundles/symbbextensionbbcode/images/email_link.png
         video: 
           code: "[video]{0}[/video]"
           image: /bundles/symbbextensionbbcode/images/film_add.png

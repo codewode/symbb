@@ -25,7 +25,7 @@ class SymBBExtensionBBCodeExtension extends Extension implements PrependExtensio
         $loader->load('services.yml');
         $loader->load('fm_bbcode.yml');
         $loader->load('twig.yml');
-        $loader->load('bbcodes.yml');
+        $loader->load('editor.yml');
     }
         
     public function load(array $configs, ContainerBuilder $container)
