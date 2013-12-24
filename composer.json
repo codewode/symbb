@@ -29,13 +29,5 @@
     "autoload": {
         "psr-0": { "SymBB\\": "" }
     },
-    "target-dir": "SymBB/",
-    "scripts": {
-        "post-install-cmd": [
-            "FM\\BbcodeBundle\\Composer\\ScriptHandler::installEmoticons"
-        ],
-        "post-update-cmd": [
-            "FM\\BbcodeBundle\\Composer\\ScriptHandler::installEmoticons"
-        ]
-    }
+    "target-dir": "SymBB/"
 }
