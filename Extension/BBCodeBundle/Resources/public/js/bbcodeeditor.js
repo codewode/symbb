@@ -5,30 +5,27 @@
         var elem    = $(element);
         var obj     = this;
         var area    = $(element).find('.symbb_bbcode_editor_textarea');
-        $(element).find('.symbb_bbcode_code').each(function(index, button) {
+        $(element).find('.symbb_bbbcode_btn').each(function(index, button) {
             $(button).click(function() {
                 button      = $(button);
-                var start   = button.data('tag');
-                var end     = start;
-                start       = '['+start+']';
-                end         = '[/'+end+']';
-                obj.insertCode(start, end, area);
+                var tagCode   = button.data('tag-code');
+                obj.insertCode(tagCode, area);
             });
         });
 
-        this.insertCode = function(start, end, element) {
+        this.insertCode = function(tagCode, element) {
             element = element[0];
             if (document.selection) {
                 element.focus();
                 sel = document.selection.createRange();
-                sel.text = start + sel.text + end;
+                sel.text = tagCode.replace('{0}', sel.text);
             } else if (element.selectionStart || element.selectionStart == '0') {
                 element.focus();
                 var startPos = element.selectionStart;
                 var endPos = element.selectionEnd;
-                element.value = element.value.substring(0, startPos) + start + element.value.substring(startPos, endPos) + end + element.value.substring(endPos, element.value.length);
+                element.value = element.value.substring(0, startPos) + tagCode.replace('{0}', element.value.substring(startPos, endPos)) + element.value.substring(endPos, element.value.length);
             } else {
-                element.value += start + end;
+                element.value += tagCode.replace('{0}', '');
             }
         }
     };

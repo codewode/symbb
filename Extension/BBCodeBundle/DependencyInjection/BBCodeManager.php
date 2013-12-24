@@ -13,42 +13,32 @@ class BBCodeManager {
     
     protected $decodaManager;
     protected $translator;
+    protected $config;
 
 
-    public function __construct($decodaManager, $translator) {
-        $this->decodaManager = $decodaManager;
-        $this->translator = $translator;
+    public function __construct($container) {
+        $this->decodaManager    = $container->get('fm_bbcode.decoda_manager');
+        $this->translator       = $container->get('translator');
+        $this->config           = $container->getParameter('symbb_extension_bbcode');
     }
     
     /**
      * get a list of grouped BBCodes
      * @return array
      */
-    public function getBBCodes(){
-        $bbcodes     = array();
-        $decoda    = $this->decodaManager->get('filters', 'default');
-        $filters    = $decoda->getFilters();
-        foreach($filters as $filterKey => $filter){
-            $tags = $filter->getTags();
-            $groupName = $this->translator->trans($filterKey, array(), 'symbb_bbcode_groups');
-            foreach($tags as $tag => $conf){
-                if(
-                    (
-                        $filterKey == 'email' && $tag == 'mail'
-                    ) ||
-                    (
-                        $filterKey == 'url' && $tag == 'link'
-                    ) ||
-                    (
-                        $filterKey == 'image' && $tag == 'img'
-                    )
-                ){
-                    // double bbcode...
-                    continue;
+    public function getBBCodes($set = 'default'){
+        $bbcodes = array();
+        
+        foreach($this->config['bbcodes'][$set] as $group => $bbcodeGroups){
+            foreach($bbcodeGroups as $tag => $bbcode){
+                $bbcodes[$group][$tag] = $bbcode;
+                $bbcodes[$group][$tag]['tag'] = $tag;
+                if(!isset($bbcodes[$group][$tag]['image']) || !$bbcodes[$group][$tag]['image']){
+                    $bbcodes[$group][$tag]['image'] = '/bundles/symbbextensionbbcode/images/default.png';
                 }
-                $bbcodes[$groupName][] = array('tag' => $tag, 'name' => $tag);
             }
         }
+        
         return $bbcodes;
     }
 }

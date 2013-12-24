@@ -25,11 +25,22 @@ class SymBBExtensionBBCodeExtension extends Extension implements PrependExtensio
         $loader->load('services.yml');
         $loader->load('fm_bbcode.yml');
         $loader->load('twig.yml');
+        $loader->load('bbcodes.yml');
     }
         
     public function load(array $configs, ContainerBuilder $container)
     {        
+        $config = array();
+        // reverse array
+        $configs = array_reverse($configs);
+        foreach ($configs as $subConfig) {
+            $config = array_merge($config, $subConfig);
+        }
+      
+        $configuration = new Configuration();
+        $config        = $this->processConfiguration($configuration, array($config));
         
-        
+        $container->setParameter('symbb_extension_bbcode', $config);
+       
     }
 }

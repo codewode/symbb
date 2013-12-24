@@ -12,5 +12,9 @@ namespace SymBB\Extension\BBCodeBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class SymBBExtensionBBCodeBundle extends Bundle
-{
+{    
+    public function getParent()
+    {
+        return 'FMBbcodeBundle';
+    }
 }

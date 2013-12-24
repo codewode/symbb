@@ -7,7 +7,7 @@
     {% trans %}Your post has been saved successfully. You will now be redirected ...{% endtrans %}
     <script type="text/javascript">
     <!--
-    window.location = "{{ path('_symbb_forum_topic_show', {'name': post.getTopic.getSeoName(), 'id': post.getTopic.getId()} ) }}";
+    window.location = "{{ path('_symbb_forum_topic_show', {'name': post.getTopic.getSeoName(), 'id': post.getTopic.getId()} ) }}?page=last";
     //–>
     </script>
 </div>
@@ -19,23 +19,13 @@
     </div> 
     <div class="bbcode_list symbb_topic ">
 
-        <div class="row symbb_header_bg subheader">
-            <div class="col-md-12">{% trans %}new Post{% endtrans %}</div>
-        </div>
-        <div class="row body">
-            <div class="col-md-3 userblock">
+        {{ form_start(form) }}
 
+            {{ form_errors(form) }}
+
+            <div class="text_input">
+                {{ form_widget(form.text) }}
             </div>
-            <div class="col-md-9 textblock">
-                {{ form_start(form) }}
-                    
-                    {{ form_errors(form) }}
-                    
-                    <div class="text_input">
-                        {{ form_widget(form.text) }}
-                    </div>
-                {{ form_end(form) }}
-            </div>
-        </div>
+        {{ form_end(form) }}
     </div>
 </div>

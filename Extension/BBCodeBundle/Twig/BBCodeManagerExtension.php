@@ -24,13 +24,18 @@ class BBCodeManagerExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-                new \Twig_SimpleFunction('getSymbbBBCodes', array($this, 'getSymbbBBCodes')
-            )
+                new \Twig_SimpleFunction('getSymbbBBCodes', array($this, 'getSymbbBBCodes')),
+                new \Twig_SimpleFunction('getSymbbBBCodesJson', array($this, 'getSymbbBBCodesJson'))
         );
     }
     
     public function getSymbbBBCodes(){
         return $this->bbcodeManager->getBBCodes();
+    }
+    
+    public function getSymbbBBCodesJson(){
+        $codes = $this->bbcodeManager->getBBCodes();
+        return json_encode($codes);
     }
     
     public function getName(){

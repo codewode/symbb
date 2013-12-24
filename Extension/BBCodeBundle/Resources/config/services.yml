@@ -11,7 +11,7 @@ services:
             - { name: kernel.event_listener, event: symbb.forum.topic.form, method: getTopicFormType }
     symbb.extensionbbcode.manager:
         class: SymBB\Extension\BBCodeBundle\DependencyInjection\BBCodeManager
-        arguments: ['@fm_bbcode.decoda_manager', '@translator']
+        arguments: ['@service_container']
     symbb.extensionbbcode.manager.twig:
         twig.extension.symbb.extensionbbcode.manager.twig:
         class: SymBB\Extension\BBCodeBundle\Twig\BBCodeManagerExtension
