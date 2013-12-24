@@ -18,3 +18,11 @@ form .input-group .input-group-addon:first-child {
 form label {
     margin-bottom: 0;   
 }
+
+form div .input-group {
+    margin-bottom: 5px;
+}
+
+form div .input-group:last-child {
+    margin-bottom: 0px;
+}
