@@ -9,16 +9,16 @@
 namespace SymBB\Core\EventBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use \SymBB\Core\ForumBundle\Entity\Post;
+use \SymBB\Core\ForumBundle\Entity\Topic;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class PostFormEvent extends Event
+class TopicFormEvent extends Event
 {
     
     /**
-     * @var Post 
+     * @var Topic 
      */
-    protected $post;
+    protected $topic;
     
     /**
      *
@@ -28,14 +28,14 @@ class PostFormEvent extends Event
     protected $translator;
 
 
-    public function __construct(Post $post, FormBuilderInterface $builder, $translator) {
-        $this->post     = $post;
+    public function __construct(Topic $topic, FormBuilderInterface $builder, $translator) {
+        $this->topic     = $topic;
         $this->builder = $builder;
         $this->translator = $translator;
     }
     
-    public function getPost(){
-        return $this->post;
+    public function getTopic(){
+        return $this->topic;
     }
     
     public function getTranslator(){

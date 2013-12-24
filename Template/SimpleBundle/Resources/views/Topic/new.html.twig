@@ -27,21 +27,22 @@
 </div>
 {% endif %}
 <div id="symbb_bottom"></div>
-<div id="symbb_bbcode_editor" class="symbb_editor bbcode">
-    <div class="preview">
+<div class="symbb_topic ">
 
-    </div> 
-    <div class="bbcode_list symbb_topic ">
+    {{ form_start(form) }}
 
-        {{ form_start(form) }}
-
-            {{ form_errors(form) }}
-
-            <div class="text_input">
-                {{ form_widget(form.text) }}
-            </div>
-        {{ form_end(form) }}
-    </div>
+        {{ form_errors(form) }}
+        <div class="name ">
+            {{ form_row(form.forum) }}
+            {{ form_row(form.name) }}
+        </div>
+        {{ form_widget(form.mainPost.children.text) }}
+        <div class="options">
+            {{ form_row(form.locked) }}
+        </div>
+        {{ form_widget(form.save) }}
+    {{ form_end(form) }}
 </div>
+
 
 {% endblock %}

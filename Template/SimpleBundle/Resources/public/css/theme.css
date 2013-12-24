@@ -68,3 +68,7 @@ root, body, html {
     width: 20em;
     margin: 0 auto;
 }
+
+.m-top-1 {
+    margin-top: 1em;
+}

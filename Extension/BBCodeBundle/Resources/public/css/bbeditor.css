@@ -1,9 +1,4 @@
-.bbcode_list button {
-    width: 100%;
-    margin-top: 5px;
-}
-
-.bbcode_list textarea{
+.symbb_editor textarea{
     width: 100%;
     min-height: 20em;
     background-color: #EEEEEE;

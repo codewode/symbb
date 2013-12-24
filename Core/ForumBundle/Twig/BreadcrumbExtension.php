@@ -71,8 +71,10 @@ class BreadcrumbExtension extends \Twig_Extension
     }
     
     protected function createForTopic(\SymBB\Core\ForumBundle\Entity\Topic $object, $breadcrumb){
-        $uri            = $this->router->generate('_symbb_forum_topic_show', array('id' => $object->getId(), 'name' => $object->getSeoName()));
-        $breadcrumb[]   = array('name' => $object->getName(), 'link' => $uri);
+        if($object->getId() > 0){
+            $uri            = $this->router->generate('_symbb_forum_topic_show', array('id' => $object->getId(), 'name' => $object->getSeoName()));
+            $breadcrumb[]   = array('name' => $object->getName(), 'link' => $uri);
+        }
         $forum          = $object->getForum();
         $breadcrumb     = $this->createForForum($forum, $breadcrumb);
         return $breadcrumb;

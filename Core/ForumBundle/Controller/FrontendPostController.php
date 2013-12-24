@@ -29,10 +29,32 @@ class FrontendPostController  extends Controller
      * @param type $post
      * @return type
      */
-    public function editAction($name, $topic, $post){
+    public function editAction($post){
 
         $post       = $this->getPostById($post);
-        $topic      = $this->getTopicById($topic);
+        $topic      = $post->getTopic();
+                
+        return $this->doEdit($topic, $post);
+    }
+    
+    /**
+     * @param type $name
+     * @param type $topic
+     * @return type
+     */
+    public function newAction($topic){       
+        $topic = $this->getTopicById($topic);
+        return $this->doEdit($topic);
+    }
+    
+    public function doEdit(\SymBB\Core\ForumBundle\Entity\Topic $topic, $post = null){
+        
+                
+        if($post && $topic->getMainPost()->getId() == $post->getId()){
+            return $this->forward('SymBBCoreForumBundle:FrontendTopic:edit', array(
+                'topic'  => $topic->getId()
+            ));
+        }
         
         // check only for "edit" case
         if(is_object($post) && $post->getId() > 0){
@@ -61,21 +83,6 @@ class FrontendPostController  extends Controller
     }
     
     /**
-     * @param type $name
-     * @param type $topic
-     * @return type
-     */
-    public function newAction($name, $topic){
-        
-        $response   = $this->editAction($name, $topic, 0);
-        $currUser   = $this->getUser();
-        $em         = $this->getDoctrine()->getManager('symbb');
-        $topic      = $this->getTopicById($topic);
-        
-        return $response;
-    }
-    
-    /**
      * 
      * @param \SymBB\Core\ForumBundle\Entity\Post $post
      * @return type
@@ -91,8 +98,8 @@ class FrontendPostController  extends Controller
         $topic      = $post->getTopic();
         $firstPost  = $topic->getPosts()->first();
         if($firstPost->getId() == $post->getId()){
-            return $this->forward('SymBBCoreForumBundle:FrontendTopic:remove', array(
-                'id'  => $topic->getId()
+            return $this->forward('SymBBCoreForumBundle:FrontendTopic:delete', array(
+                'topic'  => $topic->getId()
             ));
         }
         $em->remove($post);
@@ -197,13 +204,13 @@ class FrontendPostController  extends Controller
         }
         
         if($post->getId() > 0){
-            $url    = $this->generateUrl('_symbb_edit_post', array('name' => $topic->getSeoName(), 'topic' => $topic->getId(), 'post' => $post->getId()));
+            $url    = $this->generateUrl('_symbb_edit_post', array('post' => $post->getId()));
         } else {
-            $url    = $this->generateUrl('_symbb_new_post', array('name' => $topic->getSeoName(), 'topic' => $topic->getId()));
+            $url    = $this->generateUrl('_symbb_new_post', array('topic' => $topic->getId()));
         }
         
         $dispatcher = $this->get('event_dispatcher');
-        $formType   = new \SymBB\Core\ForumBundle\Form\Type\PostType($url, $post, $dispatcher);
+        $formType   = new \SymBB\Core\ForumBundle\Form\Type\PostType($url, $post, $dispatcher, $this->get('translator'));
         
         
         $form   = $this->createForm($formType, $post);
@@ -221,7 +228,7 @@ class FrontendPostController  extends Controller
         $filters    = $decoda->getFilters();
         foreach($filters as $filterKey => $filter){
             $tags = $filter->getTags();
-            $groupName = $this->get('translator')->trans($filterKey, array(), 'symbb_bbcode_groups');
+            $groupName = $this->get('translator')->trans($filterKey, array(), 'symbb_frontend');
             foreach($tags as $tag => $conf){
                 if(
                     (

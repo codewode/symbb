@@ -96,10 +96,19 @@ class FrontendTopicController  extends Controller
         return $this->render($this->getTemplateBundleName('forum').':Topic:show.html.twig', $params);
     }
     
-    public function newAction($name, $id){
-        
-        $forum          = $this->getForumById($id);
-        
+    public function editAction($topic){ 
+        $topic      = $this->getTopicById($topic); 
+        $forum      = $topic->getForum();
+        return $this->doEdit($forum, $topic);
+    }
+    
+    public function newAction($forum){
+        $forum      = $this->getForumById($forum);      
+        return $this->doEdit($forum);
+    }
+    
+    public function doEdit(\SymBB\Core\ForumBundle\Entity\Forum $forum, $topic = null ){
+
         // user can only create new topic in "forum" not in "category" or "link"
         if($forum->getType() !== 'forum'){
             return $this->forward('SymBBCoreForumBundle:Frontend:forumShow', array(
@@ -112,9 +121,8 @@ class FrontendTopicController  extends Controller
         $accessService->addAccessCheck('write', $forum);
         $accessService->checkAccess();
         
-        
+
         $form       = null;
-        $topic      = null;
         $saved      = $this->handleTopicRequest($form, $forum, $topic);
 
         $params = array('forum' => $forum, 'topic' => $topic);
@@ -124,7 +132,9 @@ class FrontendTopicController  extends Controller
         return $this->render($this->getTemplateBundleName('forum').':Topic:new.html.twig', $params);
     }
     
-    public function removeAction($topic){
+    public function deleteAction($topic){
+        
+        $topic = $this->getTopicById($topic);
         
         $accessService  = $this->get('symbb.core.user.access');
         $accessService->addAccessCheck('delete', $topic);
@@ -184,31 +194,36 @@ class FrontendTopicController  extends Controller
      */
     protected function handleTopicRequest(&$form, \SymBB\Core\ForumBundle\Entity\Forum &$forum, &$topic){
         
+        if(!is_object($topic)){
+            
+            $post   = new \SymBB\Core\ForumBundle\Entity\Post();
+            $post->setAuthor($this->getUser());
+            
+            $topic  = new \SymBB\Core\ForumBundle\Entity\Topic();
+            $topic->setAuthor($this->getUser());
+            $topic->setForum($forum);
+            $post->setTopic($topic);
+            $topic->setMainPost($post);
+        }
         
-        $post   = new \SymBB\Core\ForumBundle\Entity\Post();
-        $post->setAuthor($this->getUser());
-        
-        $form   = $this->getTopicForm($forum, $post);
+        $form   = $this->getTopicForm($forum, $post, $topic);
 
         $form->handleRequest($this->get('request'));
         
         if ($form->isValid()) {
-        
-            $topic  = new \SymBB\Core\ForumBundle\Entity\Topic();
-            $topic->setAuthor($this->getUser());
-            $topic->setName($post->getName());
-            $topic->setForum($forum);
-            $post->setTopic($topic);
-            $topic->addPost($post);
             
             $em = $this->getDoctrine()->getManager('symbb');
             $em->persist($topic);
-            $em->persist($post);
+            if($post){
+                $em->persist($post);
+            }
             $em->flush();
             
             $accessService  = $this->get('symbb.core.user.access');
             $accessService->grantAccess('owner', $topic);
-            $accessService->grantAccess('owner', $post);
+            if($post){
+                $accessService->grantAccess('owner', $post);
+            }
             
             $this->get('symbb.core.forum.topic.flag')->insertFlags($topic, 'new');
             
@@ -223,12 +238,17 @@ class FrontendTopicController  extends Controller
      * @param type $post
      * @return type
      */
-    protected function getTopicForm($forum, &$post){
+    protected function getTopicForm($forum, &$post, &$topic){
         
         // check if form was submited
-        $url        = $this->generateUrl('_symbb_forum_topic_new', array('name' => $forum->getSeoName(), 'id' => $forum->getId()));
+        if($topic->getId() > 0){
+            $url        = $this->generateUrl('_symbb_forum_topic_edit', array('topic' => $topic->getId()));
+        } else {
+            $url        = $this->generateUrl('_symbb_forum_topic_new', array('forum' => $forum->getId()));
+        }
+        
         $dispatcher = $this->get('event_dispatcher');
-        $form       = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\TopicType($url, $post, $dispatcher), $post);
+        $form       = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\TopicType($url, $topic, $dispatcher, $this->get('translator')), $topic);
    
         return $form;
     }
@@ -243,9 +263,9 @@ class FrontendTopicController  extends Controller
     protected function getPostForm($topic){
         
         $post       = \SymBB\Core\ForumBundle\Entity\Post::createNew($topic, $this->getUser());
-        $url        = $this->generateUrl('_symbb_new_post', array('name' => $topic->getSeoName(), 'topic' => $topic->getId()));
+        $url        = $this->generateUrl('_symbb_new_post', array('topic' => $topic->getId()));
         $dispatcher = $this->get('event_dispatcher');
-        $form       = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\PostType($url, $post, $dispatcher), $post);
+        $form       = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\PostType($url, $post, $dispatcher, $this->get('translator')), $post);
         
         return $form;
     }

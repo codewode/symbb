@@ -22,23 +22,29 @@ class PostType extends AbstractType
      */
     protected $post;
     protected $dispatcher;
-    
-    public function __construct($url, \SymBB\Core\ForumBundle\Entity\Post $post, $dispatcher) {
+    protected $addAction;
+    protected $translator;
+
+    public function __construct($url, \SymBB\Core\ForumBundle\Entity\Post $post, $dispatcher, $translator, $addAction = true) {
         $this->url = $url;
         $this->post = $post;
         $this->dispatcher = $dispatcher;
+        $this->translator = $translator;
+        $this->addAction = $addAction;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('text', 'textarea')
-                ->add('save', 'submit')
-                ->add('id', 'hidden')
-                ->setAction($this->url);
+        $builder->add('text', 'textarea', array('attr' => array('placeholder' => 'Give Your text here')));
         
+        if($this->addAction){
+            $builder->add('id', 'hidden')
+                ->add('save', 'submit')
+                ->setAction($this->url);
+        }
         
         // create Event to manipulate Post Form
-        $event      = new \SymBB\Core\EventBundle\Event\PostFormEvent($this->post, $builder);
+        $event      = new \SymBB\Core\EventBundle\Event\PostFormEvent($this->post, $builder, $this->translator);
         $this->dispatcher->dispatch('symbb.forum.post.form', $event);
         //
     }
@@ -47,6 +53,7 @@ class PostType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'SymBB\Core\ForumBundle\Entity\Post',
+            'translation_domain' => 'symbb_frontend'
         ));
     }
 

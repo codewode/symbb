@@ -7,7 +7,7 @@ _symbb_forum_index:
     defaults: { _controller: SymBBCoreForumBundle:Frontend:forum }
     
 _symbb_forum_show:
-    pattern:  /f-{name}/{id}
+    pattern:  /f-{name}/{id}/show
     defaults: { _controller: SymBBCoreForumBundle:Frontend:forumShow }
     
 _symbb_forum_newest:
@@ -15,19 +15,23 @@ _symbb_forum_newest:
     defaults: { _controller: SymBBCoreForumBundle:Frontend:newest }
     
 _symbb_forum_topic_new:
-    pattern:  /f-{name}/{id}/new
+    pattern:  /f-{forum}/new
     defaults: { _controller: SymBBCoreForumBundle:FrontendTopic:new }
     
+_symbb_forum_topic_edit:
+    pattern:  /t-{topic}/edit
+    defaults: { _controller: SymBBCoreForumBundle:FrontendTopic:edit }
+    
 _symbb_forum_topic_show:
-    pattern:  /t-{name}/{id}
+    pattern:  /t-{name}/{id}/show
     defaults: { _controller: SymBBCoreForumBundle:FrontendTopic:show}
     
 _symbb_new_post:
-    pattern:  /t-{name}/{topic}/new
+    pattern:  /t-{topic}/new
     defaults: { _controller: SymBBCoreForumBundle:FrontendPost:new}
     
 _symbb_edit_post:
-    pattern:  /t-{name}/{topic}/{post}
+    pattern:  /p-{post}/edit
     defaults: { _controller: SymBBCoreForumBundle:FrontendPost:edit}
     
 _symbb_delete_post:

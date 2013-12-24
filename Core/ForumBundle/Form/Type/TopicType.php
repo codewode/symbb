@@ -18,34 +18,40 @@ class TopicType extends AbstractType
     protected $url;
     
     /**
-     * @var \SymBB\Core\ForumBundle\Entity\Post 
+     * @var \SymBB\Core\ForumBundle\Entity\Topic
      */
-    protected $post;
+    protected $topic;
     protected $dispatcher;
+    protected $translator;
     
-    public function __construct($url, \SymBB\Core\ForumBundle\Entity\Post $post, $dispatcher) {
+    public function __construct($url, \SymBB\Core\ForumBundle\Entity\Topic $topic, $dispatcher, $translator) {
         $this->url = $url;
-        $this->post = $post;
+        $this->topic = $topic;
         $this->dispatcher = $dispatcher;
+        $this->translator = $translator;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')
-                ->add('text', 'textarea')
+        $postType = new PostType('', $this->topic->getMainPost(), $this->dispatcher, $this->translator, false);
+        $builder->add('name', 'text', array('label' => 'Titel','attr' => array('placeholder' => 'Enter a name here')))
+                ->add('mainPost', $postType)
+                ->add('locked', 'checkbox', array('required'  => false))
                 ->add('save', 'submit')
                 ->add('id', 'hidden')
+                ->add('forum', 'entity', array('class' => 'SymBBCoreForumBundle:Forum', 'disabled' => true))
                 ->setAction($this->url);
         
         // create Event to manipulate Post Form
-        $event      = new \SymBB\Core\EventBundle\Event\PostFormEvent($this->post, $builder);
+        $event      = new \SymBB\Core\EventBundle\Event\TopicFormEvent($this->topic, $builder, $this->translator);
         $this->dispatcher->dispatch('symbb.forum.topic.form', $event);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'SymBB\Core\ForumBundle\Entity\Post',
+            'data_class' => 'SymBB\Core\ForumBundle\Entity\Topic',
+            'translation_domain' => 'symbb_frontend'
         ));
     }
 

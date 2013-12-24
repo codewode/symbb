@@ -35,6 +35,12 @@ class Topic
      * @ORM\Column(type="datetime")
      */
     private $changed;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SymBB\Core\ForumBundle\Entity\Post")
+     * @ORM\JoinColumn(referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $mainPost;
     
     /**
      * @ORM\OneToMany(targetEntity="SymBB\Core\ForumBundle\Entity\Post", mappedBy="topic")
@@ -59,6 +65,11 @@ class Topic
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $locked = false;
+
 
     public function __construct() {
         $this->posts = new ArrayCollection();
@@ -67,7 +78,7 @@ class Topic
     ############################################################################
     # Default Get and Set
     ############################################################################
-    public function getId(){return $this->id;}
+    public function getId(){return (int)$this->id;}
     public function setId($value){$this->id = $value;}
     public function setForum($object){$this->forum = $object;}
     /**
@@ -81,6 +92,10 @@ class Topic
     public function getFlags(){return $this->flags;}
     public function getCreated(){return $this->created;}
     public function getChanged(){return $this->changed;}
+    public function setLocked($value){$this->locked = $value;}
+    public function isLocked(){return $this->locked;}
+    public function setMainPost($object){$this->mainPost = $object;}
+    public function getMainPost(){return $this->mainPost;}
     ############################################################################
     
     /**
@@ -103,8 +118,7 @@ class Topic
     
     public function getName(){
         $name = '';
-        $posts  = $this->getPosts();
-        $post   = $posts->first();
+        $post  = $this->getMainPost();
         if(is_object($post)){
             $name = $post->getName();
         }
@@ -112,13 +126,12 @@ class Topic
        
     }
     public function setName($value){
-        $posts  = $this->getPosts();
-        $post   = $posts->first();
+        $post  = $this->getMainPost();
         if(!is_object($post)){
             $post = new Post();
-            $post->setName($value);
             $post->setTopic($this);
         }
+        $post->setName($value);
     }
     
     public function hasPosts(){
