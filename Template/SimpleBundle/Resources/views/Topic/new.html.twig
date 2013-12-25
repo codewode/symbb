@@ -32,23 +32,27 @@
     {{ form_start(form) }}
 
         {{ form_errors(form) }}
-        <div class="name ">
-            {{ form_row(form.forum) }}
-            {{ form_row(form.name) }}
-        </div>
-        {{ form_widget(form.mainPost.children.text) }}
-    
-        <div class="m-top-1"></div>
-    
         <div class="panel panel-default">
-            <div class="panel-heading">{{ 'Options'|trans }}</div>
+            <div class="panel-heading">{{ form_widget(form.forum) }}</div>
             <div class="panel-body">
-              {{ form_rest(form.mainPost) }}
-              {{ form_rest(form) }}
+            {{ form_row(form.name) }}
+    
+            {{ form_widget(form.mainPost.children.text) }}
+                <div class="m-top-1"></div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{ 'Options'|trans }}</div>
+                    <div class="panel-body">
+                      {{ form_rest(form.mainPost) }}
+                      {{ form_rest(form) }}
+                    </div>
+                </div>
+                
+                
+                <button class="btn btn-success" type="submit">{{ 'Save'|trans }}</button>
             </div>
         </div>
     
-        <button class="btn btn-default" type="submit">{{ 'Save'|trans }}</button>
         
     {{ form_end(form) }}
 </div>
