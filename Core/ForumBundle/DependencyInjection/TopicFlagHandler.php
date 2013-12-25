@@ -225,7 +225,7 @@ class TopicFlagHandler
     }
 
 
-    protected function getUsersForFlag($flag, Topic $topic){
+    public function getUsersForFlag($flag, Topic $topic){
         $key    = $this->getMemcacheKey($flag, $topic);
         $users  = $this->memcache->get($key);
         if($users === false){

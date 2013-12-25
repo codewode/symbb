@@ -20,10 +20,19 @@
         {{ form_start(form) }}
 
             {{ form_errors(form) }}
-
-            <div class="text_input">
-                {{ form_widget(form.text) }}
+            {{ form_widget(form.text) }}
+            
+            
+            <div class="m-top-1"></div>
+        
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ 'Options'|trans }}</div>
+                <div class="panel-body">
+                  {{ form_rest(form) }}
+                </div>
             </div>
+        
+        <button class="btn btn-default" type="submit">{{ 'Save'|trans }}</button>
         {{ form_end(form) }}
     </div>
 </div>

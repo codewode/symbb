@@ -29,6 +29,7 @@ class SymBBCoreConfigExtension extends Extension implements PrependExtensionInte
         $loader->load('fos_rest.yml');
         $loader->load('knp.yml');
         $loader->load('lsw_memcache.yml');
+        $loader->load('swiftmailer.yml');
 
     }
         
@@ -46,7 +47,10 @@ class SymBBCoreConfigExtension extends Extension implements PrependExtensionInte
         $config        = $this->processConfiguration($configuration, array($config));
         
         $container->setParameter('symbb_config', $config);
+        $container->setParameter('symbb_system_name', $config['system']['name']);
+        $container->setParameter('symbb_system_email', $config['system']['email']);
         $container->setParameter('twig.globals.symbb_config.template', $config['template']);
+        $container->setParameter('twig.globals.symbb_config', $config);
         
     }
 }

@@ -1,4 +1,7 @@
 sym_bb_core_config:
+    system:
+      name: SymBB Test System
+      email: alpha@symbb.de
     database:
       table_prefix: 
         prod: symbb_
@@ -8,4 +11,5 @@ sym_bb_core_config:
       acp: SymBBTemplateAcpBundle
       forum: SymBBTemplateSimpleBundle
       portal: SymBBTemplateSimpleBundle
+      email: SymBBTemplateSimpleBundle
     

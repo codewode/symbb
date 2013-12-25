@@ -267,6 +267,10 @@ class FrontendTopicController  extends Controller
         $dispatcher = $this->get('event_dispatcher');
         $form       = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\PostType($url, $post, $dispatcher, $this->get('translator')), $post);
         
+        if($this->get('symbb.core.forum.topic.flag')->checkFlag($topic, 'notify')){
+            $form->get('notifyMe')->setData(true);
+        }
+        
         return $form;
     }
 

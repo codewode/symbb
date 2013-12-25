@@ -14,3 +14,6 @@ services:
     symbb.core.forum.topic.flag:
         class: SymBB\Core\ForumBundle\DependencyInjection\TopicFlagHandler
         arguments: ['@doctrine.orm.symbb_entity_manager', '@fos_user.user_manager', '@security.context', '@memcache.default']
+    symbb.core.forum.notify:
+        class: SymBB\Core\ForumBundle\DependencyInjection\NotifyHandler
+        arguments: ['@service_container']

@@ -37,10 +37,18 @@
             {{ form_row(form.name) }}
         </div>
         {{ form_widget(form.mainPost.children.text) }}
-        <div class="options">
-            {{ form_row(form.locked) }}
+    
+        <div class="m-top-1"></div>
+    
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ 'Options'|trans }}</div>
+            <div class="panel-body">
+              {{ form_rest(form.locked) }}
+            </div>
         </div>
-        {{ form_widget(form.save) }}
+    
+        <button class="btn btn-default" type="submit">{{ 'Save'|trans }}</button>
+        
     {{ form_end(form) }}
 </div>
 

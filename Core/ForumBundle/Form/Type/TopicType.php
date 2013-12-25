@@ -37,7 +37,6 @@ class TopicType extends AbstractType
         $builder->add('name', 'text', array('label' => 'Titel','attr' => array('placeholder' => 'Enter a name here')))
                 ->add('mainPost', $postType)
                 ->add('locked', 'checkbox', array('required'  => false))
-                ->add('save', 'submit')
                 ->add('id', 'hidden')
                 ->add('forum', 'entity', array('class' => 'SymBBCoreForumBundle:Forum', 'disabled' => true))
                 ->setAction($this->url);

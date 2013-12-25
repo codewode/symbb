@@ -36,10 +36,10 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('text', 'textarea', array('attr' => array('placeholder' => 'Give Your text here')));
+        $builder->add('notifyMe', 'checkbox', array("mapped" => false, 'required' => false));
         
         if($this->addAction){
             $builder->add('id', 'hidden')
-                ->add('save', 'submit')
                 ->setAction($this->url);
         }
         

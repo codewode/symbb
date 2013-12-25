@@ -158,6 +158,7 @@ class FrontendPostController  extends Controller
         $oldId  = $post->getId();
 
         $form->handleRequest($this->get('request'));
+        $data = $this->get('request')->get('post');
         
         if ($form->isValid()) {
             
@@ -177,6 +178,21 @@ class FrontendPostController  extends Controller
                 $this->get('symbb.core.forum.topic.flag')->insertFlags($topic, 'new');
                 $this->get('symbb.core.forum.topic.flag')->insertFlag($topic, 'answered');
             }
+            
+            if(isset($data['notifyMe']) && $data['notifyMe']){
+                $this->get('symbb.core.forum.topic.flag')->insertFlag($topic, 'notify');
+            } else {
+                $this->get('symbb.core.forum.topic.flag')->removeFlag($topic, 'notify');
+            }
+            
+            // check notify me
+            $users  = $this->get('symbb.core.forum.topic.flag')->getUsersForFlag('notify', $topic);
+            foreach($users as $notifyUser){
+                if($notifyUser != $this->getUser()->getId()){
+                    $this->get('symbb.core.forum.notify')->sendTopicNotifications($topic, $notifyUser);
+                }
+            }
+            
             return true;
         }
         return false;
@@ -214,6 +230,11 @@ class FrontendPostController  extends Controller
         
         
         $form   = $this->createForm($formType, $post);
+        
+        if($this->get('symbb.core.forum.topic.flag')->checkFlag($topic, 'notify')){
+            $form->get('notifyMe')->setData(true);
+        }
+        
         
         return $form;
     }
