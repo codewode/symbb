@@ -29,14 +29,22 @@
                 <div class="m-top-1"></div>
 
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{ 'Options'|trans }}</div>
+                    <div class="panel-heading">
+                        <ul class="nav nav-tabs nav-justified">
+                            <li class="active"><a>{{ 'Options'|trans }}</a></li>
+                            <li><a>{{ 'Survey'|trans }}</a></li>
+                            <li><a>{{ 'Files'|trans }}</a></li>
+                        </ul>
+                    </div>
                     <div class="panel-body">
                       {{ form_rest(form) }}
                     </div>
                 </div>
+                
 
 
                     <button class="btn btn-success" type="submit">{{ 'Save'|trans }}</button>
+                <button class="btn btn-danger" onclick="window.location.href='{{ path('_symbb_forum_topic_show', {'name': topic.getSeoName(), 'id': topic.getId()}) }}'; return false;">{{ 'Abort'|trans }}</button>
                 </div>
             </div>
             
