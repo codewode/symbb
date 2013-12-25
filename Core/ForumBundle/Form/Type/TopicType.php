@@ -36,7 +36,7 @@ class TopicType extends AbstractType
         $postType = new PostType('', $this->topic->getMainPost(), $this->dispatcher, $this->translator, false);
         $builder->add('name', 'text', array('label' => 'Titel','attr' => array('placeholder' => 'Enter a name here')))
                 ->add('mainPost', $postType)
-                ->add('locked', 'checkbox', array('required'  => false))
+                ->add('locked', 'checkbox', array('required'  => false, 'label' => 'close topic'))
                 ->add('id', 'hidden')
                 ->add('forum', 'entity', array('class' => 'SymBBCoreForumBundle:Forum', 'disabled' => true))
                 ->setAction($this->url);

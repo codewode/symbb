@@ -3,8 +3,13 @@
 {% block form_row %}
 {% spaceless %}
     <div class="input-group">
-        <span class="input-group-addon">{{ form_label(form) }}</span>
+        {% if form.vars.block_prefixes.1 != 'checkbox' %}
+        <span class="input-group-addon {{ form.vars.block_prefixes.1 }}">{{ form_label(form) }}</span>
+        {% endif %}
         {{ form_widget(form) }}
+        {% if form.vars.block_prefixes.1 == 'checkbox' %}
+        <span class="form-control {{ form.vars.block_prefixes.1 }}">{{ form_label(form) }}</span>
+        {% endif %}
     </div>
     {{ form_errors(form) }}
 {% endspaceless %}
@@ -19,7 +24,7 @@
     
 {% block checkbox_widget %}
 {% spaceless %}
-    <div class="form-control" >
+    <div class="input-group-addon">
     <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
     </div>
 {% endspaceless %}

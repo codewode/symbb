@@ -26,3 +26,7 @@ form div .input-group {
 form div .input-group:last-child {
     margin-bottom: 0px;
 }
+
+form .form-control {
+    min-width: 500px;
+}
