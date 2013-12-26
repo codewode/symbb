@@ -43,14 +43,16 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <ul class="nav nav-tabs nav-justified">
-                            <li class="active"><a>{{ 'Options'|trans }}</a></li>
+                            <li class="active"><a class="symbb_tab" data-tab="option">{{ 'Options'|trans }}</a></li>
                             {{ executeSymbbTemplateFormTopicEvent('options.tabs', form) }}
                         </ul>
                     </div>
                     <div class="panel-body">
+                        {{ executeSymbbTemplateFormTopicEvent('options.tabcontents', form) }}
+                        <div class="symbb_tabcontent" data-tab="option">
                         {{ form_rest(form.mainPost) }}
                         {{ form_rest(form) }}
-                        {{ executeSymbbTemplateFormTopicEvent('options.tabcontents', form) }}
+                        </div>
                     </div>
                 </div>
                 

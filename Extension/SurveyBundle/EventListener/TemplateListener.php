@@ -12,4 +12,28 @@ namespace SymBB\Extension\SurveyBundle\EventListener;
 class TemplateListener
 {
 
+    public function addPostTab($event){
+        $event->render('SymBBExtensionSurveyBundle:Post:tab.html.twig', array('form' => $event->getForm()));
+    }
+
+    public function addPostTabContent($event){
+        $event->render('SymBBExtensionSurveyBundle:Post:tabcontent.html.twig', array('form' => $event->getForm()));
+    }
+
+    public function addPostFormPart($event){
+        
+    }
+    
+    
+    public function addTopicTab($event){
+        $this->addPostTab($event);
+    }
+
+    public function addTopicTabContent($event){
+        $this->addPostTabContent($event);
+    }
+
+    public function addTopicFormPart($event){
+        
+    }
 }

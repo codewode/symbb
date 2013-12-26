@@ -7,6 +7,11 @@
     
 {% block javascripts %} 
     {{ parent() }}
+    {% javascripts 
+        '@SymBBCoreForumBundle/Resources/public/js/tabs.js' filter='?yui_js'
+     %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
     {{ executeSymbbTemplatePostEvent('javascripts', post) }}
 {% endblock %}
 

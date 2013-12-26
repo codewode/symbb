@@ -14,7 +14,7 @@
 {% endif %}
 <div id="symbb_bottom"></div>
 
-<div id="symbb_bbcode_editor" class="symbb_editor bbcode">
+<div id="symbb_bbcode_editor" class="">
     <div class="bbcode_list symbb_topic ">
 
         {{ form_start(form) }}
@@ -31,13 +31,15 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <ul class="nav nav-tabs nav-justified">
-                                <li class="active"><a>{{ 'Options'|trans }}</a></li>
+                                <li class="active"><a class="symbb_tab" data-tab="option">{{ 'Options'|trans }}</a></li>
                                 {{ executeSymbbTemplateFormPostEvent('options.tabs', form) }}
                             </ul>
                         </div>
                         <div class="panel-body">
-                            {{ form_rest(form) }}
                             {{ executeSymbbTemplateFormPostEvent('options.tabcontents', form) }}
+                            <div class="symbb_tabcontent" data-tab="option">
+                            {{ form_rest(form) }}
+                            </div>
                         </div>
                     </div>
                     

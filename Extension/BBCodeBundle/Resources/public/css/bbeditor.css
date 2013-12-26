@@ -1,7 +1,6 @@
 .symbb_editor textarea{
     width: 100%;
     min-height: 20em;
-    background-color: #EEEEEE;
     border: 1px solid #CCC;
     padding: 5px;
 }
