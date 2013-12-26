@@ -27,10 +27,9 @@
 
 {% block form_rowtable %}
 {% spaceless %}
-    {{ form_errorstable(form) }}
     <tr>
         <td>{{ form_label(form) }}</td>
-        <td>{{ form_widget(form) }}</td>
+        <td>{{ form_errors(form) }}{{ form_widget(form) }}</td>
     </tr>
 {% endspaceless %}
 {% endblock form_rowtable %}
@@ -83,17 +82,12 @@
 {% block form_errors %}
     {% spaceless %}
         {% if errors|length > 0 %}
-        <div class="panel panel-danger">
-          <div class="panel-body">
-            {% trans %}There was an error{% endtrans %}
-          </div>
-          <div class="panel-footer">
-              <ul>
-                {% for error in errors %}
-                  <li>{{ error.message }}</li>
-                {% endfor %}
-              </ul>
-          </div>
+        <div class="alert alert-danger">
+            <ul>
+              {% for error in errors %}
+                <li>{{ error.message }}</li>
+              {% endfor %}
+            </ul>
         </div>
         {% endif %}
     {% endspaceless %}
