@@ -14,7 +14,7 @@ use \SymBB\Extension\BBCodeBundle\Form\Type\BBEditorType;
 class FormListener
 {
     
-    public function getPostFormType(\SymBB\Core\EventBundle\Event\PostFormEvent $event)
+    public function getPostFormType(\SymBB\Core\EventBundle\Event\FormPostEvent $event)
     {
        $builder = $event->getBuilder();
        $builder->add('text', new BBEditorType(), array('attr' => array(
@@ -23,7 +23,7 @@ class FormListener
            )));
     }
     
-    public function getTopicFormType(\SymBB\Core\EventBundle\Event\TopicFormEvent $event)
+    public function getTopicFormType(\SymBB\Core\EventBundle\Event\FormTopicEvent $event)
     {
        //$builder = $event->getBuilder();
        //$builder->add('text', new BBEditorType(), array('attr' => array('class' => 'symbb_bbcode_editor_textarea')));

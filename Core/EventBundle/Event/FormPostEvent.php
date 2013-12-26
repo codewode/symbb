@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\Event;
 use \SymBB\Core\ForumBundle\Entity\Post;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class PostFormEvent extends Event
+class FormPostEvent extends Event
 {
     
     /**

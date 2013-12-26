@@ -25,26 +25,26 @@
                 <div class="panel-heading">{{ 'new answer'|trans }}</div>
                 <div class="panel-body">
 
-                {{ form_widget(form.text) }}
-                <div class="m-top-1"></div>
+                    {{ form_widget(form.text) }}
+                    <div class="m-top-1"></div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <ul class="nav nav-tabs nav-justified">
-                            <li class="active"><a>{{ 'Options'|trans }}</a></li>
-                            <li><a>{{ 'Survey'|trans }}</a></li>
-                            <li><a>{{ 'Files'|trans }}</a></li>
-                        </ul>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <ul class="nav nav-tabs nav-justified">
+                                <li class="active"><a>{{ 'Options'|trans }}</a></li>
+                                {{ executeSymbbTemplateFormPostEvent('options.tabs', form) }}
+                            </ul>
+                        </div>
+                        <div class="panel-body">
+                            {{ form_rest(form) }}
+                            {{ executeSymbbTemplateFormPostEvent('options.tabcontents', form) }}
+                        </div>
                     </div>
-                    <div class="panel-body">
-                      {{ form_rest(form) }}
-                    </div>
-                </div>
-                
-
-
+                    
+                    {{ executeSymbbTemplateFormPostEvent('before.buttons', form) }}
                     <button class="btn btn-success" type="submit">{{ 'Save'|trans }}</button>
-                <button class="btn btn-danger" onclick="window.location.href='{{ path('_symbb_forum_topic_show', {'name': topic.getSeoName(), 'id': topic.getId()}) }}'; return false;">{{ 'Abort'|trans }}</button>
+                    <button class="btn btn-danger" onclick="window.location.href='{{ path('_symbb_forum_topic_show', {'name': topic.getSeoName(), 'id': topic.getId()}) }}'; return false;">{{ 'Abort'|trans }}</button>
+                    {{ executeSymbbTemplateFormPostEvent('after.buttons', form) }}
                 </div>
             </div>
             

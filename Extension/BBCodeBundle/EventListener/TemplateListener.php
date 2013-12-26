@@ -12,12 +12,12 @@ namespace SymBB\Extension\BBCodeBundle\EventListener;
 class TemplateListener
 {
     
-    public function stylesheets(\SymBB\Core\EventBundle\Event\DefaultTemplateEvent $event)
+    public function stylesheets(\SymBB\Core\EventBundle\Event\TemplateDefaultEvent $event)
     {
         $event->render('SymBBExtensionBBCodeBundle::stylesheets.html.twig', array());
     }
     
-    public function javascripts(\SymBB\Core\EventBundle\Event\DefaultTemplateEvent $event)
+    public function javascripts(\SymBB\Core\EventBundle\Event\TemplateDefaultEvent $event)
     {
         $event->render('SymBBExtensionBBCodeBundle::javascripts.html.twig', array());
     }

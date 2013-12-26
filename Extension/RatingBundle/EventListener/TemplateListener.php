@@ -9,18 +9,15 @@
 
 namespace SymBB\Extension\RatingBundle\EventListener;
 
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\HttpKernel;
-
 class TemplateListener
 {
-    public function afterText(\SymBB\Core\EventBundle\Event\PostTemplateEvent $event)
+    public function afterText(\SymBB\Core\EventBundle\Event\TemplatePostEvent $event)
     {
         $post = $event->getPost();
         $event->render('SymBBExtensionRatingBundle:Post:rating.html.twig', array('object' => $post));
     }
     
-    public function topicStylesheets(\SymBB\Core\EventBundle\Event\DefaultTemplateEvent $event){
+    public function topicStylesheets(\SymBB\Core\EventBundle\Event\TemplateDefaultEvent $event){
         $event->render('SymBBExtensionRatingBundle::stylesheets.html.twig', array());
     }
 }

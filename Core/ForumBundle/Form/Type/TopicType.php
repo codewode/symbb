@@ -42,7 +42,7 @@ class TopicType extends AbstractType
                 ->setAction($this->url);
         
         // create Event to manipulate Post Form
-        $event      = new \SymBB\Core\EventBundle\Event\TopicFormEvent($this->topic, $builder, $this->translator);
+        $event      = new \SymBB\Core\EventBundle\Event\FormTopicEvent($this->topic, $builder, $this->translator);
         $this->dispatcher->dispatch('symbb.forum.topic.form', $event);
     }
 

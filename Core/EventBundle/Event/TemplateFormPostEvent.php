@@ -9,26 +9,23 @@
 namespace SymBB\Core\EventBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use \SymBB\Core\ForumBundle\Entity\Post;
 
-class PostTemplateEvent extends Event
+class TemplateFormPostEvent extends Event
 {
     
-    /**
-     * @var Post 
-     */
-    protected $post;
+
+    protected $form;
     protected $env;
     protected $html = '';
 
 
-    public function __construct($env, Post $post) {
-        $this->post = $post;
+    public function __construct($env, $form) {
+        $this->form = $form;
         $this->env = $env;
     }
     
-    public function getPost(){
-        return $this->post;
+    public function getForm(){
+        return $this->form;
     }
     
     public function render($templateName, $params){

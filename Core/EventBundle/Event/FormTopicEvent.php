@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\Event;
 use \SymBB\Core\ForumBundle\Entity\Topic;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class TopicFormEvent extends Event
+class FormTopicEvent extends Event
 {
     
     /**
