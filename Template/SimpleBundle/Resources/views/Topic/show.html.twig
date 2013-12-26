@@ -8,8 +8,7 @@
         '@SymBBTemplateSimpleBundle/Resources/public/css/topic.css' filter='?yui_css'
      %}
     <link rel="stylesheet" href="{{ asset_url }}" />
-    {{ executeSymbbTemplateEvent('layout.topic.stylesheets') }}
-    {{ executeSymbbTemplateEvent('layout.editor.stylesheets') }}
+    {{ executeSymbbTemplateTopicEvent('stylesheets', topic) }}
     {% endstylesheets %}
 {% endblock %}
     
@@ -19,8 +18,7 @@
         '@SymBBCoreForumBundle/Resources/public/js/quote.js' filter='?yui_js'
      %}
     <script src="{{ asset_url }}"></script>
-    {{ executeSymbbTemplateEvent('layout.topic.javascripts') }}
-    {{ executeSymbbTemplateEvent('layout.editor.javascripts') }}
+    {{ executeSymbbTemplateTopicEvent('javascripts', topic) }}
     {% endjavascripts %}
 {% endblock %}
 

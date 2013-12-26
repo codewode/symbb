@@ -45,7 +45,7 @@ class PostType extends AbstractType
         
         // create Event to manipulate Post Form
         $event      = new \SymBB\Core\EventBundle\Event\FormPostEvent($this->post, $builder, $this->translator);
-        $this->dispatcher->dispatch('symbb.forum.post.form', $event);
+        $this->dispatcher->dispatch('symbb.post.controller.form', $event);
         //
     }
 

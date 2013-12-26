@@ -17,7 +17,7 @@ class TemplateListener
         $event->render('SymBBExtensionRatingBundle:Post:rating.html.twig', array('object' => $post));
     }
     
-    public function topicStylesheets(\SymBB\Core\EventBundle\Event\TemplateDefaultEvent $event){
+    public function topicStylesheets(\SymBB\Core\EventBundle\Event\TemplateTopicEvent $event){
         $event->render('SymBBExtensionRatingBundle::stylesheets.html.twig', array());
     }
 }

@@ -2,13 +2,15 @@ services:
     symbb.listener.post.bbcode.editor:
         class: SymBB\Extension\BBCodeBundle\EventListener\TemplateListener
         tags:
-            - { name: kernel.event_listener, event: symbb.forum.template.layout.editor.stylesheets, method: stylesheets }
-            - { name: kernel.event_listener, event: symbb.forum.template.layout.editor.javascripts, method: javascripts }
+            - { name: kernel.event_listener, event: symbb.topic.template.stylesheets, method: stylesheets }
+            - { name: kernel.event_listener, event: symbb.topic.template.javascripts, method: javascripts }
+            - { name: kernel.event_listener, event: symbb.post.template.stylesheets, method: stylesheets }
+            - { name: kernel.event_listener, event: symbb.post.template.javascripts, method: javascripts }
     symbb.listener.post.bbcode.form:
         class: SymBB\Extension\BBCodeBundle\EventListener\FormListener
         tags:
-            - { name: kernel.event_listener, event: symbb.forum.post.form, method: getPostFormType }
-            - { name: kernel.event_listener, event: symbb.forum.topic.form, method: getTopicFormType }
+            - { name: kernel.event_listener, event: symbb.post.controller.form, method: getPostFormType }
+            - { name: kernel.event_listener, event: symbb.topic.controller.form, method: getTopicFormType }
     symbb.extensionbbcode.manager:
         class: SymBB\Extension\BBCodeBundle\DependencyInjection\BBCodeManager
         arguments: ['@service_container']

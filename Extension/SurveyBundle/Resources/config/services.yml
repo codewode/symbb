@@ -1,0 +1,10 @@
+services:
+    symbb.listener.post.survey:
+        class: SymBB\Extension\SurveyBundle\EventListener\TemplateListener
+        tags:
+            - { name: kernel.event_listener, event: symbb.post.template.form.options.tabs, method: addPostTab }
+            - { name: kernel.event_listener, event: symbb.post.template.form.options.tabcontents, method: addPostTabContent }
+            - { name: kernel.event_listener, event: symbb.post.controller.form, method: addPostFormPart }
+            - { name: kernel.event_listener, event: symbb.topic.template.form.options.tabs, method: addTopicTab }
+            - { name: kernel.event_listener, event: symbb.topic.template.form.options.tabcontents, method: addTopicTabContent }
+            - { name: kernel.event_listener, event: symbb.topic.controller.form, method: addTopicFormPart }

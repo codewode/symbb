@@ -20,17 +20,17 @@
         </div>
         <div class="row body">
             <div class="userblock">
-                {{ executeSymbbPostEvent('before.avatar', post) }}
+                {{ executeSymbbTemplatePostEvent('before.avatar', post) }}
                 <div class="avatar">
                     <img src="{{getSymbbUserAvatar(post.getAuthor())}}" />
                 </div>
-                {{ executeSymbbPostEvent('after.avatar', post) }}
-                {{ executeSymbbPostEvent('before.username', post) }}
+                {{ executeSymbbTemplatePostEvent('after.avatar', post) }}
+                {{ executeSymbbTemplatePostEvent('before.username', post) }}
                 <div class="username">
                     {{post.getAuthor().getUsername()}}
                 </div>
-                {{ executeSymbbPostEvent('after.username', post) }}
-                {{ executeSymbbPostEvent('before.userdata', post) }}
+                {{ executeSymbbTemplatePostEvent('after.username', post) }}
+                {{ executeSymbbTemplatePostEvent('before.userdata', post) }}
                 <div class="userdata">
                     <div class="text">{% trans %}posts{% endtrans %}:</div>
                     <div class="data">{{post.getAuthor().getPosts().count()}}</div>
@@ -39,20 +39,20 @@
                     <div class="data">{{post.getAuthor().getCreated()|format_date}}</div>
                     <div class="clear"></div>
                 </div>
-                {{ executeSymbbPostEvent('after.userdata', post) }}
+                {{ executeSymbbTemplatePostEvent('after.userdata', post) }}
             </div>
             <div class="textblock">
                 <div class="date">
                     {% trans with {'%user%': post.getAuthor().getUsername(), '%date%': post.getChanged()|format_date, '%time%': post.getChanged()|date('H:i')} %}%user% wrote on %date% at %time%{% endtrans %}
                 </div>
-                {{ executeSymbbPostEvent('before.text', post) }}
+                {{ executeSymbbTemplatePostEvent('before.text', post) }}
                 <div class="text" id="symbb_post_body_{{post.getId()}}">
                 {{post.getText()|bbcode_filter('default')}}
                 </div>
-                {{ executeSymbbPostEvent('after.text', post) }}
-                {{ executeSymbbPostEvent('before.signature', post) }}
+                {{ executeSymbbTemplatePostEvent('after.text', post) }}
+                {{ executeSymbbTemplatePostEvent('before.signature', post) }}
                 {{ _self.showSignature(post) }}
-                {{ executeSymbbPostEvent('after.signature', post) }}
+                {{ executeSymbbTemplatePostEvent('after.signature', post) }}
             </div>
         </div>
     {% endfor %}

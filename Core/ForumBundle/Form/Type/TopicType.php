@@ -43,7 +43,7 @@ class TopicType extends AbstractType
         
         // create Event to manipulate Post Form
         $event      = new \SymBB\Core\EventBundle\Event\FormTopicEvent($this->topic, $builder, $this->translator);
-        $this->dispatcher->dispatch('symbb.forum.topic.form', $event);
+        $this->dispatcher->dispatch('symbb.topic.controller.form', $event);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

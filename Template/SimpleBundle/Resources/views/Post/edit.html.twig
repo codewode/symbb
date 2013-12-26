@@ -2,12 +2,12 @@
 
 {% block stylesheets %} 
     {{ parent() }}
-    {{ executeSymbbTemplateEvent('layout.editor.stylesheets') }}
+    {{ executeSymbbTemplatePostEvent('stylesheets', post) }}
 {% endblock %}
     
 {% block javascripts %} 
     {{ parent() }}
-    {{ executeSymbbTemplateEvent('layout.editor.javascripts') }}
+    {{ executeSymbbTemplatePostEvent('javascripts', post) }}
 {% endblock %}
 
 {% block symbb_body %}
