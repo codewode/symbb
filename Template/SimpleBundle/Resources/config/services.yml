@@ -1,0 +1,6 @@
+services:
+    symbb.template.simple.form:
+        twig.extension.symbb.template.simple.form:
+        class: SymBB\Template\SimpleBundle\Twig\FormExtension
+        tags:
+            - { name: twig.extension } 

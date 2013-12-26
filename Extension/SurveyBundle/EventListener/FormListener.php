@@ -19,7 +19,8 @@ class FormListener
        $builder->add('surveyAnswers', 'textarea', array('mapped' => false, 'label' => 'The answers', 'attr' => array(
            'placeholder' => 'Give each answer on a separate line'
            )));
-       $builder->add('surveyChoices', 'number', array('mapped' => false, 'data' => 1 ,'label' => 'Choices', 'attr' => array()));
+       $builder->add('surveyChoices', 'number', array('mapped' => false, 'data' => 1 ,'label' => 'Options per user', 'attr' => array()));
+       $builder->add('surveyChoiceChanges', 'checkbox', array('mapped' => false ,'label' => 'Allow changing the voting', 'attr' => array()));
     }
     
 }

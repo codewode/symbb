@@ -4,16 +4,36 @@
 {% spaceless %}
     <div class="input-group">
         {% if form.vars.block_prefixes.1 != 'checkbox' %}
-        <span class="input-group-addon {{ form.vars.block_prefixes.1 }}">{{ form_label(form) }}</span>
+        <span class="input-group-addon">{{ form_label(form) }}</span>
         {% endif %}
         {{ form_widget(form) }}
         {% if form.vars.block_prefixes.1 == 'checkbox' %}
-        <span class="form-control {{ form.vars.block_prefixes.1 }}">{{ form_label(form) }}</span>
+        <span class="form-control ">{{ form_label(form) }}</span>
         {% endif %}
     </div>
     {{ form_errors(form) }}
 {% endspaceless %}
 {% endblock form_row %}
+
+{% block form_resttable %}
+{% spaceless %}
+    {% for child in form %}
+        {% if not child.rendered %}
+            {{ form_rowtable(child) }}
+        {% endif %}
+    {% endfor %}
+{% endspaceless %}
+{% endblock form_resttable %}
+
+{% block form_rowtable %}
+{% spaceless %}
+    {{ form_errorstable(form) }}
+    <tr>
+        <td>{{ form_label(form) }}</td>
+        <td>{{ form_widget(form) }}</td>
+    </tr>
+{% endspaceless %}
+{% endblock form_rowtable %}
 
 {% block form_widget_simple %}
 {% spaceless %}
@@ -24,9 +44,7 @@
     
 {% block checkbox_widget %}
 {% spaceless %}
-    <div class="input-group-addon">
     <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
-    </div>
 {% endspaceless %}
 {% endblock checkbox_widget %}
 
@@ -51,6 +69,16 @@
     </select>
 {% endspaceless %}
 {% endblock choice_widget_collapsed %}
+    
+{% block form_errorstable %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+        <tr>
+            <td colspan="2">{{ form_errors(form) }}</td>
+        </tr>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errorstable %}
     
 {% block form_errors %}
     {% spaceless %}

@@ -36,6 +36,8 @@
             <div class="panel-heading">{{ form_widget(form.forum) }}</div>
             <div class="panel-body">
             {{ form_row(form.name) }}
+            {{ form_row(form.id) }}
+            {{ form_row(form._token) }}
     
             {{ form_widget(form.mainPost.children.text) }}
                 <div class="m-top-1"></div>
@@ -50,8 +52,12 @@
                     <div class="panel-body">
                         {{ executeSymbbTemplateFormTopicEvent('options.tabcontents', form) }}
                         <div class="symbb_tabcontent" data-tab="option">
-                        {{ form_rest(form.mainPost) }}
-                        {{ form_rest(form) }}
+                            <div class="panel panel-default">
+                                <table class="table">
+                                    {{ form_resttable(form.mainPost) }}
+                                    {{ form_resttable(form) }}
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

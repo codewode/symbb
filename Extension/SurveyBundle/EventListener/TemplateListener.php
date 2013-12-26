@@ -30,7 +30,7 @@ class TemplateListener
     }
 
     public function addTopicTabContent($event){
-        $this->addPostTabContent($event);
+        $event->render('SymBBExtensionSurveyBundle:Topic:tabcontent.html.twig', array('form' => $event->getForm()));
     }
 
     public function addTopicFormPart($event){

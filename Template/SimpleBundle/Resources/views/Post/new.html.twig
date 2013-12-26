@@ -25,6 +25,8 @@
                 <div class="panel-heading">{{ 'new answer'|trans }}</div>
                 <div class="panel-body">
 
+                    {{ form_row(form.id) }}
+                    {{ form_row(form._token) }}
                     {{ form_widget(form.text) }}
                     <div class="m-top-1"></div>
 
@@ -38,7 +40,11 @@
                         <div class="panel-body">
                             {{ executeSymbbTemplateFormPostEvent('options.tabcontents', form) }}
                             <div class="symbb_tabcontent" data-tab="option">
-                            {{ form_rest(form) }}
+                                <div class="panel panel-default">
+                                    <table class="table">
+                                        {{ form_resttable(form) }}
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

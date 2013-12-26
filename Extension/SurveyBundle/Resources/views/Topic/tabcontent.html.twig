@@ -1,0 +1,12 @@
+{% trans_default_domain "symbb_frontend" %}
+
+<div class="symbb_tabcontent" data-tab="survey">
+    <div class="panel panel-default">
+        <table class="table">
+        {{ form_rowtable(form.mainPost.surveyQuestion) }}
+        {{ form_rowtable(form.mainPost.surveyAnswers) }}
+        {{ form_rowtable(form.mainPost.surveyChoices) }}
+        {{ form_rowtable(form.mainPost.surveyChoiceChanges) }}
+        </table>
+    </div>
+</div>
