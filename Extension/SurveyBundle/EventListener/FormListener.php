@@ -21,7 +21,7 @@ class FormListener
            )));
        $builder->add('surveyChoices', 'number', array('mapped' => false, 'required' => false,'data' => 1 ,'label' => 'Options per user', 'attr' => array()));
        $builder->add('surveyChoiceChanges', 'checkbox', array('mapped' => false , 'required' => false, 'label' => 'Allow changing the voting', 'attr' => array()));
-       $builder->add('surveyEnd', 'date', array('mapped' => false , 'data' => new \DateTime(), 'required' => false, 'label' => 'End date', 'input'  => 'datetime', 'widget' => 'single_text'));
+       $builder->add('surveyEnd', 'date', array('mapped' => false , 'required' => false, 'label' => 'End date', 'input'  => 'datetime', 'widget' => 'single_text'));
     }
     
 }
