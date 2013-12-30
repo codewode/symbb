@@ -8,7 +8,7 @@ sym_bb_core_config:
         dev:  symbb_dev_
         test: symbb_test_
     template: 
-      acp: SymBBTemplateAcpBundle
+      acp: SymBBTemplateSimpleBundle
       forum: SymBBTemplateSimpleBundle
       portal: SymBBTemplateSimpleBundle
       email: SymBBTemplateSimpleBundle

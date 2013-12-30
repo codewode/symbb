@@ -1,11 +1,11 @@
 <?
 /**
-*
-* @package symBB
-* @copyright (c) 2013 Christian Wielath
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-*
-*/
+ *
+ * @package symBB
+ * @copyright (c) 2013 Christian Wielath
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+ *
+ */
 
 namespace SymBB\Core\ForumBundle\Form\EventListener;
 
@@ -15,13 +15,15 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AddForumFieldSubscriber implements EventSubscriberInterface
 {
+
     public static function getSubscribedEvents()
     {
         // Tells the dispatcher that you want to listen on the form.pre_set_data
         // event and that the preSetData method should be called.
         return array(FormEvents::PRE_SUBMIT => 'preSubmit', FormEvents::PRE_SET_DATA => 'preSetData');
+
     }
-    
+
     /**
      * befor form data bind
      * @param \Symfony\Component\Form\FormEvent $event
@@ -31,16 +33,16 @@ class AddForumFieldSubscriber implements EventSubscriberInterface
         $data = $event->getData();
         $form = $event->getForm();
 
-        // check if the product object is "new"
-        // If you didn't pass any data to the form, the data is "null".
-        // This should be considered a new "Product"
         if ($data && $data->getType() == 'link') {
             $this->addLinkFields($form);
-        } else if ($data && $data->getType() == 'forum') {
-            $this->addForumFields($form);
-        } else if ($data && $data->getType() == 'category') {
+        }
+        else if ($data && $data->getType() == 'forum') {
             $this->addForumFields($form);
         }
+        else if ($data && $data->getType() == 'category') {
+            $this->addForumFields($form);
+        }
+
     }
 
     /**
@@ -52,49 +54,58 @@ class AddForumFieldSubscriber implements EventSubscriberInterface
         $data = $event->getData();
         $form = $event->getForm();
 
-        // check if the product object is "new"
-        // If you didn't pass any data to the form, the data is "null".
-        // This should be considered a new "Product"
-        if ($data && $data['type'] == 'link') {
-            $this->addLinkFields($form);
-        } else if($data) {
-            $this->addLinkFields($form, true);
-        }
-        
         if ($data && ($data['type'] == 'forum')) {
             $this->addForumFields($form);
-        } else if ($data && ($data['type'] == 'category')) {
-            $this->addCategoryFields($form);
-        }else if($data) {
-            $this->addForumFields($form, true);
         }
+        else if ($data && ($data['type'] == 'category')) {
+            $this->addCategoryFields($form);
+        }
+        else if ($data && ($data['type'] == 'link')) {
+            $this->addLinkFields($form);
+        }
+
     }
-    
-    protected function addLinkFields($form, $hidden = false){
+
+    protected function addLinkFields($form, $hidden = false)
+    {
         $type = null;
-        if($hidden){
+        if ($hidden) {
             $type = 'hidden';
         }
         $form->add('link', $type);
-        $form->add('countLinkCalls', $type);        
+        $form->add('countLinkCalls', $type);
+        $form->remove('description');
+        $form->remove('showSubForumList');
+        $form->remove('entriesPerPage');
+
     }
-    
-    protected function addForumFields($form, $hidden = false){
+
+    protected function addForumFields($form, $hidden = false)
+    {
         $type = null;
-        if($hidden){
+        if ($hidden) {
             $type = 'hidden';
         }
         $form->add('description', $type);
-        $form->add('showSubForumList', $type); 
+        $form->add('showSubForumList', $type);
         $form->add('entriesPerPage', $type);
+
+        $form->remove('link');
+        $form->remove('countLinkCalls');
+
     }
-    
-    protected function addCategoryFields($form, $hidden = false){
+
+    protected function addCategoryFields($form, $hidden = false)
+    {
         $type = null;
-        if($hidden){
+        if ($hidden) {
             $type = 'hidden';
         }
         $form->add('description', $type);
         $form->add('entriesPerPage', $type);
+
+        $form->remove('link');
+        $form->remove('countLinkCalls');
+
     }
 }

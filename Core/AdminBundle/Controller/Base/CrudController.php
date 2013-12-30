@@ -1,70 +1,80 @@
 <?
 /**
-*
-* @package symBB
-* @copyright (c) 2013 Christian Wielath
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-*
-*/
+ *
+ * @package symBB
+ * @copyright (c) 2013 Christian Wielath
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+ *
+ */
 
 namespace SymBB\Core\AdminBundle\Controller\Base;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-
-abstract class CrudController extends Controller 
+abstract class CrudController extends Controller
 {
+
     private $formEntity;
+
     protected $entityBundle = 'SymBBCoreForumBundle';
+
     protected $templateBundle = null;
+
     protected $entityName = '';
+
     protected $formClass = '';
 
-    
+    public function listAction($parent = null)
+    {
+        $entityList = $this->findListEntities($parent);
 
-    public function listAction($parent = null){
-        $entityList     = $this->findListEntities($parent);
-        $breadcrum      = false;
-        $path           = '_'.$this->entityBundle.'_'.$this->entityName;
-        $path           = strtolower($path);
-        
-        if($parent){
-            $repository             = $this->getRepository();
-            $parentEntity           = $repository->find($parent);
-            if(is_object($parentEntity)){
-                $breadcrum      = array();
-                $names          = $parentEntity->getExtendNameArray();
-                $uri            = $this->get('router')->generate($path.'_list');
-                $breadcrum[]    = '<a href="'.$uri.'">'.$this->get('translator')->trans('Übersicht', array(), 'list').'</a>';
-                foreach($names as $id => $name){
-                    $uri = $this->get('router')->generate($path.'_list_child', array('parent' => $id));
-                    $breadcrum[] = '<a href="'.$uri.'">'.$name.'</a>';
-                }
-                $breadcrum = implode(' - ', $breadcrum);
-            }
-        }
-        $params = array('entityList' => $entityList, 'breadcrum' => $breadcrum);
+        $params = array('entityList' => $entityList, 'breadcrum' => $this->getBreadcrum($parent));
         $params = $this->addListParams($params);
         return $this->render(
-            $this->getTemplateBundleName().':'.$this->entityName.':list.html.twig',
-            $params
+                $this->getTemplateBundleName() . ':Acp/' . $this->entityName . ':list.html.twig', $params
         );
-	}
-    
-    public function sortAction(){
-        $request                = $this->getRequest();
-        $return                 = array('success' => 0);
-        if($request->isMethod('POST'))
-        {
+
+    }
+
+    public function getBreadcrum($parent = null)
+    {
+        $breadcrum = false;
+        $path = '_' . $this->entityBundle . '_' . $this->entityName;
+        $path = strtolower($path);
+
+        if ($parent) {
             $repository = $this->getRepository();
-            $em         = $this->get('doctrine')->getEntityManager('symbb');
-            $entries    = (array)$request->get('entries');
-            $i          = 0;
-            foreach($entries as $entry){
-                $entry      = explode('_', $entry);
-                $entityId   = end($entry);
-                $entity     = $repository->findOneById($entityId);
-                if($entity){
+            $parentEntity = $repository->find($parent);
+            if (is_object($parentEntity)) {
+                $breadcrum = array();
+                $names = $parentEntity->getExtendNameArray();
+                $uri = $this->get('router')->generate($path . '_list');
+                $breadcrum[] = '<li><a href="' . $uri . '">' . $this->get('translator')->trans('Übersicht', array(), 'list') . '</a></li>';
+                foreach ($names as $id => $name) {
+                    $uri = $this->get('router')->generate($path . '_list_child', array('parent' => $id));
+                    $breadcrum[] = '<li><a href="' . $uri . '">' . $name . '</a></li>';
+                }
+                $breadcrum = implode('', $breadcrum);
+            }
+        }
+        return '<ol class="breadcrumb">' . $breadcrum . '</ol>';
+
+    }
+
+    public function sortAction()
+    {
+        $request = $this->getRequest();
+        $return = array('success' => 0);
+        if ($request->isMethod('POST')) {
+            $repository = $this->getRepository();
+            $em = $this->get('doctrine')->getEntityManager('symbb');
+            $entries = (array) $request->get('entries');
+            $i = 0;
+            foreach ($entries as $entry) {
+                $entry = explode('_', $entry);
+                $entityId = end($entry);
+                $entity = $repository->findOneById($entityId);
+                if ($entity) {
                     $entity->setPosition($i);
                     $em->persist($entity);
                     $i++;
@@ -77,144 +87,157 @@ abstract class CrudController extends Controller
         $response = new \Symfony\Component\HttpFoundation\Response($json);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
+
     }
 
     public function newAction()
-	{
+    {
         return $this->editAction();
-	}
-    
+
+    }
+
     public function editAction()
-	{
+    {
         $request = $this->getRequest();
-        if($request->isMethod('POST'))
-        {
+        if ($request->isMethod('POST')) {
             return $this->saveAction();
-        } else {
-            $form   = $this->getForm();
+        }
+        else {
+            $form = $this->getForm();
             $entity = $this->getFormEntity();
             return $this->editCallback($form, $entity);
         }
-	}
-    
+
+    }
 
     public function saveAction()
     {
-        $request                = $this->getRequest();
-        $form                   = $this->getForm();
-        
-        if($request->isMethod('POST'))
-        {
+        $request = $this->getRequest();
+        $form = $this->getForm();
+
+        if ($request->isMethod('POST')) {
             $form->bind($request);
             $entity = $this->getFormEntity();
 
-            if($form->isValid() && $request->get('save'))
-            {
+            if ($form->isValid() && $request->get('save')) {
                 $em = $this->get('doctrine')->getEntityManager('symbb');
                 $em->persist($entity);
                 $em->flush();
-                
+
                 return $this->listAction();
             }
-            else
-            {
+            else {
                 return $this->editCallback($form, $entity);
             }
         }
+
     }
-    
-    
-    public function removeAction($id){
-        $repository     = $this->getRepository();
-        $entity         = $repository->findOneById($id);
-        $parent         = null;
-        if(is_object($entity)){
-            $parent         = $entity->getParent();
+
+    public function removeAction($id)
+    {
+        $repository = $this->getRepository();
+        $entity = $repository->findOneById($id);
+        $parent = null;
+        if (is_object($entity)) {
+            $parent = $entity->getParent();
             $em = $this->get('doctrine')->getEntityManager('symbb');
             $em->remove($entity);
             $em->flush();
         }
         return $this->listAction($parent);
+
     }
-    
-        /**
+
+    /**
      * Entity object for the form
      * Dont load the object twice and load from this method
-     * 
+     *
      * @return Object
      */
     protected function getFormEntity()
     {
-        if($this->formEntity === null)
-        {
-            $request                = $this->getRequest();
-            $entityId               = (int)$request->get('id');
-            $repository             = $this->getRepository();
+        if ($this->formEntity === null) {
+            $request = $this->getRequest();
+            $entityId = (int) $request->get('id');
+            $repository = $this->getRepository();
 
-            if($entityId > 0)
-            {
+            if ($entityId > 0) {
                 // edit form
-                $entity				= $repository->findOneById($entityId);
+                $entity = $repository->findOneById($entityId);
             }
-            else
-            {    
+            else {
                 // new form, return empty entity
-                $entity_class_name  = $repository->getClassName();
-                $entity				= new $entity_class_name();
+                $entity_class_name = $repository->getClassName();
+                $entity = new $entity_class_name();
             }
 
-            $this->formEntity      = $entity;
+            $this->formEntity = $entity;
         }
-        
+
         return $this->formEntity;
+
     }
 
     protected function getForm()
     {
-        $entity                 = $this->getFormEntity();        
+        $entity = $this->getFormEntity();
         $form = $this->createForm(new $this->formClass, $entity);
         return $form;
-    }
-    
-    
-    protected function addListParams($params){
-        return $params;
-    }
-    
-    protected function addFormParams($params){
-        return $params;
+
     }
 
-    protected function getRepository(){
-        $repo = $this->get('doctrine')->getRepository($this->entityBundle.':'.$this->entityName, 'symbb');
-        return $repo;
+    protected function addListParams($params)
+    {
+        return $params;
+
     }
-    
-    protected function findListEntities($parent = null){
-        if($parent === null){
-            $entityList = $this->getRepository()->findAll();  
-        } else {
-            $entityList = $this->getRepository()->findBy(array('parent' => $parent));  
+
+    protected function addFormParams($params)
+    {
+        return $params;
+
+    }
+
+    protected function getRepository()
+    {
+        $repo = $this->get('doctrine')->getRepository($this->entityBundle . ':' . $this->entityName, 'symbb');
+        return $repo;
+
+    }
+
+    protected function findListEntities($parent = null)
+    {
+        if ($parent === null) {
+            $entityList = $this->getRepository()->findAll();
+        }
+        else {
+            $entityList = $this->getRepository()->findBy(array('parent' => $parent));
         }
         return $entityList;
+
     }
-    
-    protected function editCallback($form, $entity){
-        
+
+    protected function editCallback($form, $entity)
+    {
+
         $params = array(
-                        'entity' => $entity,
-                        'form'  => $form->createView(),
-                    );
+            'entity' => $entity,
+            'form' => $form->createView(),
+            'breadcrum' => $this->getBreadcrum($entity->getParent())
+        );
         $params = $this->addFormParams($params);
-        
-        return $this->render($this->getTemplateBundleName().':'.$this->entityName.':edit.html.twig', $params);
+
+        return $this->render($this->getTemplateBundleName() . ':Acp/' . $this->entityName . ':edit.html.twig', $params);
+
     }
-    
-    protected function getTemplateBundleName(){
-        if($this->templateBundle === null){
+
+    protected function getTemplateBundleName()
+    {
+        if ($this->templateBundle === null) {
             $config = $this->container->getParameter('symbb_config');
             $this->templateBundle = $config['template']['acp'];
         }
         return $this->templateBundle;
+
     }
 }

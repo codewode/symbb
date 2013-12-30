@@ -7,7 +7,15 @@ root, body, html {
     height: 100%;
 }
 
+.navbar .container {
+    width: 100%;
+}
 
+.symbb_body {
+    display: block;
+    width: 95%;
+    margin: 14px auto;
+}
 
 .symbb_header {
     position: relative;

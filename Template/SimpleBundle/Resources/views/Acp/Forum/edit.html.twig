@@ -1,0 +1,23 @@
+{% extends getSymbbTemplateConfig('acp') ~ ':Acp/Forum:list.html.twig' %}
+
+{% trans_default_domain "symbb_backend" %}
+
+{% form_theme form getSymbbTemplateConfig('acp') ~ '::form.html.twig' %}
+
+{% block symbb_body %}
+<form action="" method="post" {{ form_enctype(form) }}>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {{ 'Eintrag speichern'|trans }}
+        </div>
+        {{ form_row(form._token) }}
+        <table class="table">
+        {{ form_resttable(form) }}
+        </table>
+        <input type="hidden" name="id" value="{{ entity.getId() }}" />
+        <div class="panel-footer">
+            <button onclick="submit();" type="button" class="btn btn-info">{{ 'save'|trans({}) }}</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

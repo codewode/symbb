@@ -1,4 +1,6 @@
-{% extends getSymbbTemplateConfig('acp') ~ '::layout.html.twig' %}
+{% extends getSymbbTemplateConfig('acp') ~ ':Acp:layout.html.twig' %}
+
+{% trans_default_domain "symbb_backend" %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -20,18 +22,19 @@
 {% block subnavi %}
     {{ knp_menu_render('SymBBCoreForumBundle:Builder:subMenu') }}
 {% endblock %}
+    
+{% block symbb_breadcrumb_content %}
+    {% if breadcrum %}
+        {{ breadcrum|raw }}
+    {% endif %}
+{% endblock %}
 
-{% block content %}
-    <div class="table">
-        <div class="breadcrum">
-            {% if breadcrum %}
-                {{ breadcrum|raw }}
-            {% endif %}
+{% block symbb_body %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <button onclick="window.location.href='{{path('_symbbcoreforumbundle_forum_new')}}';" type="button" class="btn btn-info">{{ 'new'|trans({}) }}</button>
         </div>
-        <div class="actions">
-            <button onclick="SymBBUtil.goTo('{{path('_symbbcoreforumbundle_forum_new')}}')">{{ 'Neues Forum'|trans({}, "list") }}</button>
-        </div>
-        <table>
+        <table class="table">
             <colgroup>
                 <col style="width: 26px;" />
                 <col style="width: auto;" />
@@ -41,20 +44,20 @@
             <thead>
                 <tr>
                     <th>&nbsp;</th>
-                    <th>{{ 'Forum'|trans({}, "list") }}</th>
-                    <th>{{ 'Art'|trans({}, "list") }}</th>
-                    <th>{{ 'Aktionen'|trans({}, "list") }}</th>
+                    <th>{{ 'Forum'|trans }}</th>
+                    <th>{{ 'Type'|trans }}</th>
+                    <th>{{ 'Actions'|trans }}</th>
                 </tr>
             </thead>
             <tbody class="sortable_table">
                 {% for entry in entityList %}
                     <tr id="entry_{{entry.getId()}}">
                         <th class="mover">&nbsp;</th>
-                        <td class="clickable" onclick="SymBBUtil.goTo('{{ path('_symbbcoreforumbundle_forum_list_child', {parent: entry.getId()}) }}')">{{entry.getName()}}</td>
+                        <td class="clickable" onclick="window.location.href='{{ path('_symbbcoreforumbundle_forum_list_child', {parent: entry.getId()}) }}';">{{entry.getName()}}</td>
                         <td>{{helper.type.format(entry.getType())}}</td>
                         <td>
-                            <a href="{{ path('_symbbcoreforumbundle_forum_edit', {id: entry.getId()}) }}"><img class="clickable" src="/bundles/symbbtemplateacp/images/icons/16_16/pencil.png" alt="{{ 'Editieren'|trans({}, "list") }}" title="{{ 'Editieren'|trans({}, "list") }}" /> </a>
-                            <a onclick="confirm('{{ 'Eintrag wirklich löschen?'|trans({}, "list") }}')" href="{{ path('_symbbcoreforumbundle_forum_remove', {id: entry.getId()}) }}"><img class="clickable" src="/bundles/symbbtemplateacp/images/icons/16_16/cross.png" alt="{{ 'Löschen'|trans({}, "list") }}" title="{{ 'Löschen'|trans({}, "list") }}" /> </a>
+                            <a href="{{ path('_symbbcoreforumbundle_forum_edit', {id: entry.getId()}) }}"><img class="clickable" src="/bundles/symbbtemplatesimple/images/icons/16_16/pencil.png" alt="{{ 'Editieren'|trans }}" title="{{ 'Editieren'|trans }}" /> </a>
+                            <a onclick="confirm('{{ 'Eintrag wirklich löschen?'|trans }}')" href="{{ path('_symbbcoreforumbundle_forum_remove', {id: entry.getId()}) }}"><img class="clickable" src="/bundles/symbbtemplatesimple/images/icons/16_16/cross.png" alt="{{ 'Löschen'|trans }}" title="{{ 'Löschen'|trans }}" /> </a>
                         </td>
                     </tr>
                 {% endfor %}

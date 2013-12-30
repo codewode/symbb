@@ -1,0 +1,46 @@
+{% trans_default_domain "symbb_backend" %}
+
+{% extends getSymbbTemplateConfig('acp') ~ '::layout.html.twig' %}
+
+{% block stylesheets %} 
+    {{ parent() }}
+    {% stylesheets 
+        '@SymBBTemplateSimpleBundle/Resources/public/css/acp/*.css' filter='?yui_css'
+     %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+    
+    
+
+{% block symbb_navi %} 
+    {% include getSymbbTemplateConfig('forum') ~ ':Acp:navi.html.twig' %}
+{% endblock %}
+
+{% block symbb_breadcrumb %}
+ <div class="symbb_breadcrumb">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#breadcrumb-collapse-1">
+                    <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand glyphicon glyphicon-th-large" href="{{path('_symbb_index')}}"></a>
+            </div>
+            
+            {% block symbb_breadcrumb_content %}
+            {% endblock %}
+        </div>
+    </nav>
+</div>
+{% endblock %}
+
+    
+{% block symbb_body %}
+    
+{% endblock %}
+
