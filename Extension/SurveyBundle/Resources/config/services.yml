@@ -6,7 +6,19 @@ services:
             - { name: kernel.event_listener, event: symbb.post.template.form.options.tabcontents, method: addPostTabContent }
             - { name: kernel.event_listener, event: symbb.topic.template.form.options.tabs, method: addTopicTab }
             - { name: kernel.event_listener, event: symbb.topic.template.form.options.tabcontents, method: addTopicTabContent }
+            
     symbb.listener.post.survey.form:
         class: SymBB\Extension\SurveyBundle\EventListener\FormListener
         tags:
             - { name: kernel.event_listener, event: symbb.post.controller.form, method: addPostFormPart }
+            
+    symbb.listener.post.survey.save:
+        class: SymBB\Extension\SurveyBundle\EventListener\SaveListener
+        arguments: ['@doctrine.orm.symbb_entity_manager']
+        tags:
+            - { name: kernel.event_listener, event: symbb.post.controller.save, method: save }
+            - { name: kernel.event_listener, event: symbb.post.controller.handle.request, method: handleRequest }
+            
+            
+            
+            

@@ -208,11 +208,24 @@ class FrontendTopicController  extends Controller
         
         $form   = $this->getTopicForm($forum, $post, $topic);
 
+        $event      = new \SymBB\Core\EventBundle\Event\EditTopicEvent($topic, $form);
+        $this->get('event_dispatcher')->dispatch('symbb.topic.controller.handle.request', $event);
+        
+        $event      = new \SymBB\Core\EventBundle\Event\EditPostEvent($topic->getMainPost(), $form->get('mainPost'));
+        $this->get('event_dispatcher')->dispatch('symbb.post.controller.handle.request', $event);
+        
         $form->handleRequest($this->get('request'));
         
         if ($form->isValid()) {
             
-            $em = $this->getDoctrine()->getManager('symbb');
+            $em         = $this->getDoctrine()->getManager('symbb');
+            
+            $event      = new \SymBB\Core\EventBundle\Event\EditTopicEvent($topic, $form);
+            $this->get('event_dispatcher')->dispatch('symbb.topic.controller.save', $event);
+            
+            $event      = new \SymBB\Core\EventBundle\Event\EditPostEvent($topic->getMainPost(), $form->get('mainPost'));
+            $this->get('event_dispatcher')->dispatch('symbb.post.controller.save', $event);
+            
             $em->persist($topic);
             if($post){
                 $em->persist($post);
