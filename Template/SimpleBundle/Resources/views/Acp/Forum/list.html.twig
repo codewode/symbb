@@ -2,25 +2,17 @@
 
 {% trans_default_domain "symbb_backend" %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        window.addEvent('domready', function() {
-            var sortableList = new Sortables('.sortable_table', {
-                constrain: true,
-                clone: false,
-                revert: true,
-                handle: '.mover',
-                onComplete: function(element){
-                    SymBBUtil.saveSortable(sortableList, '{{ path('_symbbcoreforumbundle_forum_sort') }}');
-                }
-            });
-        });
-    </script>
-{% endblock %}
-
 {% block subnavi %}
     {{ knp_menu_render('SymBBCoreForumBundle:Builder:subMenu') }}
+{% endblock %}
+    
+{% block javascripts %} 
+    {{ parent() }}
+    {% javascripts 
+        '@SymBBTemplateSimpleBundle/Resources/public/js/acp/sorting.js' filter='?yui_js'
+     %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
     
 {% block symbb_breadcrumb_content %}
@@ -43,16 +35,16 @@
             </colgroup>
             <thead>
                 <tr>
-                    <th>&nbsp;</th>
+                    <th></th>
                     <th>{{ 'Forum'|trans }}</th>
                     <th>{{ 'Type'|trans }}</th>
                     <th>{{ 'Actions'|trans }}</th>
                 </tr>
             </thead>
-            <tbody class="sortable_table">
+            <tbody class="sortable_table" data-url="{{ path('_symbbcoreforumbundle_forum_sort') }}">
                 {% for entry in entityList %}
                     <tr id="entry_{{entry.getId()}}">
-                        <th class="mover">&nbsp;</th>
+                        <th class="mover"><i class="glyphicon glyphicon-fullscreen"></i></th>
                         <td class="clickable" onclick="window.location.href='{{ path('_symbbcoreforumbundle_forum_list_child', {parent: entry.getId()}) }}';">{{entry.getName()}}</td>
                         <td>{{helper.type.format(entry.getType())}}</td>
                         <td>

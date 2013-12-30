@@ -68,11 +68,10 @@ abstract class CrudController extends Controller
         if ($request->isMethod('POST')) {
             $repository = $this->getRepository();
             $em = $this->get('doctrine')->getEntityManager('symbb');
-            $entries = (array) $request->get('entries');
+            $entries = (array) $request->get('entry');
             $i = 0;
             foreach ($entries as $entry) {
-                $entry = explode('_', $entry);
-                $entityId = end($entry);
+                $entityId = (int) $entry;
                 $entity = $repository->findOneById($entityId);
                 if ($entity) {
                     $entity->setPosition($i);
