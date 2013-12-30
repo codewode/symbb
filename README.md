@@ -25,7 +25,7 @@ Danach muss dann nur auf folgendes geachtet werden:
 - es muss ein Attribute mit dem Namen "symbbType" geben. Es genügt nicht! Nur die get Methode zu definieren da über dieses Feld gesucht wird!
 - die Userklasse muss die normale FOS Gruppen implementation haben. Falls jemand was eigenes dafür baut kann es sein das die Fixturen beim Installer nicht klappen
 - die getSymbbData Methode muss IMMER ein Object zurückliefern! Auch wenn noch keins in der DB gespeichert wurde.
-- Die FOS User Entity muss über den Entitymanager "symbb" laufen und ggf. müssen wir einpaar Bundles anpassen... da evt. an ein paar stellen der SymbbUser Bundle name benutzt wird
+- Die FOS User Entity muss über den Entitymanager "symbb" laufen, da wir datenbank verknüpfungen haben ich ich bezweifle das doctrine mit 2 EM bei Joins oder sonstigem Arbeiten kann..
 
 Initalisieren der Beispieldaten solange es keinen Installer gibt
 -------------
