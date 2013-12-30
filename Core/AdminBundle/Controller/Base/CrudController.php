@@ -117,12 +117,10 @@ abstract class CrudController extends Controller
         if ($request->isMethod('POST')) {
             $form->bind($request);
             $entity = $this->getFormEntity();
-
-            if ($form->isValid() && $request->get('save')) {
+            if ($form->isValid()) {
                 $em = $this->get('doctrine')->getEntityManager('symbb');
                 $em->persist($entity);
                 $em->flush();
-
                 return $this->listAction();
             }
             else {
