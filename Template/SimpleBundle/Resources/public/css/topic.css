@@ -20,8 +20,7 @@
 }
 
 .symbb_topic .textblock .text {
-    min-height: 14em;    
-    padding-right: 1.5em;
+    padding-right: 20px;
 }
 
 .symbb_topic .textblock .date {
