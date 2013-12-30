@@ -8,10 +8,9 @@
 */
 namespace SymBB\Core\EventBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use \SymBB\Core\ForumBundle\Entity\Topic;
 
-class TemplateTopicEvent extends Event
+class TemplateTopicEvent extends BaseTemplateEvent
 {
     
     /**
@@ -31,15 +30,4 @@ class TemplateTopicEvent extends Event
         return $this->topic;
     }
     
-    public function render($templateName, $params){
-        $html = $this->env->render(
-            $templateName,
-            $params
-        );
-        $this->html = $html;
-    }
-    
-    public function getHtml(){
-        return $this->html;
-    }
 }

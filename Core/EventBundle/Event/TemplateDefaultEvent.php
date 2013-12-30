@@ -8,32 +8,11 @@
 */
 namespace SymBB\Core\EventBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
-
-class TemplateDefaultEvent extends Event
+class TemplateDefaultEvent extends BaseTemplateEvent
 {
-    
-    protected $env;
-    protected $html = '';
-
-
-    public function __construct($env) {
-        $this->env = $env;
-    }
-    
-    public function render($templateName, $params){
-        $html = $this->env->render(
-            $templateName,
-            $params
-        );
-        $this->html = $html;
-    }
     
     public function setHtml($html){
         $this->html = $html;
     }
     
-    public function getHtml(){
-        return $this->html;
-    }
 }

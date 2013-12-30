@@ -8,18 +8,15 @@
 */
 namespace SymBB\Core\EventBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use \SymBB\Core\ForumBundle\Entity\Post;
 
-class TemplatePostEvent extends Event
+class TemplatePostEvent extends BaseTemplateEvent
 {
     
     /**
      * @var Post 
      */
     protected $post;
-    protected $env;
-    protected $html = '';
 
 
     public function __construct($env, Post $post) {
@@ -29,17 +26,5 @@ class TemplatePostEvent extends Event
     
     public function getPost(){
         return $this->post;
-    }
-    
-    public function render($templateName, $params){
-        $html = $this->env->render(
-            $templateName,
-            $params
-        );
-        $this->html = $html;
-    }
-    
-    public function getHtml(){
-        return $this->html;
     }
 }

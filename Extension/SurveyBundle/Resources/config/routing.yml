@@ -1,0 +1,3 @@
+_symbb_post_survey_vote:
+    pattern:  /forum/survey/p-{name}/{post}/vote
+    defaults: { _controller: SymBBExtensionSurveyBundle:Default:vote}

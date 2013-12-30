@@ -1,11 +1,16 @@
 services:
     symbb.listener.post.survey.template:
         class: SymBB\Extension\SurveyBundle\EventListener\TemplateListener
+        arguments: ['@doctrine.orm.symbb_entity_manager']
         tags:
             - { name: kernel.event_listener, event: symbb.post.template.form.options.tabs, method: addPostTab }
             - { name: kernel.event_listener, event: symbb.post.template.form.options.tabcontents, method: addPostTabContent }
             - { name: kernel.event_listener, event: symbb.topic.template.form.options.tabs, method: addTopicTab }
             - { name: kernel.event_listener, event: symbb.topic.template.form.options.tabcontents, method: addTopicTabContent }
+            - { name: kernel.event_listener, event: symbb.post.template.before.text, method: addSurveyBlock }
+            - { name: kernel.event_listener, event: symbb.topic.template.stylesheets, method: topicStylesheets }
+            
+            
             
     symbb.listener.post.survey.form:
         class: SymBB\Extension\SurveyBundle\EventListener\FormListener

@@ -4,3 +4,5 @@ The question: Die Frage
 Options per user: Auswahlmöglichkeiten pro Benutzer
 Allow changing the voting: Ändern der Abstimmung erlauben
 End date: Ende der Umfrage
+vote: abstimmen
+You can vote for a maximum of %count% answers.: Du darfst maximal für %count% Antworten abstimmen.

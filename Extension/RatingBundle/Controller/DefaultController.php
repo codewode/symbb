@@ -28,12 +28,12 @@ class DefaultController  extends Controller
             } else {
                 $this->addPostLike($post, $user, true);
             }
-
-            $response = $this->forward('SymBBCoreForumBundle:FrontendTopic:show', array(
-                'name'  => '',
-                'id' => $post->getTopic()->getId(),
-            ));
         }
+
+        $response = $this->forward('SymBBCoreForumBundle:FrontendTopic:show', array(
+            'name'  => '',
+            'id' => $post->getTopic()->getId(),
+        ));
         
         return $response;
     }

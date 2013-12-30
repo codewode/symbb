@@ -31,12 +31,23 @@ class SaveListener {
         $surveyEnd = $form->get('surveyEnd')->getData();
 
         if(!empty($surveyQuestion) && !empty($surveyAnswers)) {
+            
             $repo = $this->em->getRepository('SymBBExtensionSurveyBundle:Survey');
             $survey = $repo->findOneBy(array('post' => $post));
+            
             if (!$survey) {
                 $survey = new \SymBB\Extension\SurveyBundle\Entity\Survey();
             }
 
+            // if answers are changed, then we need to reset all votes because we have no unique answer keys
+            if($surveyAnswers != $survey->getAnswers()){
+                $votes = $survey->getVotes();
+                foreach($votes as $vote){
+                    $this->em->remove($vote);
+                }
+                $survey->setVotes(array());
+            }
+            
             $survey->setAnswers($surveyAnswers);
             $survey->setQuestion($surveyQuestion);
             $survey->setChoices($surveyChoices);
