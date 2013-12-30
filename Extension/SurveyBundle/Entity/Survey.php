@@ -63,7 +63,7 @@ class Survey {
     private $votes;
 
     public function __construct() {
-        $this->votes = new ArrayColletion();
+        $this->votes = new ArrayCollection();
     }
 
     ############################################################################

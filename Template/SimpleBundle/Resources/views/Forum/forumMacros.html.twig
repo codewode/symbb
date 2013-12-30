@@ -143,6 +143,7 @@ Macro to generate a list of all topics
                 {% if topic.isLocked() %}
                     <span class="label label-warning">{% trans %}locked{% endtrans %}</span>
                 {% endif %}
+                 {{ executeSymbbTemplateTopicEvent('topiclist.label', post) }}
                 </div>
                 <div class="clear"></div>
                 <div class="user">{% trans with {'%user%': topic.getAuthor().getUsername(), '%date%': topic.getCreated().format('D d.M Y'), '%time%': topic.getCreated().format('H:i')} %}by %user% on %date% at %time%{% endtrans %}</div>

@@ -160,11 +160,19 @@ class FrontendPostController  extends Controller
         $form->handleRequest($this->get('request'));
         $data = $this->get('request')->get('post');
         
+        $event      = new \SymBB\Core\EventBundle\Event\EditPostEvent($post, $form);
+        $this->get('event_dispatcher')->dispatch('symbb.post.controller.handle.request', $event);
+        
         if ($form->isValid()) {
             
             $topic->setChangedValue(new \DateTime());
             
             $em = $this->getDoctrine()->getManager('symbb');
+            
+            $event      = new \SymBB\Core\EventBundle\Event\EditPostEvent($post, $form);
+            $this->get('event_dispatcher')->dispatch('symbb.post.controller.save', $event);
+            
+            
             $em->persist($post);
             $em->persist($topic);
             $em->flush();
