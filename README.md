@@ -8,8 +8,19 @@ https://github.com/seyon/symbb/wiki/
 
 Bei Verwendung einer eigenen FOS User Klasse
 -------------
-Generell ist es möglich die User Entity aus dem SymBB Bundle durch eine eigene zu ersetzen. 
-Jedoch muss auf folgendes geachtet werden:
+
+In zukunft soll es natürlich möglich sein eine eigene FOS User Klasse anzugeben.
+
+Bzw. idealerweise sollte es auch eine nicht FOS Userklasse geben.
+
+Hierzu sind jedoch folgende Anpassungen noch nötig:
+
+- Doctrine Mapping Extension welche die Annotation Angaben auf die andere Userklasse ummapped
+- FOS UserManager durch einen eigenen ersetzen
+- alle sonstigen aufrufe z.b Repository aufrufe welche auf das Core Bundle Zeigen über den eigenen UserManager lösen!
+
+Danach muss dann nur auf folgendes geachtet werden:
+
 - implementiert das SymBB\Core\UserBundle\Entity\UserInterface
 - es muss ein Attribute mit dem Namen "symbbType" geben. Es genügt nicht! Nur die get Methode zu definieren da über dieses Feld gesucht wird!
 - die Userklasse muss die normale FOS Gruppen implementation haben. Falls jemand was eigenes dafür baut kann es sein das die Fixturen beim Installer nicht klappen
