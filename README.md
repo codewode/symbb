@@ -3,7 +3,7 @@ SymBB Forum System
 
 Genauere Infos und Anleitungen findet ihr hier:
 
-https://github.com/seyon/symbb/wiki/SymBB-Foren-System
+https://github.com/seyon/symbb/wiki/
 
 
 Bei Verwendung einer eigenen FOS User Klasse
