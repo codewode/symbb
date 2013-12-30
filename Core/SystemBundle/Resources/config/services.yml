@@ -4,13 +4,13 @@ services:
         tags:
             - { name: twig.extension }
     symbb.core.table.prefix:
-        class: SymBB\Core\ConfigBundle\EventListener\DoctrineNameListener
+        class: SymBB\Core\SystemBundle\EventListener\DoctrineNameListener
         arguments: ['@service_container']
         tags:
             - { name: doctrine.event_listener, event: loadClassMetadata, connection: symbb }
     symbb.core.config.template:
         twig.extension.symbb.core.config.template:
-        class: SymBB\Core\ConfigBundle\DependencyInjection\TwigTemplateConfigExtension
+        class: SymBB\Core\SystemBundle\DependencyInjection\TwigTemplateConfigExtension
         arguments: ['@service_container']
         tags:
             - { name: twig.extension }

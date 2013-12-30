@@ -26,9 +26,9 @@ fos_user_group:
  
  
 _symbb_acp_routings:
-    resource: "@SymBBCoreConfigBundle/Resources/config/routing/acp.yml"
+    resource: "@SymBBCoreSystemBundle/Resources/config/routing/acp.yml"
     
 _symbb_frontend_routings:
-    resource: "@SymBBCoreConfigBundle/Resources/config/routing/frontend.yml"
+    resource: "@SymBBCoreSystemBundle/Resources/config/routing/frontend.yml"
  
     

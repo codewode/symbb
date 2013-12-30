@@ -6,11 +6,7 @@
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
-namespace SymBB\Core\ConfigBundle\EventListener;
-
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+namespace SymBB\Core\SystemBundle\EventListener;
 
 class DoctrineNameListener
 {
@@ -27,7 +23,6 @@ class DoctrineNameListener
     public function loadClassMetadata(\Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs)
     {
         $classMetadata = $eventArgs->getClassMetadata();
-        $em = $eventArgs->getEntityManager();
         $classMetadata->setTableName($this->prefix . $classMetadata->getTableName());
 
         foreach ($classMetadata->getAssociationMappings() as $fieldName => $mapping) {

@@ -6,7 +6,7 @@
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
-namespace SymBB\Core\ConfigBundle\DependencyInjection;
+namespace SymBB\Core\SystemBundle\DependencyInjection;
 
 class TwigTemplateConfigExtension extends \Twig_Extension
 {
