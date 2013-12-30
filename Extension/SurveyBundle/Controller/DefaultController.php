@@ -33,7 +33,7 @@ class DefaultController  extends Controller
             $survey = $em->getRepository('SymBBExtensionSurveyBundle:Survey')
             ->findOneBy(array('post' => $post));
             
-            if(is_object($survey)){
+            if(is_object($survey) && $survey->checkIfVoteable($user)){
                 
                 $votes = $em->getRepository('SymBBExtensionSurveyBundle:Vote')
                 ->findBy(array('survey' => $survey, 'user' => $user));

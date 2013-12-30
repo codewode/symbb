@@ -15,7 +15,7 @@
                         </div>
                     </div>
                         <div class="answer">
-                            {% if survey.checkIfVoteAble(app.user) %}
+                            {% if survey.checkIfVoteable(app.user) %}
                                 <input type="checkbox" name="surveyAnswer[]" value="{{ key }}" {% if survey.checkForVote(key, app.user) %} checked="checked"{% endif %} >
                             {% endif %}
                             {{ answer }} ( {{survey.getAnswerPercent(key)}}% )
@@ -31,21 +31,29 @@
                             <span class="sr-only">{{survey.getAnswerPercent(key)}}% : {{ answer }} </span>
                         </div>
                     </div>
-                        <div class="answer"><input type="radio" name="surveyAnswer" value="{{ key }}" {% if survey.checkForVote(key, app.user) %} checked="checked"{% endif %} >{{ answer }} ( {{survey.getAnswerPercent(key)}}% )</div>
+                        <div class="answer">
+                            {% if survey.checkIfVoteable(app.user) %}
+                                <input type="radio" name="surveyAnswer" value="{{ key }}" {% if survey.checkForVote(key, app.user) %} checked="checked"{% endif %} >
+                            {% endif %}
+                            {{ answer }} ( {{survey.getAnswerPercent(key)}}% )
+                        </div>
                     <div class="clear"></div>
                 </li>
 
                 {% endif %}
 
             {% endfor %}
+            {% if survey.checkIfVoteable(app.user) %}
                 <li class="list-group-item">
-                {% for flashMessage in app.session.flashbag.get('symbb-extension-survey-error') %}
-                    <div class="alert alert-danger">
-                        {{ flashMessage }}
-                    </div>
-                {% endfor %}
+                    {% for flashMessage in app.session.flashbag.get('symbb-extension-survey-error') %}
+                        <div class="alert alert-danger">
+                            {{ flashMessage }}
+                        </div>
+                    {% endfor %}
+                    
                     <button type="button" onclick="submit();" class="btn btn-default">{{ 'vote'|trans}}</button>
                 </li>
+            {% endif %}
             </ul>
         </form>
     </div>

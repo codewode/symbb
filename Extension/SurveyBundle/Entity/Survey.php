@@ -191,7 +191,15 @@ class Survey {
         return false;
     }
 
-    public function checkIfVoteAble(\SymBB\Core\UserBundle\Entity\UserInterface $user){
+    public function checkIfVoteable(\SymBB\Core\UserBundle\Entity\UserInterface $user){
+        
+        $end = $this->getEnd();
+        $now = new \DateTime();
+        
+        // if the time is over, no new Votes are allowed
+        if($end &&  $now > $end){
+            return false;
+        }
         
         // if the user can change the vote
         if($this->choicesChangeable){

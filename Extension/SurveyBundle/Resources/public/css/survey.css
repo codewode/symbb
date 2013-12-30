@@ -20,3 +20,7 @@
 .survey .answers .answer input {
     margin-right: 10px;
 }
+
+.survey {
+ margin-right: 20px;   
+}
