@@ -4,7 +4,7 @@
     "description": "Symfony 2 BB Forum",
     "keywords": ["bb","forum", "Symfony"],
     "homepage": "https://github.com/seyon/symbb",
-    "license": "MIT",
+    "license": "GPL",
     "authors": [
         {
             "name": "Christian Wielath",
