@@ -11,6 +11,7 @@ namespace SymBB\Core\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="forum_topic_posts")
@@ -38,11 +39,13 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $text;
 

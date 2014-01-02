@@ -41,6 +41,8 @@ class PostType extends AbstractType
         if($this->addAction){
             $builder->add('id', 'hidden')
                 ->setAction($this->url);
+        } else {
+            $builder->add('name', 'text', array('label' => 'Titel', 'required' => true, 'attr' => array('placeholder' => 'Enter a name here')));
         }
         
         // create Event to manipulate Post Form

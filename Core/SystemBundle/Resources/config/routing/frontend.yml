@@ -34,6 +34,10 @@ _symbb_forum_watch:
     pattern:  /f-{forum}/watch
     defaults: { _controller: SymBBCoreForumBundle:Frontend:watch}
 
+_symbb_forum_read:
+    pattern:  /f-{forum}/read
+    defaults: { _controller: SymBBCoreForumBundle:Frontend:read}
+
 _symbb_new_post:
     pattern:  /t-{topic}/new
     defaults: { _controller: SymBBCoreForumBundle:FrontendPost:new}

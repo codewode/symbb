@@ -215,8 +215,8 @@ class FrontendTopicController  extends Controller
         $this->get('event_dispatcher')->dispatch('symbb.post.controller.handle.request', $event);
         
         $form->handleRequest($this->get('request'));
-        
-        if ($form->isValid()) {
+
+        if ($form->isValid() && $form->get('mainPost')->isValid()) {
             
             $em         = $this->getDoctrine()->getManager('symbb');
             

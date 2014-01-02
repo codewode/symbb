@@ -34,7 +34,7 @@ class TopicType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $postType = new PostType('', $this->topic->getMainPost(), $this->dispatcher, $this->translator, false);
-        $builder->add('name', 'text', array('label' => 'Titel','attr' => array('placeholder' => 'Enter a name here')))
+        $builder//->add('name', 'text', array('label' => 'Titel', 'required' => true, 'attr' => array('placeholder' => 'Enter a name here')))
                 ->add('mainPost', $postType)
                 ->add('locked', 'checkbox', array('required'  => false, 'label' => 'close topic'))
                 ->add('id', 'hidden')
@@ -50,7 +50,8 @@ class TopicType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'SymBB\Core\ForumBundle\Entity\Topic',
-            'translation_domain' => 'symbb_frontend'
+            'translation_domain' => 'symbb_frontend',
+            'cascade_validation' => true
         ));
     }
 

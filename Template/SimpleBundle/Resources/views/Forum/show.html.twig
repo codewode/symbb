@@ -15,6 +15,7 @@
             
             {% if hasSymbbAccess('write', forum) %}
             <button type="button" class="btn btn-default" onclick="window.location.href='{{ path('_symbb_forum_topic_new', {'forum': forum.getId()}) }}'">{% trans %}new Topic{% endtrans %}</button>
+            <button type="button" class="btn btn-default" onclick="window.location.href='{{ path('_symbb_forum_read', {'forum': forum.getId()}) }}'">{% trans %}Mark as read{% endtrans %}</button>
             {% endif %}
             {% if checkSymbbForIgnoreFlag(forum) %}
                 <button title="{{ 'You ignore the forum'|trans }}" type="button" class="btn btn-default" onclick="window.location.href='{{ path('_symbb_forum_watch', {'forum': forum.getId()}) }}'">

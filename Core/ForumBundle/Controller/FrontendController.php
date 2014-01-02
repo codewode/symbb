@@ -109,6 +109,19 @@ class FrontendController  extends Controller
                 'id'  => $forum->getId()
             ));
     }
+
+
+    public function readAction($forum){
+        $forum = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Forum', 'symbb')
+            ->find($forum);
+        if(is_object($forum)){
+            $this->readForum($forum);
+        }
+        return $this->forward('SymBBCoreForumBundle:Frontend:forumShow', array(
+                'name' => $forum->getSeoName(),
+                'id'  => $forum->getId()
+            ));
+    }
     
     protected function getTemplateBundleName($for = 'forum'){
         if($this->templateBundle === null){
@@ -136,5 +149,19 @@ class FrontendController  extends Controller
         }
     }
     
+    protected function readForum(\SymBB\Core\ForumBundle\Entity\Forum $forum){
+        
+        $topics = $forum->getTopics();
+        foreach($topics as $topic){
+            $flagHandler = $this->get('symbb.core.forum.topic.flag');
+            $flagHandler->removeFlag($topic, 'new');
+        }
+        
+        $subForms = $forum->getChildren();
+        foreach($subForms as $subForm){
+            $this->readAction($subForm);
+        }
+        
+    }
     
 }
