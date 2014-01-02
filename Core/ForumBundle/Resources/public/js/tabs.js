@@ -28,6 +28,15 @@ $(document).ready(function() {
             } else {
                 $(content).show();
             }
+            $(content).find('.alert-danger').each(function(key, element){
+                $('.symbb_tab').each(function(key, tab){
+                    var tabKey = $(tab).data('tab');
+                    if(tabKey === tabContentKey){
+                        $(tab).addClass('alert');
+                        $(tab).addClass('alert-danger');
+                    }
+                });
+            });
         });
     }
     
