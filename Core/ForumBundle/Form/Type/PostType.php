@@ -55,7 +55,8 @@ class PostType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'SymBB\Core\ForumBundle\Entity\Post',
-            'translation_domain' => 'symbb_frontend'
+            'translation_domain' => 'symbb_frontend',
+            'cascade_validation' => true
         ));
     }
 
