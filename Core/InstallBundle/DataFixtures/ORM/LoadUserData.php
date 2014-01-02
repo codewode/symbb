@@ -39,7 +39,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $userName       = $this->container->get('translator')->trans('User');
         $adminName      = $this->container->get('translator')->trans('Admin');
         
-        $userManager    = $this->container->get('fos_user.user_manager');
+        $userManager    = $this->container->get('symbb.core.user.manager');
         
         $userGuest      = $userManager->createUser();
         $userGuest->setUsername($guestName);

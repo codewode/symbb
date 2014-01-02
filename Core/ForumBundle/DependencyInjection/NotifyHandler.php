@@ -40,7 +40,6 @@ class NotifyHandler
      */
     protected $user;
 
-    protected $userManager;
     protected $mailer;
     protected $container;
     
@@ -49,7 +48,6 @@ class NotifyHandler
 
     public function __construct($container) {
         $this->em               = $container->get('doctrine.orm.symbb_entity_manager');
-        $this->userManager      = $container->get('fos_user.user_manager');
         $this->securityContext  = $container->get('security.context');
         $this->flagHandler      = $container->get('symbb.core.forum.topic.flag');
         $this->mailer           = $container->get('swiftmailer.mailer.default');

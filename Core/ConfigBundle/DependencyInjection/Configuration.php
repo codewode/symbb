@@ -20,6 +20,13 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->arrayNode('usermanager') 
+                    ->children()
+                        ->scalarNode('user_class') 
+                            ->defaultValue('SymBB\Core\ForumBundle\Entity\User')
+                        ->end()
+                    ->end()
+                ->end()
                 ->arrayNode('system') 
                     ->children()
                         ->scalarNode('name') 

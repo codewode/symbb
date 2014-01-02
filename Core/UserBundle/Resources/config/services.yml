@@ -7,6 +7,14 @@ services:
     symbb.core.user.access:
         class: SymBB\Core\UserBundle\DependencyInjection\UserAccess
         arguments: ["@doctrine.orm.symbb_entity_manager", "@security.context", "@security.acl.provider"]
+    symbb.core.user.manager:
+        class: SymBB\Core\UserBundle\DependencyInjection\UserManager
+        arguments: ["@service_container"]
+    symbb.core.user.metadata:
+        class: SymBB\Core\UserBundle\EventListener\DoctrineMetaDataListener
+        arguments: ['@service_container']
+        tags:
+            - { name: doctrine.event_listener, event: loadClassMetadata, connection: symbb }
     symbb.core.user.access.twig:
         twig.extension.symbb.core.user.access:
         class: SymBB\Core\UserBundle\Twig\AccessExtension

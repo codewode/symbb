@@ -1,4 +1,6 @@
 sym_bb_core_config:
+    usermanager:
+      user_class: SymBB\Core\UserBundle\Entity\User
     system:
       name: SymBB Test System
       email: alpha@symbb.de

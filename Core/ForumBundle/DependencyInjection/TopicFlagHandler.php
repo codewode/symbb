@@ -11,16 +11,29 @@ namespace SymBB\Core\ForumBundle\DependencyInjection;
 
 use \SymBB\Core\UserBundle\Entity\UserInterface;
 use \SymBB\Core\ForumBundle\Entity\Topic;
-
+use \SymBB\Core\UserBundle\DependencyInjection\UserManager;
 /**
  * @TODO for performance save the flags into memcache and dont use database ;)
  */
 class TopicFlagHandler
 {
     
+    /**
+     * @var \Doctrine\ORM\EntityManager 
+     */
     protected $em;
+    
+    /**
+     * @var UserManager 
+     */
     protected $userManager;
+    
+    /**
+     *
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface 
+     */
     protected $securityContext;
+    
     protected $memcache;
     
     const LIFETIME = 86400; // 1day
@@ -32,7 +45,7 @@ class TopicFlagHandler
      */
     protected $user;
 
-    public function __construct($em, $userManager, $securityContext, $memcache) {
+    public function __construct($em, UserManager $userManager, $securityContext, $memcache) {
         $this->em               = $em;
         $this->userManager      = $userManager;
         $this->securityContext  = $securityContext;
