@@ -69,6 +69,11 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
     protected $topics;
     
     /**
+     * @ORM\OneToMany(targetEntity="SymBB\Core\ForumBundle\Entity\Forum\Flag", mappedBy="forum")
+     */
+    private $flags;
+    
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $active = true;
@@ -117,6 +122,7 @@ class Forum extends \SymBB\Core\AdminBundle\Entity\Base\CrudAbstract
     public function getParent(){return $this->parent;}
     public function getChildren(){return $this->children;}
     public function getTopics(){return $this->topics;}
+    public function getFlags(){return $this->flags;}
     ############################################################################
     
 

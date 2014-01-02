@@ -82,6 +82,33 @@ class FrontendController  extends Controller
         return $this->render($this->getTemplateBundleName('forum').':Forum:newest.html.twig', array('topicPagination' => $pagination));
     }
     
+    public function ignoreAction($forum){
+        
+        $forum = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Forum', 'symbb')
+            ->find($forum);
+        
+        if(is_object($forum)){
+            $this->ignoreForum($forum);
+        }
+        
+        return $this->forward('SymBBCoreForumBundle:Frontend:forumShow', array(
+                'name' => $forum->getSeoName(),
+                'id'  => $forum->getId()
+            ));
+    }
+
+
+    public function watchAction($forum){
+        $forum = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Forum', 'symbb')
+            ->find($forum);
+        if(is_object($forum)){
+            $this->watchForum($forum);
+        }
+        return $this->forward('SymBBCoreForumBundle:Frontend:forumShow', array(
+                'name' => $forum->getSeoName(),
+                'id'  => $forum->getId()
+            ));
+    }
     
     protected function getTemplateBundleName($for = 'forum'){
         if($this->templateBundle === null){
@@ -89,6 +116,24 @@ class FrontendController  extends Controller
             $this->templateBundle = $config['template'][$for];
         }
         return $this->templateBundle;
+    }
+    
+    protected function ignoreForum(\SymBB\Core\ForumBundle\Entity\Forum $forum){
+        $flagHandler = $this->get('symbb.core.forum.flag');
+        $flagHandler->insertFlag($forum, 'ignore');
+        $subForms = $forum->getChildren();
+        foreach($subForms as $subForm){
+            $this->ignoreForum($subForm);
+        }
+    }
+    
+    protected function watchForum(\SymBB\Core\ForumBundle\Entity\Forum $forum){
+        $flagHandler = $this->get('symbb.core.forum.flag');
+        $flagHandler->removeFlag($forum, 'ignore');
+        $subForms = $forum->getChildren();
+        foreach($subForms as $subForm){
+            $this->watchForum($subForm);
+        }
     }
     
     

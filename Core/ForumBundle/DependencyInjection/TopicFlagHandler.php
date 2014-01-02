@@ -10,149 +10,63 @@
 namespace SymBB\Core\ForumBundle\DependencyInjection;
 
 use \SymBB\Core\UserBundle\Entity\UserInterface;
-use \SymBB\Core\ForumBundle\Entity\Topic;
-use \SymBB\Core\UserBundle\DependencyInjection\UserManager;
-/**
- * @TODO for performance save the flags into memcache and dont use database ;)
- */
-class TopicFlagHandler
+use \SymBB\Core\ForumBundle\DependencyInjection\ForumFlagHandler;
+
+class TopicFlagHandler extends \SymBB\Core\ForumBundle\DependencyInjection\AbstractFlagHandler
 {
-    
     /**
-     * @var \Doctrine\ORM\EntityManager 
+     * @var ForumFlagHandler 
      */
-    protected $em;
+    protected $forumFlagHandler;
     
-    /**
-     * @var UserManager 
-     */
-    protected $userManager;
-    
-    /**
-     *
-     * @var \Symfony\Component\Security\Core\SecurityContextInterface 
-     */
-    protected $securityContext;
-    
-    protected $memcache;
-    
-    const LIFETIME = 86400; // 1day
-
-
-    /**
-     *
-     * @var UserInterface
-     */
-    protected $user;
-
-    public function __construct($em, UserManager $userManager, $securityContext, $memcache) {
-        $this->em               = $em;
-        $this->userManager      = $userManager;
-        $this->securityContext  = $securityContext;
-        $this->memcache         = $memcache;
+    public function setForumFlagHandler(ForumFlagHandler $handler){
+        $this->forumFlagHandler = $handler;
     }
-    
-    public function getUser(){
-        if(!is_object($this->user)){
-            $this->user = $this->securityContext->getToken()->getUser();
-        }
-        return $this->user;
-    }
-    
-    public function removeFlag(Topic $topic, $flag, UserInterface $user = null){
+
+    public function insertFlag($object, $flag, UserInterface $user = null, $flushEm = true)
+    {
+        $ignore = false;
         
-        if($user === null){
-            $user = $this->getUser();
+        // if we add a topic "new" flag, we need to check if the user ignore the complete forum or not
+        if($flag === 'new'){
+            $ignore = $this->forumFlagHandler->checkFlag($object->getForum(), 'ignore', $user);
         }
         
-        // only if the user is a real "user" and not a guest or bot
-        if($user->getSymbbType() === 'user'){
-           $flagObject = $this->em->getRepository('SymBBCoreForumBundle:Topic\Flag', 'symbb')->findOneBy(array(
-                'topic' => $topic,
+        if(!$ignore){
+            parent::insertFlag($object, $flag, $user, $flushEm);
+        }
+    }
+    
+    public function findOne($object, UserInterface $user, $flag)
+    {
+        $flagObject = $this->em->getRepository('SymBBCoreForumBundle:Topic\Flag', 'symbb')->findOneBy(array(
+                'topic' => $object,
                 'user' => $user,
                 'flag' => $flag
             ));
-
-            if(is_object($flagObject)){
-                $this->em->remove($flagObject);  
-                $this->em->flush();  
-                $this->removeFromMemchache($flag, $topic, $user);
-            } 
-        }
+        
+        return $flagObject;
     }
     
-    
-    /**
-     * @param Topic $topic
-     * @param type $flag
-     */
-    public function insertFlags(Topic $topic, $flag = 'new'){
-        
-        if(is_object($this->getUser())){
-            // adding user topic flags
-            $users          = $this->userManager->findUsers();
-            foreach($users as $user){
-                if(
-                    $user->getSymbbType() === 'user' &&
-                    (
-                        $flag !== 'new' ||
-                        $user->getId() != $this->getUser()->getId() // new flag only by "other" users
-                    )
-                ){
-                    $this->insertFlag($topic, $flag, $user, false);
-                }
-            }
-            
-            $this->em->flush();  
-            
-        }
-        
+    public function createNewFlag($object, UserInterface $user, $flag)
+    {
+        $flagObject = new \SymBB\Core\ForumBundle\Entity\Topic\Flag();
+        $flagObject->setTopic($object);
+        $flagObject->setUser($user);
+        $flagObject->setFlag($flag);
+        return $flagObject;
     }
 
-    /**
-     * 
-     * @param \SymBB\Core\ForumBundle\Entity\Topic $topic
-     * @param \SymBB\Core\UserBundle\Entity\UserInterface $user
-     * @param \SymBB\Core\UserBundle\Entity\UserInterface $user
-     */
-    public function insertFlag(Topic $topic, $flag, UserInterface $user = null, $flushEm = true){
-
-        if($user === null){
-            $user = $this->getUser();
-        }
-        // only for real "users"
-        if($user->getSymbbType() === 'user'){
-            
-            $users  = $this->getUsersForFlag($flag, $topic);
-            $userId = $user->getId();
-            if(!isset($users[$userId])){
-                
-                // save into database
-                $flagObject = new \SymBB\Core\ForumBundle\Entity\Topic\Flag();
-                $flagObject->setTopic($topic);
-                $flagObject->setUser($user);
-                $flagObject->setFlag($flag);
-                $this->em->persist($flagObject);
-                
-                // save into memcache
-                $users[$userId] = $userId;
-                $key = $this->getMemcacheKey($flag, $topic);
-                $this->memcache->set($key, $users, TopicFlagHandler::LIFETIME);
-            }
-        }
-        if($flushEm){
-            $this->em->flush();
-        }
-    }
-
-
-    public function checkFlag($element, $flag){
+    public function checkFlag($element, $flag, UserInterface $user = null){
         $check = false;
 
+        if(!$user){
+            $user = $this->getUser();
+        }
         
         if(
-           $this->getUser() instanceof \SymBB\Core\UserBundle\Entity\UserInterface && 
-           $this->getUser()->getSymbbType() === 'user'
+           $user instanceof \SymBB\Core\UserBundle\Entity\UserInterface && 
+           $user->getSymbbType() === 'user'
         ){
 
             if($element instanceof \SymBB\Core\ForumBundle\Entity\Topic){
@@ -160,7 +74,7 @@ class TopicFlagHandler
                 $users  = $this->getUsersForFlag($flag, $element);
                 foreach($users as $userId){
                     if(
-                        $userId == $this->getUser()->getId()
+                        $userId == $user->getId()
                     ){
                         $check = true;
                         break;
@@ -174,7 +88,7 @@ class TopicFlagHandler
                 $topics = $element->getTopics();
 
                 foreach($topics as $topic){
-                    $check = $this->checkFlag($topic, $flag);
+                    $check = $this->checkFlag($topic, $flag, $user);
                     if($check){
                         break;
                     }
@@ -184,7 +98,7 @@ class TopicFlagHandler
                     $childs = $element->getChildren();
                     foreach($childs as $child){
 
-                        $check = $this->checkFlag($child, $flag);
+                        $check = $this->checkFlag($child, $flag, $user);
                         if($check){
                             break;
                         }
@@ -199,52 +113,17 @@ class TopicFlagHandler
         return $check;
     }
     
-    protected function getMemcacheKey($flag, Topic $topic){
+    protected function getMemcacheKey($flag, $topic){
         $key = 'symbb.topic.'.$topic->getId().'.flag.'.$flag;
         return $key;
     }
 
-
-    protected function fillMemcache($flag, Topic $topic){
-        
-        $finalFlags = $this->prepareForMemcache($flag, $topic);
-        $key        = $this->getMemcacheKey($flag, $topic);
-        $this->memcache->set($key, $finalFlags, TopicFlagHandler::LIFETIME);
-    }
-    
-    protected function prepareForMemcache($flag, Topic $topic){
+    public function findFlagsByObjectAndFlag($object, $flag)
+    {
         $flags = $this->em->getRepository('SymBBCoreForumBundle:Topic\Flag', 'symbb')->findBy(array(
-            'flag' => $flag,
-            'topic' => $topic
-        ));
-        
-        $finalFlags = array();
-        foreach($flags as $flagObject){
-            $userId = $flagObject->getUser()->getId();
-            $finalFlags[$userId] = $userId;
-        }
-        return $finalFlags;
-    }
-    
-    protected function removeFromMemchache($flag, Topic $topic, UserInterface $user){
-        $key    = $this->getMemcacheKey($flag, $topic);
-        $users  = $this->getUsersForFlag($flag, $topic);
-        $userId = $this->getUser()->getId();
-        if(isset($users[$userId])){
-            unset($users[$userId]);
-            $key    = $this->getMemcacheKey($flag, $topic);
-            $this->memcache->set($key, $users, TopicFlagHandler::LIFETIME);
-        }
-    }
-
-
-    public function getUsersForFlag($flag, Topic $topic){
-        $key    = $this->getMemcacheKey($flag, $topic);
-        $users  = $this->memcache->get($key);
-        if($users === false){
-            $this->fillMemcache($flag, $topic);
-            $users = (array)$this->memcache->get($key);
-        }
-        return $users;
+                'topic' => $object,
+                'flag' => $flag
+            ));
+        return $flags;
     }
 }

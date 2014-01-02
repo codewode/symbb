@@ -66,7 +66,9 @@ Macro to generate the structure of the forum/Category name Row
     {% if showIcon %}
     <i class="f-left glyphicon glyphicon-list"></i>
     {% endif %}
-    <div class="name">{{object.getName()}}</div>
+    <div class="name">
+        {{object.getName()}}
+    </div>
     {% if showLabels %}
         <div class="labels">
         {% if checkSymbbForNewPostFlag(object) %}
@@ -158,18 +160,6 @@ Macro to generate a list of all topics
     </div>
 
     {% endfor %}
-
-    {% if forum %}
-        {% if hasSymbbAccess('write', forum) %}
-        <div class="row topic">
-            <div class="col-md-12">
-                <div class="btn-group btn-group-xs">
-                    <button type="button" class="btn btn-default btn-primary" onclick="window.location.href='{{ path('_symbb_forum_topic_new', {'forum': forum.getId()}) }}'">{% trans %}new Topic{% endtrans %}</button>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-    {% endif %}
 
     {{ knp_pagination_render(topicPagination) }}
 
