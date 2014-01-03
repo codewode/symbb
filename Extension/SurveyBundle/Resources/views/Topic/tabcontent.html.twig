@@ -2,12 +2,12 @@
 
 <div class="symbb_tabcontent" data-tab="survey">
     <div class="panel panel-default">
-        <table class="table">
-        {{ form_rowtable(form.mainPost.surveyQuestion) }}
-        {{ form_rowtable(form.mainPost.surveyAnswers) }}
-        {{ form_rowtable(form.mainPost.surveyChoices) }}
-        {{ form_rowtable(form.mainPost.surveyChoicesChangeable) }}
-        {{ form_rowtable(form.mainPost.surveyEnd) }}
-        </table>
+        <div class="padding10">
+        {{ form_rowbootstrap(form.mainPost.surveyQuestion) }}
+        {{ form_rowbootstrap(form.mainPost.surveyAnswers) }}
+        {{ form_rowbootstrap(form.mainPost.surveyChoices) }}
+        {{ form_rowbootstrap(form.mainPost.surveyChoicesChangeable) }}
+        {{ form_rowbootstrap(form.mainPost.surveyEnd) }}
+        </div>
     </div>
 </div>

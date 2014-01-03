@@ -29,7 +29,7 @@
 <div id="symbb_bottom"></div>
 <div class="symbb_topic ">
 
-    {{ form_start(form) }}
+    {{ form_startbootstrap(form) }}
 
         {{ form_errors(form) }}
         <div class="panel panel-default">
@@ -53,10 +53,8 @@
                         {{ executeSymbbTemplateFormTopicEvent('options.tabcontents', form) }}
                         <div class="symbb_tabcontent" data-tab="option">
                             <div class="panel panel-default">
-                                <table class="table">
-                                    {{ form_resttable(form.mainPost) }}
-                                    {{ form_resttable(form) }}
-                                </table>
+                                {{ form_restbootstrap(form.mainPost) }}
+                                {{ form_restbootstrap(form) }}
                             </div>
                         </div>
                     </div>

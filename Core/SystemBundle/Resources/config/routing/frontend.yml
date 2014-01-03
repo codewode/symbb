@@ -1,3 +1,16 @@
+symbb_login:
+    pattern:  /login
+    defaults: { _controller: FOSUserBundle:Security:login }
+    
+symbb_logout:
+    pattern:  /logout
+    defaults: { _controller: FOSUserBundle:Security:logout }
+    
+symbb_register:
+    pattern:  /register
+    defaults: { _controller: FOSUserBundle:Registration:register }
+    
+
 _symbb_index:
     pattern:  /portal
     defaults: { _controller: SymBBCoreForumBundle:Frontend:forum }

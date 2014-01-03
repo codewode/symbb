@@ -61,11 +61,11 @@ root, body, html {
 }
 
 .f-right {
-    float: right;
+    float: right !important;
 }
 
 .f-left {
-    float: left;
+    float: left !important;
 }
 
 .clear {
@@ -79,4 +79,47 @@ root, body, html {
 
 .m-top-1 {
     margin-top: 1em;
+}
+
+.symbb_user_panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 40px;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 0 3px 7px 0 rgba(0,0,0,0.3);
+    z-index: 1000;
+    color: #FFF;
+}
+
+.symbb_user_panel .content {
+    width: 95%;
+    margin: 5px auto;
+}
+
+.symbb_user_panel .content .avatar {
+    float: left;
+}
+
+.symbb_user_panel .content .avatar img {
+    height: 32px;
+    border: 1px solid #FFF;
+}
+
+.symbb_user_panel .content .username {
+    float: left;
+    margin-top: 8px;
+    margin-left: 5px;
+}
+
+.symbb_user_panel .content .usermenu {
+    float: left;
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+.padding10 {
+    padding: 10px;
 }

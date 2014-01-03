@@ -17,7 +17,7 @@
 <div id="symbb_bbcode_editor" class="">
     <div class="bbcode_list symbb_topic ">
 
-        {{ form_start(form) }}
+        {{ form_startbootstrap(form) }}
 
             {{ form_errors(form) }}
         
@@ -41,9 +41,7 @@
                             {{ executeSymbbTemplateFormPostEvent('options.tabcontents', form) }}
                             <div class="symbb_tabcontent" data-tab="option">
                                 <div class="panel panel-default">
-                                    <table class="table">
-                                        {{ form_resttable(form) }}
-                                    </table>
+                                    {{ form_restbootstrap(form) }}
                                 </div>
                             </div>
                         </div>

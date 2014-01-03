@@ -10,26 +10,6 @@
 {% endspaceless %}
 {% endblock form_row %}
 
-{% block form_resttable %}
-{% spaceless %}
-    {% for child in form %}
-        {% if not child.rendered %}
-            {{ form_rowtable(child) }}
-        {% endif %}
-    {% endfor %}
-{% endspaceless %}
-{% endblock form_resttable %}
-
-
-{% block form_rowtable %}
-{% spaceless %}
-    <tr>
-        <td>{{ form_label(form) }}</td>
-        <td>{{ form_errors(form) }}{{ form_widget(form) }}</td>
-    </tr>
-{% endspaceless %}
-{% endblock form_rowtable %}
-
 {% block form_widget_simple %}
 {% spaceless %}
     {% set type = type|default('text') %}
@@ -66,16 +46,6 @@
 {% endspaceless %}
 {% endblock choice_widget_collapsed %}
     
-{% block form_errorstable %}
-    {% spaceless %}
-        {% if errors|length > 0 %}
-        <tr>
-            <td colspan="2">{{ form_errors(form) }}</td>
-        </tr>
-        {% endif %}
-    {% endspaceless %}
-{% endblock form_errorstable %}
-    
 {% block form_errors %}
     {% spaceless %}
         {% if errors|length > 0 %}
@@ -104,3 +74,65 @@
     <button type="{{ type|default('button') }}" {{ block('button_attributes') }} class="btn btn-default">{{ label|trans({}, translation_domain) }}</button>
 {% endspaceless %}
 {% endblock button_widget %}
+    
+
+<!-- BOOTSTRAP IMPLEMENTATION -->
+    
+    
+{% block form_startbootstrap %}
+{% spaceless %}
+    {% set method = method|upper %}
+    {% if method in ["GET", "POST"] %}
+        {% set form_method = method %}
+    {% else %}
+        {% set form_method = "POST" %}
+    {% endif %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-horizontal')|trim, 'role': (attr.class|default('') ~ ' form')|trim}) %}
+    <form name="{{ form.vars.name }}" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+    {% if form_method != method %}
+        <input type="hidden" name="_method" value="{{ method }}" />
+    {% endif %}
+{% endspaceless %}
+{% endblock form_startbootstrap %}
+        
+        
+{% block form_restbootstrap %}
+{% spaceless %}
+    {% for child in form %}
+        {% if not child.rendered %}
+            {{ form_rowbootstrap(child) }}
+        {% endif %}
+    {% endfor %}
+{% endspaceless %}
+{% endblock form_restbootstrap %}
+        
+
+{% block form_rowbootstrap %}
+{% spaceless %}
+    <div class="form-group">
+        {{ form_labelbootstrap(form) }}
+        <div class="col-sm-10">
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock form_rowbootstrap %}
+        
+{% block form_labelbootstrap %}
+{% spaceless %}
+    {% if label is not sameas(false) %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' col-sm-2 control-label')|trim}) %}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {% endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_labelbootstrap %}

@@ -32,3 +32,7 @@ form .form-control {
 form .panel-heading .nav-tabs.nav-justified {   
     margin-bottom: -11px;
 }
+
+form input[type="checkbox"] {
+    margin-top: 10px;
+}
