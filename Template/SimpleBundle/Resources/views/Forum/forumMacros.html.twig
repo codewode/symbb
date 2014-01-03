@@ -9,8 +9,10 @@ Macro to generate the row of a forum
 {% macro forumRow(object) %}
 <div class="row forum"> 
         <div class="col-md-6 nameBlock">{{_self.nameRow(object, true, true)}}</div>
-        <div class="col-md-1 topicCountBlock">{{object.getTopicCount()}}</div>
-        <div class="col-md-1 postCountBlock">{{object.getPostCount()}}</div>
+        <div class="col-md-2 postCountBlock">
+            {{object.getTopicCount()}} <span>{% trans %}Topics{% endtrans %}</span><br/>
+            {{object.getPostCount()}} <span>{% trans %}Posts{% endtrans %}</span>
+        </div>
         <div class="col-md-4 lastPostBlock">{{_self.lastPostRow(object)}}</div>
     </div>
 {% endmacro %}
@@ -25,8 +27,7 @@ Macro to generate the row of a category
 {% macro categoryRow(object) %}
     <div class="row category symbb_header_bg">
         <div class="col-md-6 nameBlock">{{_self.nameRow(object)}}</div>
-        <div class="col-md-1 topicCountBlock">{% trans %}Topics{% endtrans %}</div>
-        <div class="col-md-1 postCountBlock">{% trans %}Posts{% endtrans %}</div>
+        <div class="col-md-2">&nsbp;</div>
         <div class="col-md-4 lastPostBlock">{% trans %}Last post{% endtrans %}</div>
     </div>
     {{_self.showForumList(object.getChildren(), 0, 1)}}
@@ -129,7 +130,7 @@ Macro to generate a list of all topics
     {% for topic in topicPagination %}
 
     <div class="row topic">
-        <div class="col-md-7 nameBlock">
+        <div class="col-md-6 nameBlock">
             <a href="{{ path('_symbb_forum_topic_show', {'id': topic.getId(), 'name': topic.getSeoName()}) }}">
                 <div class="name">{{topic.getName()}}</div>
                 <div class="labels">
@@ -151,7 +152,9 @@ Macro to generate a list of all topics
                 <div class="user">{% trans with {'%user%': topic.getAuthor().getUsername(), '%date%': topic.getCreated().format('D d.M Y'), '%time%': topic.getCreated().format('H:i')} %}by %user% on %date% at %time%{% endtrans %}</div>
             </a>
         </div>
-        <div class="col-md-1 topicCountBlock">{{topic.getPostCount()}}</div>
+        <div class="col-md-2 postCountBlock">
+            {{topic.getPostCount()}} <span>{% trans %}Answers{% endtrans %}</span>
+        </div>
         <div class="col-md-4">
             {% if topic.getPostCount() %}
                 {{_self.lastPostRow(topic)}}
@@ -222,8 +225,7 @@ Macro to generate a Header for a Forum block
 {% macro showEmptyForumHeader() %}
 <div class="row category symbb_header_bg">
     <div class="col-md-6 nameBlock">{% trans %}Forums{% endtrans %}</div>
-    <div class="col-md-1 topicCountBlock">{% trans %}Topics{% endtrans %}</div>
-    <div class="col-md-1 postCountBlock">{% trans %}Posts{% endtrans %}</div>
+    <div class="col-md-2">&nbsp;</div>
     <div class="col-md-4 lastPostBlock">{% trans %}Last post{% endtrans %}</div>
 </div>
 {% endmacro %}
@@ -236,10 +238,10 @@ Macro to generate a Header for a Topic block
 
 {% macro showEmptyTopicHeader() %}
 <div class="row category symbb_header_bg">
-    <div class="col-md-7 nameBlock">
+    <div class="col-md-6 nameBlock">
         {% trans %}Topics{% endtrans %}
     </div>
-    <div class="col-md-1 topicCountBlock">{% trans %}Answers{% endtrans %}</div>
+    <div class="col-md-2 topicCountBlock">&nbsp;</div>
     <div class="col-md-4 lastPostBlock">{% trans %}Last post{% endtrans %}</div>
 </div>
 {% endmacro %}

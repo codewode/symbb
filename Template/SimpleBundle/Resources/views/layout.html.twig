@@ -42,6 +42,7 @@
                 </div>
                 {% endif %}
                 <div class="username">{{app.user.getUsername()}}</div>
+                {% if app.user.getSymbbType == 'user' %}
                 <div class="usermenu">
                     <button type="button" class="btn btn-default btn-xs">
                         <span class="glyphicon glyphicon-cog"></span> {{ 'Options'|trans }}
@@ -50,7 +51,13 @@
                         <span class="glyphicon glyphicon-comment"></span> {{ 'Messages'|trans }}
                     </button>
                 </div>
+                {% endif %}
                 <div class="f-right usermenu">
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <button onclick="window.location.href='{{ path('_symbb_acp') }}'" type="button" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-list-alt"></span> {{ 'Adminpanel'|trans }}
+                    </button>
+                    {% endif %}
                     {% if app.user.getSymbbType == 'guest' %}
                     <button onclick="window.location.href='{{ path('symbb_login') }}'" type="button" class="btn btn-default btn-xs">
                         <span class="glyphicon glyphicon-off"></span> {{ 'Sign in'|trans }}
@@ -68,29 +75,26 @@
                 <div class="clear"></div>
             </div>
         </div>
-        <div class="symbb_header symbb_header_bg">
-            <div class="content">
-                <div class="logo">&nbsp;</div>
-                <div class="navi">
-                    {% block symbb_navi %} 
-                    {% endblock %}
-                </div>
-            </div>
-            <div class="border_bottom">&nbsp;</div>
-        </div>
-            
         {% block symbb_breadcrumb %}
         {% endblock %}
+        <div class="symbb_container">
         
-        <div class="symbb_body">
-            
-            {% if app.getUser.getSymbbType() == 'guest' %}
-                <div class="alert alert-info">{% trans %}You are not currently logged.{% endtrans %}</div>
-            {% endif %}
-            
-            {% block symbb_body %}
+            <div class="symbb_navi">
+                {% block symbb_navi %} 
+                {% endblock %}
+            </div>
 
-            {% endblock %}
+            <div class="symbb_body">
+
+                {% if app.getUser.getSymbbType() == 'guest' %}
+                    <div class="alert alert-info">{% trans %}You are not currently logged.{% endtrans %}</div>
+                {% endif %}
+
+                {% block symbb_body %}
+
+                {% endblock %}
+            </div>
+
         </div>
     </body>
 </html>

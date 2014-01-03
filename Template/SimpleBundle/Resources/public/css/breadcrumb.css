@@ -1,16 +1,69 @@
 .symbb_breadcrumb a {
-    color: #000;
-    font-size: 1em;
+    color: #FFF;
+    line-height: 20px;
+    font-size: 11px;
 }
 
-.symbb_breadcrumb .navbar {
-    min-height: 0em !important;
-    margin-bottom: 0;
+
+.symbb_breadcrumb  {
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    color: #FFF;
+    margin: 40px auto;
+    background-color: rgba(0,0,0,0.5);
+    border-top: 1px solid rgba(238,238,238,0.5);
+    border-bottom: 1px solid rgba(238,238,238,0.3);
+    z-index: 1000;
+    color: #FFF;
 }
+
+
+.symbb_breadcrumb .breadcrumb {
+    margin-bottom: 0;
+    background-color: transparent;
+    border-radius: 0;
+    padding: 5px;
+}
+
 
 .symbb_breadcrumb .navbar .container {
     width: 95%;
-    margin: 0 auto;
+    margin: auto;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.symbb_breadcrumb .navbar-brand {
+    padding: 3px;
+    padding-right: 5px;
+    color: #FFF;
+    line-height: initial;    
+    margin-left: 0px !important;
+}
+
+.symbb_breadcrumb .navbar-nav>li>a {
+    padding: 5px;
+    color: #FFF;
+}
+
+.symbb_breadcrumb .navbar-default {
+    background-color: transparent;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.symbb_breadcrumb .navbar-nav>li>a:hover,
+.symbb_breadcrumb .navbar-brand:hover {
+    color: #FFF;
+}
+
+.symbb_breadcrumb .navbar {
+    margin-bottom: 0;
+    min-height: 10px;
+    border-radius: 0;
+    border: none;
 }
 
 .symbb_breadcrumb .navbar-nav>li>a{
@@ -18,18 +71,14 @@
 }
 
 
-.symbb_breadcrumb .navbar-brand{
-    padding: 0.7em;
-}
-
-
 .symbb_breadcrumb li a .glyphicon {
     margin-left: 15px;
 }
 
+.symbb_breadcrumb .navbar-header {
+    margin-top: 1px;
+}
 
-.symbb_breadcrumb .breadcrumb {
-    margin-bottom: 0;
-    padding-top: 1em;
-    background-color: transparent !important;
+.symbb_breadcrumb .breadcrumb>.active {
+    color: #FFF;
 }
