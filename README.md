@@ -1,5 +1,5 @@
-SymBB Forum System
-=============
+# SymBB Forum System
+
 
 Genauere Infos und Anleitungen findet ihr hier:
 
@@ -9,9 +9,17 @@ Für eine "fertige" Symfony Version könnt ihr die Sandbox nutzen:
 
 https://github.com/seyon/symbb_sandbox
 
+# Demo
 
-Initalisieren der Beispieldaten solange es keinen Installer gibt
--------------
+Eine Demo der aktuellen Funktionen findet ihr hier:
+
+http://symbb.de/
+
+solange keine Beta feststeht dient die Seite als Demo. Die Daten werden regelmäsig resettet.
+Zudem kann die Version leicht hinter der aktuellen Version hinterherhinken da ich Sie nur update wenn die Dev. einigernmassen Stabil ist.
+
+# Initalisieren der Beispieldaten solange es keinen Installer gibt
+
 
 Mit folgendem Befehlt könnt ihr die Beispieldaten importieren 
 
