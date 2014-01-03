@@ -37,7 +37,7 @@
             <div class="content">
             {% block symbb_userinfob %}
                 {% if app.user.getSymbbType() == 'user' %}
-                <div class="avatar">
+                <div class="avatar avatar_mini">
                     <img src="{{getSymbbUserAvatar(app.user)}}" />
                 </div>
                 {% endif %}
@@ -83,7 +83,17 @@
                 {% block symbb_navi %} 
                 {% endblock %}
             </div>
+            
+            <div class="clear"></div>
 
+            <div class="symbb_actions">
+            {% block symbb_actions %}
+                   
+            {% endblock %}
+            </div>
+            
+            <div class="clear"></div>
+            
             <div class="symbb_body">
 
                 {% if app.getUser.getSymbbType() == 'guest' %}
@@ -91,10 +101,19 @@
                 {% endif %}
 
                 {% block symbb_body %}
-
+                    
                 {% endblock %}
             </div>
-
+            
+            <div class="symbb_sidebar pull-right">
+                <div class="padding10">
+                    {% block symbb_sidebar %}
+                   
+                    {% endblock %}
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
         </div>
     </body>
 </html>

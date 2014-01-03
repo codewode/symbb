@@ -8,21 +8,44 @@
 */
 namespace SymBB\Core\ForumBundle\Twig;
 
+use \SymBB\Core\ForumBundle\DependencyInjection\ForumManager;
+use \SymBB\Core\ForumBundle\DependencyInjection\ForumFlagHandler;
+
 class ForumDataExtension extends \Twig_Extension
 {
-
+    /**
+     * @var ForumFlagHandler
+     */
     protected $flagHandler;
+    /**
+     *
+     * @var ForumManager
+     */
+    protected $forumManager;
 
-    public function __construct($forumFlagHandler) {
+    public function __construct(ForumFlagHandler $forumFlagHandler, ForumManager $forumManager) {
         $this->flagHandler = $forumFlagHandler;
+        $this->forumManager = $forumManager;
     }
 
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('checkSymbbForIgnoreFlag', array($this, 'checkSymbbForIgnoreFlag')),
-            new \Twig_SimpleFunction('checkSymbbForFlag', array($this, 'checkForFlag')),
+            new \Twig_SimpleFunction('checkSymbbForForumIgnoreFlag', array($this, 'checkSymbbForIgnoreFlag')),
+            new \Twig_SimpleFunction('checkSymbbForForumNewFlag', array($this, 'checkSymbbForNewPostFlag')),
+            new \Twig_SimpleFunction('checkSymbbForForumFlag', array($this, 'checkForFlag')),
+            new \Twig_SimpleFunction('getNewestPost', array($this, 'getNewestPost')),
         );
+    }
+    
+    public function checkSymbbForNewPostFlag($element)
+    {
+        return $this->checkForFlag($element, 'new');
+    }
+    
+    public function getNewestPost($parent, $limit = 10)
+    {
+        return $this->forumManager->findNewestPosts($parent, $limit);
     }
     
     public function checkSymbbForIgnoreFlag($element)

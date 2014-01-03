@@ -49,7 +49,7 @@ class NotifyHandler
     public function __construct($container) {
         $this->em               = $container->get('doctrine.orm.symbb_entity_manager');
         $this->securityContext  = $container->get('security.context');
-        $this->flagHandler      = $container->get('symbb.core.forum.topic.flag');
+        $this->flagHandler      = $container->get('symbb.core.topic.flag');
         $this->mailer           = $container->get('swiftmailer.mailer.default');
         $this->translator       = $container->get('translator');
         $this->config           = $container->getParameter('symbb_config');

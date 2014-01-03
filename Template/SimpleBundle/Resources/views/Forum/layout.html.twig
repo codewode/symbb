@@ -24,6 +24,13 @@
     {{ getSymbbBreadcrumb() }}
 {% endblock %}
     
+
+{% block symbb_sidebar %}
+    
+    {% include getSymbbTemplateConfig('forum') ~ ':Forum:sidebar.html.twig' with {'forum': null} %}
+    
+{% endblock %}    
+
 {% block symbb_body %}
     
 {% endblock %}

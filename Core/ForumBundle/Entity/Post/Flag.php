@@ -7,12 +7,12 @@
 *
 */
 
-namespace SymBB\Core\ForumBundle\Entity\Forum;
+namespace SymBB\Core\ForumBundle\Entity\Post;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="forum_flags")
+ * @ORM\Table(name="forum_topic_post_flags")
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
  */
@@ -20,10 +20,10 @@ class Flag
 {
     /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="SymBB\Core\ForumBundle\Entity\Forum", inversedBy="flags")
+     * @ORM\ManyToOne(targetEntity="SymBB\Core\ForumBundle\Entity\Post", inversedBy="flags")
      * @ORM\JoinColumn(referencedColumnName="id", onDelete="cascade")
      */
-    private $forum;
+    private $post;
 
     /**
      * @ORM\Id()
@@ -36,7 +36,7 @@ class Flag
      * @ORM\Id()
      * @ORM\Column(type="string", length=10)
      */
-    private $flag = 'ignore';
+    private $flag = 'new';
 
     /**
      * @ORM\Column(type="datetime")
@@ -50,8 +50,8 @@ class Flag
     ############################################################################
     public function getFlag(){return $this->flag;}
     public function setFlag($value){$this->flag = $value;}
-    public function setForum($object){$this->forum = $object;}
-    public function getForum(){return $this->forum;}
+    public function setPost($object){$this->post = $object;}
+    public function getPost(){return $this->post;}
     public function setUser($object){$this->user = $object;}
     public function getUser(){return $this->user;}
     public function getCreated(){return $this->created;}

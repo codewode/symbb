@@ -162,4 +162,8 @@ class Topic
         $post->setTopic($this);
         $this->posts->add($post);
     }
+    
+    public function getParent(){
+        return $this->getForum();
+    }
 }

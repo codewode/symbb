@@ -9,24 +9,34 @@ services:
     symbb.core.forum.topic.data:
         twig.extension.symbb.core.forum.topic.data:
         class: SymBB\Core\ForumBundle\Twig\TopicDataExtension
-        arguments: ['@doctrine.orm.symbb_entity_manager', '@knp_paginator', '@service_container', '@symbb.core.forum.topic.flag']
+        arguments: ['@doctrine.orm.symbb_entity_manager', '@knp_paginator', '@service_container', '@symbb.core.topic.flag']
         tags:
             - { name: twig.extension } 
             
     symbb.core.forum.data:
         twig.extension.symbb.core.forum.data:
         class: SymBB\Core\ForumBundle\Twig\ForumDataExtension
-        arguments: ['@symbb.core.forum.flag']
+        arguments: ['@symbb.core.forum.flag', '@symbb.core.forum.manager']
         tags:
             - { name: twig.extension } 
             
+    symbb.core.forum.manager:
+        class: SymBB\Core\ForumBundle\DependencyInjection\ForumManager
+        arguments: ['@security.context', '@symbb.core.topic.flag', '@symbb.core.post.flag']
+            
     symbb.core.forum.flag:
         class: SymBB\Core\ForumBundle\DependencyInjection\ForumFlagHandler
-        arguments: ['@doctrine.orm.symbb_entity_manager', '@symbb.core.user.manager', '@security.context', '@memcache.default']
+        arguments: ['@doctrine.orm.symbb_entity_manager', '@symbb.core.user.manager', "@symbb.core.user.access", '@security.context', '@memcache.default']
         
-    symbb.core.forum.topic.flag:
+    symbb.core.topic.flag:
         class: SymBB\Core\ForumBundle\DependencyInjection\TopicFlagHandler
-        arguments: ['@doctrine.orm.symbb_entity_manager', '@symbb.core.user.manager', '@security.context', '@memcache.default']
+        arguments: ['@doctrine.orm.symbb_entity_manager', '@symbb.core.user.manager', "@symbb.core.user.access", '@security.context', '@memcache.default']
+        calls:
+            - [setForumFlagHandler, ["@symbb.core.forum.flag"]]
+            
+    symbb.core.post.flag:
+        class: SymBB\Core\ForumBundle\DependencyInjection\PostFlagHandler
+        arguments: ['@doctrine.orm.symbb_entity_manager', '@symbb.core.user.manager', "@symbb.core.user.access", '@security.context', '@memcache.default']
         calls:
             - [setForumFlagHandler, ["@symbb.core.forum.flag"]]
             

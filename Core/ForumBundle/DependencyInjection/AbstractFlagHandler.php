@@ -11,6 +11,7 @@ namespace SymBB\Core\ForumBundle\DependencyInjection;
 
 use \SymBB\Core\UserBundle\Entity\UserInterface;
 use \SymBB\Core\UserBundle\DependencyInjection\UserManager;
+use \SymBB\Core\UserBundle\DependencyInjection\UserAccess;
 
 abstract class AbstractFlagHandler
 {
@@ -31,6 +32,11 @@ abstract class AbstractFlagHandler
      */
     protected $securityContext;
     
+    /*
+     * @var UserAccess 
+     */
+    protected $userAccess;
+    
     protected $memcache;
     
     const LIFETIME = 86400; // 1day
@@ -42,14 +48,15 @@ abstract class AbstractFlagHandler
      */
     protected $user;
 
-    public function __construct($em, UserManager $userManager, $securityContext, $memcache) {
+    public function __construct($em, UserManager $userManager, UserAccess $userAccess, $securityContext, $memcache) {
         $this->em               = $em;
         $this->userManager      = $userManager;
+        $this->userAccess      = $userAccess;
         $this->securityContext  = $securityContext;
         $this->memcache         = $memcache;
     }
     
-    public abstract function findOne($object, \SymBB\Core\UserBundle\Entity\UserInterface  $user, $flag);
+    public abstract function findOne($flag, $object, \SymBB\Core\UserBundle\Entity\UserInterface  $user);
     
     public abstract function findFlagsByObjectAndFlag($object, $flag);
     
@@ -72,7 +79,7 @@ abstract class AbstractFlagHandler
         
         // only if the user is a real "user" and not a guest or bot
         if($user->getSymbbType() === 'user'){
-           $flagObject = $this->findOne($object, $user, $flag);
+           $flagObject = $this->findOne($flag, $object, $user);
             if(is_object($flagObject)){
                 $this->em->remove($flagObject);  
                 $this->em->flush();  
@@ -120,7 +127,7 @@ abstract class AbstractFlagHandler
                 $this->em->persist($flagObject);
                 
                 // save into memcache
-                $users[$userId] = $userId;
+                $users[$userId] = $flagObject->getCreated()->getTimestamp();
                 $key = $this->getMemcacheKey($flag, $object);
                 $this->memcache->set($key, $users, self::LIFETIME);
             }
@@ -146,7 +153,7 @@ abstract class AbstractFlagHandler
            $user->getSymbbType() === 'user'
         ){
             $users  = $this->getUsersForFlag($flag, $object);
-            foreach($users as $userId){
+            foreach($users as $userId => $timestamp){
                 if(
                     $userId == $user->getId()
                 ){

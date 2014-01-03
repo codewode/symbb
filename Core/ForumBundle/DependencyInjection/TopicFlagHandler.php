@@ -19,17 +19,27 @@ class TopicFlagHandler extends \SymBB\Core\ForumBundle\DependencyInjection\Abstr
      */
     protected $forumFlagHandler;
     
+    protected $foundTopics = array();
+
+
     public function setForumFlagHandler(ForumFlagHandler $handler){
         $this->forumFlagHandler = $handler;
     }
-
+    
     public function insertFlag($object, $flag, UserInterface $user = null, $flushEm = true)
     {
         $ignore = false;
         
-        // if we add a topic "new" flag, we need to check if the user ignore the complete forum or not
+        // if we add a topic "new" flag, we need to check if the user has read access to the forum
+        // an we must check if the user has ignore the forum
         if($flag === 'new'){
-            $ignore = $this->forumFlagHandler->checkFlag($object->getForum(), 'ignore', $user);
+            $this->userAccess->addAccessCheck('VIEW', $object->getForum(), $user);
+            $access = $this->userAccess->checkAccess();
+            if($access){
+                $ignore = $this->forumFlagHandler->checkFlag($object->getForum(), 'ignore', $user);
+            } else {
+                $ignore = true;
+            }
         }
         
         if(!$ignore){
@@ -37,8 +47,12 @@ class TopicFlagHandler extends \SymBB\Core\ForumBundle\DependencyInjection\Abstr
         }
     }
     
-    public function findOne($object, UserInterface $user, $flag)
+    public function findOne($flag, $object, UserInterface $user = null)
     {
+        if(!$user){
+            $user = $this->getUser();
+        }
+        
         $flagObject = $this->em->getRepository('SymBBCoreForumBundle:Topic\Flag', 'symbb')->findOneBy(array(
                 'topic' => $object,
                 'user' => $user,
@@ -58,59 +72,78 @@ class TopicFlagHandler extends \SymBB\Core\ForumBundle\DependencyInjection\Abstr
     }
 
     public function checkFlag($element, $flag, UserInterface $user = null){
-        $check = false;
-
-        if(!$user){
-            $user = $this->getUser();
-        }
+        $topics = $this->findTopicsByFlag($flag, $element, $user, false);
+        return count($topics);
+    }
+    
+    public function findTopicsByFlag($flag, $element, $user = false, $objects = true, $limit = null){
+        $this->foundTopics = array();
+        $this->doFindTopicsByFlag($flag, $element, $user, $objects, $limit);
+        ksort($this->foundTopics);
+        return $this->foundTopics; 
+    }
+    
+    public function doFindTopicsByFlag($flag, $element, $user = false, $objects = true, $limit = null){
         
-        if(
-           $user instanceof \SymBB\Core\UserBundle\Entity\UserInterface && 
-           $user->getSymbbType() === 'user'
-        ){
+        $foundTopics = array();
+        
+        if(is_object($element)){
 
-            if($element instanceof \SymBB\Core\ForumBundle\Entity\Topic){
-                
-                $users  = $this->getUsersForFlag($flag, $element);
-                foreach($users as $userId){
+            if(!$user){
+                $user = $this->getUser();
+            }
+
+            if(
+               $user instanceof \SymBB\Core\UserBundle\Entity\UserInterface && 
+               $user->getSymbbType() === 'user'
+            ){
+
+                if($element instanceof \SymBB\Core\ForumBundle\Entity\Topic){
+
+                    if($limit && count($this->foundTopics) >= $limit){
+                        return $this->foundTopics;
+                    }
+      
+                    $users  = $this->getUsersForFlag($flag, $element);
+
                     if(
-                        $userId == $user->getId()
+                        isset($users[$user->getId()])
                     ){
-                        $check = true;
-                        break;
-                    }
-                }
-                
-            } else if($element instanceof \SymBB\Core\ForumBundle\Entity\Forum){
-                
-                $check = false;
-                    
-                $topics = $element->getTopics();
-
-                foreach($topics as $topic){
-                    $check = $this->checkFlag($topic, $flag, $user);
-                    if($check){
-                        break;
-                    }
-                }
-                
-                if(!$check){
-                    $childs = $element->getChildren();
-                    foreach($childs as $child){
-
-                        $check = $this->checkFlag($child, $flag, $user);
-                        if($check){
-                            break;
+                        $timestamp = $users[$user->getId()];
+                              
+                        if($objects){
+                            $this->foundTopics[$timestamp] = $element;
+                        } else {
+                            $this->foundTopics[$timestamp] = $element->getId();
                         }
                     }
+
+                } else if($element instanceof \SymBB\Core\ForumBundle\Entity\Forum){
+
+                    $topics = $element->getTopics();
+
+                    foreach($topics as $topic){
+                        if($limit && count($this->foundTopics) >= $limit){
+                            break;
+                        }
+                        $this->doFindTopicsByFlag($flag, $topic, $user, $objects, $limit);
+                    }
+
+                    $childs = $element->getChildren();
+                    foreach($childs as $child){
+                        if($limit && count($this->foundTopics) >= $limit){
+                            break;
+                        }
+                        $this->doFindTopicsByFlag($flag, $child, $user, $objects, $limit);
+                    }
+
+                } else if(is_object($element)) {
+                    throw new \Exception('findTopicsByFlag don´t know the object ('.get_class($element).')');
                 }
-                
-            } else {
-                throw new Exception('checkSymbbForNewPosts don´t know the object');
-            }
+            }     
         }
         
-        return $check;
+        return $foundTopics;
     }
     
     protected function getMemcacheKey($flag, $topic){

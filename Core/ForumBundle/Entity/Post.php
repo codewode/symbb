@@ -60,6 +60,11 @@ class Post
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id", onDelete="NO ACTION")
      */
     private $author;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="SymBB\Core\ForumBundle\Entity\Post\Flag", mappedBy="post")
+     */
+    private $flags;
 
 
     public function __construct() {
@@ -78,6 +83,7 @@ class Post
     public function getText(){return $this->text;}
     public function setText($value){$this->text = $value;}
     public function setTopic($object){$this->topic = $object;}
+    public function getFlags(){return $this->flags;}
     /**
      * 
      * @return Topic
@@ -119,5 +125,9 @@ class Post
         $post->setAuthor($user);
         $post->setName($topic->getName());
         return $post;
+    }
+    
+    public function getParent(){
+        return $this->getTopic();
     }
 }

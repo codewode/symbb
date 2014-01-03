@@ -24,16 +24,26 @@
     {{ executeSymbbTemplateTopicEvent('javascripts', topic) }}
 {% endblock %}
 
+{% block symbb_sidebar %}
+    
+    {% include getSymbbTemplateConfig('forum') ~ ':Forum:sidebar.html.twig' with {'forum': topic.getForum()} %}
+    
+{% endblock %}  
+    
 {% block symbb_breadcrumb %}
     {{ getSymbbBreadcrumb(topic) }}
 {% endblock %}
 
-{% block symbb_body %}
- 
+{% block symbb_actions %}
     <div class="btn-group pull-left">
         <button type="button" class="btn btn-default btn-sm" onclick="window.location.href='#symbb_bbcode_editor'">{{ 'Answer'|trans }}</button>
         <button type="button" class="btn btn-default btn-sm" onclick="window.location.href='#symbb_bottom'">{{ 'Bottom'|trans }}</button>
-    </div>
+    </div>        
+{% endblock %}
+    
+{% block symbb_body %}
+ 
+
  
     {{ knp_pagination_render(pagination) }}
    

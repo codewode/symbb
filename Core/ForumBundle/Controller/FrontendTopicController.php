@@ -86,7 +86,13 @@ class FrontendTopicController  extends Controller
         
         $pagination->setTemplate($this->getTemplateBundleName('forum').':Pagination:pagination.html.twig');
         
-        $this->get('symbb.core.forum.topic.flag')->removeFlag($topic, 'new');
+        // remove "new" flags off forum/topic and posts for the current user
+        $this->get('symbb.core.forum.flag')->removeFlag($topic->getForum(), 'new');
+        $this->get('symbb.core.topic.flag')->removeFlag($topic, 'new');
+        foreach($topic->getPosts() as $post){
+            $this->get('symbb.core.post.flag')->removeFlag($post, 'new');
+        }
+        
         
         $params                 = array();
         $params['topic']        = $topic;
@@ -238,7 +244,9 @@ class FrontendTopicController  extends Controller
                 $accessService->grantAccess('owner', $post);
             }
             
-            $this->get('symbb.core.forum.topic.flag')->insertFlags($topic, 'new');
+            $this->get('symbb.core.forum.flag')->insertFlags($forum, 'new');
+            $this->get('symbb.core.topic.flag')->insertFlags($topic, 'new');
+            $this->get('symbb.core.post.flag')->insertFlags($post, 'new');
             
             return true;
         }
@@ -280,7 +288,7 @@ class FrontendTopicController  extends Controller
         $dispatcher = $this->get('event_dispatcher');
         $form       = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\PostType($url, $post, $dispatcher, $this->get('translator')), $post);
         
-        if($this->get('symbb.core.forum.topic.flag')->checkFlag($topic, 'notify')){
+        if($this->get('symbb.core.topic.flag')->checkFlag($topic, 'notify')){
             $form->get('notifyMe')->setData(true);
         }
         

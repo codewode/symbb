@@ -7,7 +7,7 @@ Macro to generate the row of a forum
 -->
 
 {% macro forumRow(object) %}
-<div class="row forum"> 
+    <div class="row forum"> 
         <div class="col-md-6 nameBlock">{{_self.nameRow(object, true, true)}}</div>
         <div class="col-md-2 postCountBlock">
             {{object.getTopicCount()}} <span>{% trans %}Topics{% endtrans %}</span><br/>
@@ -72,7 +72,7 @@ Macro to generate the structure of the forum/Category name Row
     </div>
     {% if showLabels %}
         <div class="labels">
-        {% if checkSymbbForNewPostFlag(object) %}
+        {% if checkSymbbForForumNewFlag(object) %}
             <span class="label label-success">{% trans %}new{% endtrans %}</span>
         {% endif %}
         </div>
@@ -137,10 +137,10 @@ Macro to generate a list of all topics
                 {% if app.user and app.user.getId() == topic.getAuthor().getId() %}
                     <span class="label label-default">{% trans %}author{% endtrans %}</span>
                 {% endif %}
-                {% if checkSymbbForAnsweredPostFlag(topic) %}
+                {% if checkSymbbForTopicAnsweredFlag(topic) %}
                     <span class="label label-info">{% trans %}answered{% endtrans %}</span>
                 {% endif %}
-                {% if checkSymbbForNewPostFlag(topic) %}
+                {% if checkSymbbForTopicNewFlag(topic) %}
                     <span class="label label-success">{% trans %}new{% endtrans %}</span>
                 {% endif %}
                 {% if topic.isLocked() %}

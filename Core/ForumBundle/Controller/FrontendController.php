@@ -153,7 +153,7 @@ class FrontendController  extends Controller
         
         $topics = $forum->getTopics();
         foreach($topics as $topic){
-            $flagHandler = $this->get('symbb.core.forum.topic.flag');
+            $flagHandler = $this->get('symbb.core.topic.flag');
             $flagHandler->removeFlag($topic, 'new');
         }
         

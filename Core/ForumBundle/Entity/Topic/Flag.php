@@ -10,7 +10,6 @@
 namespace SymBB\Core\ForumBundle\Entity\Topic;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Table(name="forum_topic_flags")
@@ -39,6 +38,11 @@ class Flag
      */
     private $flag = 'new';
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
 
 
     ############################################################################
@@ -50,6 +54,14 @@ class Flag
     public function getTopic(){return $this->topic;}
     public function setUser($object){$this->user = $object;}
     public function getUser(){return $this->user;}
+    public function getCreated(){return $this->created;}
     ############################################################################
     
+    /**
+    * @ORM\PrePersist
+    */
+    public function setCreatedValue()
+    {
+       $this->created = new \DateTime();
+    }
 }

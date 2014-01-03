@@ -182,20 +182,24 @@ class FrontendPostController  extends Controller
                 // set access to owner
                 $accessService  = $this->get('symbb.core.user.access');
                 $accessService->grantAccess('owner', $post);
+                
                 // adding new flags to all user and a answered flag for the current user
-                $this->get('symbb.core.forum.topic.flag')->insertFlags($topic, 'new');
-                $this->get('symbb.core.forum.topic.flag')->insertFlag($topic, 'answered');
+                $this->get('symbb.core.post.flag')->insertFlags($post, 'new');
+                $this->get('symbb.core.topic.flag')->insertFlags($topic, 'new');
+                $this->get('symbb.core.forum.flag')->insertFlags($topic->getForum(), 'new');
+                // answered
+                $this->get('symbb.core.topic.flag')->insertFlag($topic, 'answered');
             }
             
             if(isset($data['notifyMe']) && $data['notifyMe']){
-                $this->get('symbb.core.forum.topic.flag')->insertFlag($topic, 'notify');
+                $this->get('symbb.core.topic.flag')->insertFlag($topic, 'notify');
             } else {
-                $this->get('symbb.core.forum.topic.flag')->removeFlag($topic, 'notify');
+                $this->get('symbb.core.topic.flag')->removeFlag($topic, 'notify');
             }
             
             // check notify me
-            $users  = $this->get('symbb.core.forum.topic.flag')->getUsersForFlag('notify', $topic);
-            foreach($users as $notifyUser){
+            $users  = $this->get('symbb.core.topic.flag')->getUsersForFlag('notify', $topic);
+            foreach($users as $notifyUser => $timestamp){
                 if($notifyUser != $this->getUser()->getId()){
                     $this->get('symbb.core.forum.notify')->sendTopicNotifications($topic, $notifyUser);
                 }
@@ -239,7 +243,7 @@ class FrontendPostController  extends Controller
         
         $form   = $this->createForm($formType, $post);
         
-        if($this->get('symbb.core.forum.topic.flag')->checkFlag($topic, 'notify')){
+        if($this->get('symbb.core.topic.flag')->checkFlag($topic, 'notify')){
             $form->get('notifyMe')->setData(true);
         }
         

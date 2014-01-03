@@ -16,8 +16,10 @@ root, body, html {
 }
 
 .symbb_body {
-    display: block;
     padding: 10px;
+    padding-top: 0px;
+    width: 80%;
+    float: left;
 }
 
 .row {
@@ -69,11 +71,11 @@ root, body, html {
     margin: 5px auto;
 }
 
-.symbb_user_panel .content .avatar {
+.avatar {
     float: left;
 }
 
-.symbb_user_panel .content .avatar img {
+.avatar_mini img {
     height: 32px;
     border: 1px solid #FFF;
 }
@@ -128,4 +130,17 @@ root, body, html {
 
 .symbb_navi .navbar-collapse {
     padding-left: 0px;
+}
+
+.symbb_sidebar {
+    width: 20%;
+}
+
+.symbb_sidebar .padding10 {
+    padding-top: 0px;
+}
+
+.symbb_actions {
+    padding: 10px;
+    padding-bottom: 0px;
 }

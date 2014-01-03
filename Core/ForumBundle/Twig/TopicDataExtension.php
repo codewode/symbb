@@ -26,9 +26,9 @@ class TopicDataExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('getTopicPagination', array($this, 'getTopicPagination')),
-            new \Twig_SimpleFunction('checkSymbbForNewPostFlag', array($this, 'checkSymbbForNewPostFlag')),
-            new \Twig_SimpleFunction('checkSymbbForAnsweredPostFlag', array($this, 'checkSymbbForAnsweredPostFlag')),
-            new \Twig_SimpleFunction('checkSymbbForFlag', array($this, 'checkForFlag')),
+            new \Twig_SimpleFunction('checkSymbbForTopicNewFlag', array($this, 'checkSymbbForNewPostFlag')),
+            new \Twig_SimpleFunction('checkSymbbForTopicAnsweredFlag', array($this, 'checkSymbbForAnsweredPostFlag')),
+            new \Twig_SimpleFunction('checkSymbbForTopicFlag', array($this, 'checkForFlag')),
         );
     }
     
@@ -65,7 +65,8 @@ class TopicDataExtension extends \Twig_Extension
     
     public function checkForFlag($element, $flag)
     {
-        return $this->topicFlagHandler->checkFlag($element, $flag);
+        $check = $this->topicFlagHandler->checkFlag($element, $flag);
+        return $check;
     }
     
     protected function getTemplateBundleName($for = 'forum'){
