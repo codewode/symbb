@@ -33,6 +33,7 @@ abstract class AbstractManager  {
     public function checkPrefix($prefix)
     {
         $prefix     = strtoupper($prefix);
+        
         $prefixes   = $this->getPrefixes();
         foreach($prefixes as $prefixCurr){
             if($prefix === $prefixCurr){
@@ -94,6 +95,7 @@ abstract class AbstractManager  {
     }
     
     public function createAccessChecks($permission, $object, $indentity){
+        $checks             = array();
         $permission         = explode('#', $permission);
         $prefix             = reset($permission).'#';
         $finalPermission    = end($permission);

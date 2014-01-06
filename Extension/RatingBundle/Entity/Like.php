@@ -27,7 +27,7 @@ class Like
 
     /**
      * @ORM\ManyToOne(targetEntity="SymBB\Core\ForumBundle\Entity\Post")
-     * @ORM\JoinColumn(name="post_id", referencedColumnName="id", unique=true, onDelete="cascade")
+     * @ORM\JoinColumn(name="post_id", referencedColumnName="id", onDelete="cascade")
      */
     private $post;
 

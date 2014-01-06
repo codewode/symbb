@@ -91,21 +91,24 @@ class AccessManager {
         $objects = array();
         foreach((array)$masks as $mask){
             foreach($this->aclManager as $aclManager){
-                $mask   = explode('#', $mask);
-                $prefix = reset($mask).'#';
-                $mask   = end($mask);
+                $maskData   = explode('#', $mask);
+                $prefix     = reset($maskData).'#';
+                $finalMask  = end($maskData);
                 if($aclManager->checkPrefix($prefix)){
                     $domainObject                           = $aclManager->createDomainObject($prefix, $object);
-                    if(is_object($object)){
-                        $objects[$prefix]['object']         = $domainObject;
-                        $objects[$prefix]['masks'][]        = $mask;
-                        $objects[$prefix]['maskBuilder']    = $aclManager->getMaskBuilder($prefix);
+                    if(is_object($domainObject)){
+                        if(!isset($objects[$prefix])){
+                            $objects[$prefix]['object']         = $domainObject;
+                            $objects[$prefix]['maskBuilder']    = $aclManager->getMaskBuilder($prefix);
+                        }
+                        $objects[$prefix]['masks'][]            = $finalMask;
                     }
                     break;
+                } else {
                 }
             }
         }
-   
+
         foreach($objects as $objectData){
             
             $masks              = (array)$objectData['masks'];
@@ -124,7 +127,7 @@ class AccessManager {
             }
 
             if($identity instanceof UserInterface){
-                $securityIdentity   = UserSecurityIdentity::fromAccount($identity);
+                $securityIdentity   = $this->getUserIdentity($identity);
             } else if($identity instanceof \SymBB\Core\UserBundle\Entity\Group){
                 $securityIdentity   = $this->getUserGroupIdentity($identity);
             } else {
@@ -135,7 +138,6 @@ class AccessManager {
                 $builder->add($currMask);
             }
             $finalMask = $builder->get();
-            
             $acl->insertObjectAce($securityIdentity, $finalMask);
 
             $this->aclProvider->updateAcl($acl);
@@ -158,18 +160,19 @@ class AccessManager {
         }
         
         if($indentityObject instanceof UserInterface){
-            $indentity          = UserSecurityIdentity::fromAccount($indentityObject);
+            $indentity          = $this->getUserIdentity($indentityObject);
             $groups             = $indentityObject->getGroups();
             foreach($groups as $group){
                 $this->addAccessCheck($permission, $object, $group);
             }
+            
         } else if($indentityObject instanceof \SymBB\Core\UserBundle\Entity\Group){
             $indentity          = $this->getUserGroupIdentity($indentityObject);
         }
         
         foreach($this->aclManager as $aclManager){
             $checks             = $aclManager->createAccessChecks($permission, $object, $indentity);
-            $this->accessChecks += $checks;
+            $this->accessChecks = array_merge($this->accessChecks, $checks);
             // check if we need some additional acces checks for the given access
             if($checkAdditional){
                $additionalChecks = $aclManager->getAdditionalAccessCheck($permission, $object);
@@ -181,6 +184,11 @@ class AccessManager {
         
     }
     
+    protected function getUserIdentity(\SymBB\Core\UserBundle\Entity\UserInterface $identity){
+        $indentity          = new UserSecurityIdentity($identity->getId(), ClassUtils::getRealClass($identity));
+        return $indentity;
+    }
+     
     protected function getUserGroupIdentity($group){
         $indentity          = new UserSecurityIdentity($group->getId(), ClassUtils::getRealClass($group));
         return $indentity;
