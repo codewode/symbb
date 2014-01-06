@@ -33,9 +33,8 @@ class FrontendTopicController  extends Controller
         
         $topic          = $this->getTopicById($id);
         
-        $accessService  = $this->get('symbb.core.user.access');
-        $accessService->addAccessCheck('view', $topic);
-        $accessService->addAccessCheck('view', $topic->getForum());
+        $accessService  = $this->get('symbb.core.access.manager');
+        $accessService->addAccessCheck('SYMBB_FORUM#VIEW', $topic->getForum());
         $accessService->checkAccess();
         
         $post   = null;
@@ -123,8 +122,12 @@ class FrontendTopicController  extends Controller
             ));
         }
         
-        $accessService  = $this->get('symbb.core.user.access');
-        $accessService->addAccessCheck('write', $forum);
+        $accessService  = $this->get('symbb.core.access.manager');
+        if(!$topic || $topic->getId() <= 0){
+            $accessService->addAccessCheck('SYMBB_FORUM#CREATE_TOPIC', $forum);
+        } else {
+            $accessService->addAccessCheck('SYMBB_TOPIC#EDIT', $topic);
+        }
         $accessService->checkAccess();
         
 
@@ -142,9 +145,8 @@ class FrontendTopicController  extends Controller
         
         $topic = $this->getTopicById($topic);
         
-        $accessService  = $this->get('symbb.core.user.access');
-        $accessService->addAccessCheck('delete', $topic);
-        $accessService->addAccessCheck('delete', $topic->getForum());
+        $accessService  = $this->get('symbb.core.access.manager');
+        $accessService->addAccessCheck('SYMBB_TOPIC#DELETE', $topic);
         $accessService->checkAccess();
         
         $em         = $this->getDoctrine()->getManager('symbb');
@@ -238,10 +240,10 @@ class FrontendTopicController  extends Controller
             }
             $em->flush();
             
-            $accessService  = $this->get('symbb.core.user.access');
-            $accessService->grantAccess('owner', $topic);
+            $accessService  = $this->get('symbb.core.access.manager');
+            $accessService->grantAccess('SYMBB_TOPIC#OWNER', $topic);
             if($post){
-                $accessService->grantAccess('owner', $post);
+                $accessService->grantAccess('SYMBB_POST#OWNER', $post);
             }
             
             $this->get('symbb.core.forum.flag')->insertFlags($forum, 'new');

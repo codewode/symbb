@@ -58,15 +58,13 @@ class FrontendPostController  extends Controller
         
         // check only for "edit" case
         if(is_object($post) && $post->getId() > 0){
-            $accessService  = $this->get('symbb.core.user.access');
+            $accessService  = $this->get('symbb.core.access.manager');
             // check if you have access to edit the post
-            $accessService->addAccessCheck('edit', $post);
-            // or if you have the access to edit the forum
-            $accessService->addAccessCheck('edit', $topic->getForum());
+            $accessService->addAccessCheck('SYMBB_POST#EDIT', $post);
             $accessService->checkAccess();
         } else {
-            $accessService  = $this->get('symbb.core.user.access');
-            $accessService->addAccessCheck('write', $topic->getForum());
+            $accessService  = $this->get('symbb.core.access.manager');
+            $accessService->addAccessCheck('SYMBB_FORUM#CREATE_POST', $topic->getForum());
             $accessService->checkAccess();
         }
         
@@ -89,9 +87,8 @@ class FrontendPostController  extends Controller
      */
     public function deleteAction(\SymBB\Core\ForumBundle\Entity\Post $post){
         
-        $accessService  = $this->get('symbb.core.user.access');
-        $accessService->addAccessCheck('delete', $post);
-        $accessService->addAccessCheck('delete', $post->getTopic()->getForum());
+        $accessService  = $this->get('symbb.core.access.manager');
+        $accessService->addAccessCheck('SYMBB_POST#DELETE', $post);
         $accessService->checkAccess();
         
         $em         = $this->getDoctrine()->getManager('symbb');
@@ -180,8 +177,8 @@ class FrontendPostController  extends Controller
             //only if the id was "0" ( only by "new" )
             if($oldId === null){
                 // set access to owner
-                $accessService  = $this->get('symbb.core.user.access');
-                $accessService->grantAccess('owner', $post);
+                $accessService  = $this->get('symbb.core.access.manager');
+                $accessService->grantAccess('SYMBB_POST#OWNER', $post);
                 
                 // adding new flags to all user and a answered flag for the current user
                 $this->get('symbb.core.post.flag')->insertFlags($post, 'new');

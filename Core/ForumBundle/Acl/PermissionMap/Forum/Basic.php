@@ -7,18 +7,21 @@
 *
 */
 
-namespace SymBB\Core\UserBundle\Acl;
+namespace SymBB\Core\ForumBundle\Acl\PermissionMap\Forum;
 
 use \Symfony\Component\Security\Acl\Permission\BasicPermissionMap;
+use \SymBB\Core\ForumBundle\Acl\MaskBuilder\Forum\Basic as MaskBuilder;
+use \SymBB\Core\ForumBundle\Acl\Manager;
 
-class PermissionMap extends BasicPermissionMap {
+class Basic extends BasicPermissionMap {
     
     const PERMISSION_VIEW        = 'VIEW';
-    const PERMISSION_EDIT        = 'EDIT';
-    const PERMISSION_CREATE      = 'CREATE';
-    const PERMISSION_DELETE      = 'DELETE';
-    const PERMISSION_WRITE       = 'WRITE';
-    const PERMISSION_OPERATOR    = 'OPERATOR';
+    const PERMISSION_CREATE_TOPIC= 'CREATE_TOPIC';
+    const PERMISSION_CREATE_POST = 'CREATE_POST';
+    const PERMISSION_EDIT_TOPIC  = 'EDIT_TOPIC';
+    const PERMISSION_EDIT_POST   = 'EDIT_POST';
+    const PERMISSION_DELETE_TOPIC= 'DELETE_TOPIC';
+    const PERMISSION_DELETE_POST = 'DELETE_POST';
     const PERMISSION_MASTER      = 'MASTER';
     const PERMISSION_OWNER       = 'OWNER';
     
@@ -27,42 +30,42 @@ class PermissionMap extends BasicPermissionMap {
         $this->map = array(
             self::PERMISSION_VIEW => array(
                 MaskBuilder::MASK_VIEW,
-                MaskBuilder::MASK_EDIT,
-                MaskBuilder::MASK_OPERATOR,
                 MaskBuilder::MASK_MASTER,
                 MaskBuilder::MASK_OWNER,
             ),
 
-            self::PERMISSION_EDIT => array(
-                MaskBuilder::MASK_EDIT,
-                MaskBuilder::MASK_OPERATOR,
+            self::PERMISSION_CREATE_TOPIC => array(
+                MaskBuilder::CODE_CREATE_TOPIC,
                 MaskBuilder::MASK_MASTER,
                 MaskBuilder::MASK_OWNER,
             ),
 
-            self::PERMISSION_CREATE => array(
-                MaskBuilder::MASK_CREATE,
-                MaskBuilder::MASK_OPERATOR,
+            self::PERMISSION_CREATE_POST => array(
+                MaskBuilder::MASK_CREATE_POST,
                 MaskBuilder::MASK_MASTER,
                 MaskBuilder::MASK_OWNER,
             ),
 
-            self::PERMISSION_DELETE => array(
-                MaskBuilder::MASK_DELETE,
-                MaskBuilder::MASK_OPERATOR,
+            self::PERMISSION_EDIT_TOPIC => array(
+                MaskBuilder::MASK_EDIT_TOPIC,
                 MaskBuilder::MASK_MASTER,
                 MaskBuilder::MASK_OWNER,
             ),
 
-            self::PERMISSION_WRITE => array(
-                MaskBuilder::MASK_WRITE,
-                MaskBuilder::MASK_OPERATOR,
+            self::PERMISSION_EDIT_POST => array(
+                MaskBuilder::MASK_EDIT_POST,
                 MaskBuilder::MASK_MASTER,
                 MaskBuilder::MASK_OWNER,
             ),
 
-            self::PERMISSION_OPERATOR => array(
-                MaskBuilder::MASK_OPERATOR,
+            self::PERMISSION_DELETE_TOPIC => array(
+                MaskBuilder::MASK_DELETE_TOPIC,
+                MaskBuilder::MASK_MASTER,
+                MaskBuilder::MASK_OWNER,
+            ),
+
+            self::PERMISSION_DELETE_POST => array(
+                MaskBuilder::MASK_DELETE_POST,
                 MaskBuilder::MASK_MASTER,
                 MaskBuilder::MASK_OWNER,
             ),
@@ -75,11 +78,16 @@ class PermissionMap extends BasicPermissionMap {
             self::PERMISSION_OWNER => array(
                 MaskBuilder::MASK_OWNER,
             ),
+
         );
     }
     
-    public function getMasks($permission, $object = null) {
-        return parent::getMasks($permission, $object);
+    public function getParentMap(){
+        return array(
+            self::PERMISSION_CREATE_TOPIC => array(
+                Manager::SYMBB_POST_BASIC
+            )
+        );
     }
     
 }

@@ -4,9 +4,6 @@ services:
         class: SymBB\Core\UserBundle\Twig\UserDataExtension
         tags:
             - { name: twig.extension } 
-    symbb.core.user.access:
-        class: SymBB\Core\UserBundle\DependencyInjection\UserAccess
-        arguments: ["@doctrine.orm.symbb_entity_manager", "@security.context", "@security.acl.provider"]
     symbb.core.user.manager:
         class: SymBB\Core\UserBundle\DependencyInjection\UserManager
         arguments: ["@service_container"]
@@ -18,6 +15,6 @@ services:
     symbb.core.user.access.twig:
         twig.extension.symbb.core.user.access:
         class: SymBB\Core\UserBundle\Twig\AccessExtension
-        arguments: ['@symbb.core.user.access']
+        arguments: ['@symbb.core.access.manager']
         tags:
             - { name: twig.extension } 

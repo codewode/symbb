@@ -13,4 +13,10 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class SymBBCoreSystemBundle extends Bundle
 {
+    public function build(\Symfony\Component\DependencyInjection\ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->addCompilerPass(new \SymBB\Core\SystemBundle\DependencyInjection\AccessManagerCompilerPass());
+    }
 }

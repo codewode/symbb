@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 *
 * @package symBB
@@ -6,8 +6,7 @@
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
-
-namespace SymBB\Core\UserBundle\DependencyInjection;
+namespace SymBB\Core\SystemBundle\DependencyInjection;
 
 use \Symfony\Component\Security\Core\SecurityContextInterface;
 use \SymBB\Core\UserBundle\Entity\UserInterface;
@@ -15,18 +14,20 @@ use \Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use \Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use \Symfony\Component\Security\Acl\Exception\AclNotFoundException;
 use \Symfony\Component\Security\Acl\Exception\NoAceFoundException;
-use \SymBB\Core\UserBundle\Acl\PermissionMap;
 use \Symfony\Component\Security\Core\Util\ClassUtils;
 use \Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
-use \SymBB\Core\UserBundle\Acl\MaskBuilder;
+use \Symfony\Component\Security\Acl\Model\AclProviderInterface;
 
-class UserAccess
-{
+class AccessManager {
+    
+    /**
+     * @var \Doctrine\ORM\EntityManager 
+     */
     protected $em;
     
     /**
      *
-     * @var \Symfony\Component\Security\Acl\Model\AclProviderInterface 
+     * @var AclProviderInterface 
      */
     protected $aclProvider;
     
@@ -35,8 +36,8 @@ class UserAccess
      */
     protected $user;
     
-    protected $accessChecks = array();
-
+    protected $accessChecks     = array();
+    protected $aclManager       = array();
 
     /**
      * 
@@ -44,9 +45,13 @@ class UserAccess
      * @param \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
      */
     public function __construct($em, SecurityContextInterface $securityContext, $aclProvider) {
-        $this->em = $em;
-        $this->securityContext = $securityContext;
-        $this->aclProvider = $aclProvider;
+        $this->em               = $em;
+        $this->securityContext  = $securityContext;
+        $this->aclProvider      = $aclProvider;
+    }
+    
+    public function addAclManager($aclManager){
+        $this->aclManager[] = $aclManager;
     }
     
     /**
@@ -81,36 +86,61 @@ class UserAccess
      * @param \SymBB\Core\UserBundle\Entity\UserInterface $identity
      * @throws Exception
      */
-    public function grantAccess($mask, $object, $identity = null){
-  
-        $objectIdentity     = ObjectIdentity::fromDomainObject($object);
+    public function grantAccess($masks, $object, $identity = null){
         
-        try {
-            $acl            = $this->aclProvider->findAcl($objectIdentity);
-        } catch (AclNotFoundException $exc) {
-            $acl            = $this->aclProvider->createAcl($objectIdentity);
+        $objects = array();
+        foreach((array)$masks as $mask){
+            foreach($this->aclManager as $aclManager){
+                $mask   = explode('#', $mask);
+                $prefix = reset($mask).'#';
+                $mask   = end($mask);
+                if($aclManager->checkPrefix($prefix)){
+                    $domainObject                           = $aclManager->createDomainObject($prefix, $object);
+                    if(is_object($object)){
+                        $objects[$prefix]['object']         = $domainObject;
+                        $objects[$prefix]['masks'][]        = $mask;
+                        $objects[$prefix]['maskBuilder']    = $aclManager->getMaskBuilder($prefix);
+                    }
+                    break;
+                }
+            }
+        }
+   
+        foreach($objects as $objectData){
+            
+            $masks              = (array)$objectData['masks'];
+            $builder            = $objectData['maskBuilder'];
+            $object             = $objectData['object'];
+            $objectIdentity     = ObjectIdentity::fromDomainObject($object);
+
+            try {
+                $acl            = $this->aclProvider->findAcl($objectIdentity);
+            } catch (AclNotFoundException $exc) {
+                $acl            = $this->aclProvider->createAcl($objectIdentity);
+            }
+
+            if($identity === null){
+                $identity               = $this->getUser();
+            }
+
+            if($identity instanceof UserInterface){
+                $securityIdentity   = UserSecurityIdentity::fromAccount($identity);
+            } else if($identity instanceof \SymBB\Core\UserBundle\Entity\Group){
+                $securityIdentity   = $this->getUserGroupIdentity($identity);
+            } else {
+                throw new Exception('Unknown Security Indentity for '.ClassUtils::getRealClass($identity));
+            }
+
+            foreach((array)$masks as $currMask){
+                $builder->add($currMask);
+            }
+            $finalMask = $builder->get();
+            
+            $acl->insertObjectAce($securityIdentity, $finalMask);
+
+            $this->aclProvider->updateAcl($acl);
         }
         
-        if($identity === null){
-            $identity               = $this->getUser();
-        }
-        
-        if($identity instanceof UserInterface){
-            $securityIdentity   = UserSecurityIdentity::fromAccount($identity);
-        } else if($identity instanceof \SymBB\Core\UserBundle\Entity\Group){
-            $securityIdentity   = $this->getUserGroupIdentity($identity);
-        } else {
-            throw new Exception('Unknown Security Indentity for '.ClassUtils::getRealClass($identity));
-        }
-        
-        $builder = new MaskBuilder();
-        foreach((array)$mask as $currMask){
-            $builder->add($currMask);
-        }
-        $mask = $builder->get();
-        $acl->insertObjectAce($securityIdentity, $mask);
-        
-        $this->aclProvider->updateAcl($acl);
     }
     
     /**
@@ -119,7 +149,7 @@ class UserAccess
      * @param int $mask PermissionMap::PERMISSION_EDIT, MaskBuilder::PERMISSION_VIEW,...
      * @param SecurityIdentityInterface $indentity
      */
-    public function addAccessCheck($permission, $object, $indentityObject = null){
+    public function addAccessCheck($permission, $object, $indentityObject = null, $checkAdditional = true){
         
         $indentity = null;
         
@@ -137,21 +167,18 @@ class UserAccess
             $indentity          = $this->getUserGroupIdentity($indentityObject);
         }
         
-        if(is_object($indentity)){
-            $this->accessChecks[] = array(
-                'object'        => $object,
-                'permission'    => $permission,
-                'indentity'     => $indentity
-            );
+        foreach($this->aclManager as $aclManager){
+            $checks             = $aclManager->createAccessChecks($permission, $object, $indentity);
+            $this->accessChecks += $checks;
+            // check if we need some additional acces checks for the given access
+            if($checkAdditional){
+               $additionalChecks = $aclManager->getAdditionalAccessCheck($permission, $object);
+                foreach($additionalChecks as $additional){
+                    $this->addAccessCheck($additional['permission'], $additional['object'], $indentityObject, false);
+                } 
+            }
         }
         
-        // If we check a "post" than we must also check the "forum" because a MOD can have acces to "edit" / "delete" the Forum 
-        // is he has also acces to the "posts"
-        if(
-            $object instanceof \SymBB\Core\ForumBundle\Entity\Post
-        ){
-            $this->addAccessCheck($permission, $object->getTopic()->getForum(), $indentityObject);
-        }
     }
     
     protected function getUserGroupIdentity($group){
@@ -165,10 +192,11 @@ class UserAccess
         foreach($this->accessChecks as $data){
             $object             = $data['object'];
             $indentity          = $data['indentity'];
+            $permissionMap      = $data['permissionMap'];
             $permission         = strtoupper($data['permission']);
             $objectIdentity     = ObjectIdentity::fromDomainObject($object);
+            
             try {
-                $permissionMap      = new PermissionMap();
                 $masks              = $permissionMap->getMasks($permission, $object);
                 $acl                = $this->aclProvider->findAcl($objectIdentity);
                 $access             = $acl->isGranted($masks, array($indentity)); 

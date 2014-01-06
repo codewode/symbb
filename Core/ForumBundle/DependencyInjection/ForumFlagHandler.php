@@ -52,8 +52,8 @@ class ForumFlagHandler extends \SymBB\Core\ForumBundle\DependencyInjection\Abstr
         // if we add a topic "new" flag, we need to check if the user has read access to the forum
         // an we must check if the user has ignore the forum
         if($flag === 'new'){
-            $this->userAccess->addAccessCheck('VIEW', $object, $user);
-            $access = $this->userAccess->checkAccess();
+            $this->accessManager->addAccessCheck('SYMBB_FORUM#VIEW', $object, $user);
+            $access = $this->accessManager->checkAccess();
             if($access){
                 $ignore = $this->checkFlag($object, 'ignore', $user);
             } else {

@@ -11,7 +11,7 @@ namespace SymBB\Core\ForumBundle\DependencyInjection;
 
 use \SymBB\Core\UserBundle\Entity\UserInterface;
 use \SymBB\Core\UserBundle\DependencyInjection\UserManager;
-use \SymBB\Core\UserBundle\DependencyInjection\UserAccess;
+use \SymBB\Core\SystemBundle\DependencyInjection\AccessManager;
 
 abstract class AbstractFlagHandler
 {
@@ -33,9 +33,9 @@ abstract class AbstractFlagHandler
     protected $securityContext;
     
     /*
-     * @var UserAccess 
+     * @var AccessManager 
      */
-    protected $userAccess;
+    protected $accessManager;
     
     protected $memcache;
     
@@ -48,10 +48,10 @@ abstract class AbstractFlagHandler
      */
     protected $user;
 
-    public function __construct($em, UserManager $userManager, UserAccess $userAccess, $securityContext, $memcache) {
+    public function __construct($em, UserManager $userManager, AccessManager $accessManager, $securityContext, $memcache) {
         $this->em               = $em;
         $this->userManager      = $userManager;
-        $this->userAccess      = $userAccess;
+        $this->accessManager    = $accessManager;
         $this->securityContext  = $securityContext;
         $this->memcache         = $memcache;
     }

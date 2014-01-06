@@ -98,89 +98,95 @@ class LoadForumExampleData extends AbstractFixture implements OrderedFixtureInte
         
         
         
-        $accessService  = $this->container->get('symbb.core.user.access');
+        $accessService  = $this->container->get('symbb.core.access.manager');
         
         //GUEST Access
         $accessService->grantAccess(array(
-            'view'
+            'SYMBB_FORUM#VIEW'
         ), $forum, $this->getReference('guest-group'));
         
         $accessService->grantAccess(array(
-           'view'
+           'SYMBB_FORUM#VIEW'
         ), $forum2, $this->getReference('guest-group'));
         
         $accessService->grantAccess(array(
-           'view'
+           'SYMBB_FORUM#VIEW'
         ), $forum3, $this->getReference('guest-group'));
         
         $accessService->grantAccess(array(
-           'view'
+           'SYMBB_FORUM#VIEW'
         ), $forum4, $this->getReference('guest-group'));
         
         $accessService->grantAccess(array(
-           'view'
+           'SYMBB_FORUM#VIEW'
         ), $forum5, $this->getReference('guest-group'));
         
         $accessService->grantAccess(array(
-           'view'
+           'SYMBB_FORUM#VIEW'
         ), $forum6, $this->getReference('guest-group'));
         
         
         // USER ACCESS
         $accessService->grantAccess(array(
-           'view',
-           'write'
+           'SYMBB_FORUM#VIEW',
+           'SYMBB_FORUM#CREATE_TOPIC',
+           'SYMBB_FORUM#CREATE_POST'
         ), $forum, $this->getReference('user-group'));
         
         $accessService->grantAccess(array(
-           'view',
-           'write'
+           'SYMBB_FORUM#VIEW',
+           'SYMBB_FORUM#CREATE_TOPIC',
+           'SYMBB_FORUM#CREATE_POST'
         ), $forum2, $this->getReference('user-group'));
         
         $accessService->grantAccess(array(
-           'view',
-           'write'
+           'SYMBB_FORUM#VIEW',
+           'SYMBB_FORUM#CREATE_TOPIC',
+           'SYMBB_FORUM#CREATE_POST'
         ), $forum3, $this->getReference('user-group'));
         
         $accessService->grantAccess(array(
-           'view',
-           'write'
+           'SYMBB_FORUM#VIEW',
+           'SYMBB_FORUM#CREATE_TOPIC',
+           'SYMBB_FORUM#CREATE_POST'
         ), $forum4, $this->getReference('user-group'));
         
         $accessService->grantAccess(array(
-           'view',
-           'write'
+           'SYMBB_FORUM#VIEW',
+           'SYMBB_FORUM#CREATE_TOPIC',
+           'SYMBB_FORUM#CREATE_POST'
         ), $forum5, $this->getReference('user-group'));
         
         $accessService->grantAccess(array(
-           'view',
-           'write'
+           'SYMBB_FORUM#VIEW',
+           'SYMBB_FORUM#CREATE_TOPIC',
+           'SYMBB_FORUM#CREATE_POST'
         ), $forum6, $this->getReference('user-group'));
         
         
         // ADMIN ACCESS
         $accessService->grantAccess(array(
-           'master'
+           'SYMBB_FORUM#MASTER'
         ), $forum, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-           'master'
+           'SYMBB_FORUM#MASTER'
         ), $forum2, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-           'master'
+           'SYMBB_FORUM#MASTER'
         ), $forum3, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-           'master'
+           'SYMBB_FORUM#MASTER'
         ), $forum4, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-           'master'
+           'SYMBB_FORUM#MASTER'
         ), $forum5, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-           'master'
+           'SYMBB_FORUM#MASTER'
         ), $forum6, $this->getReference('admin-group'));
         
     }

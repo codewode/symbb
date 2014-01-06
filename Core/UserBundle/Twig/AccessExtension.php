@@ -8,18 +8,18 @@
 */
 namespace SymBB\Core\UserBundle\Twig;
 
-use \SymBB\Core\UserBundle\DependencyInjection\UserAccess;
+use SymBB\Core\SystemBundle\DependencyInjection\AccessManager;
 
 class AccessExtension extends \Twig_Extension
 {
     /**
      *
-     * @var UserAccess 
+     * @var AccessManager 
      */
-    protected $userAccess;
+    protected $accessManager;
     
-    public function __construct(UserAccess $userAccess) {
-        $this->userAccess = $userAccess;
+    public function __construct(AccessManager $accessManager) {
+        $this->accessManager = $accessManager;
     }
 
     public function getFunctions()
@@ -31,8 +31,8 @@ class AccessExtension extends \Twig_Extension
     
     public function hasSymbbAccess($permissionString, $element)
     {
-        $this->userAccess->addAccessCheck($permissionString, $element);
-        $access             = $this->userAccess->hasAccess();
+        $this->accessManager->addAccessCheck($permissionString, $element);
+        $access             = $this->accessManager->hasAccess();
         return $access;
     }
     

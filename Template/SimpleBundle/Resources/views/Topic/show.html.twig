@@ -70,7 +70,7 @@
     
     {% if not topic.isLocked() %}
     
-        {% if hasSymbbAccess('write', topic.getForum()) %}
+        {% if hasSymbbAccess('SYMBB_FORUM#CREATE_POST', topic.getForum()) %}
 
             <hr>
     

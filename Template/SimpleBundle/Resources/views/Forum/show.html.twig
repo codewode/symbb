@@ -13,9 +13,9 @@
 {% endblock %}
 
 {% block symbb_actions %}
-    {% if forum.getType() == 'forum' and ( hasSymbbAccess('write', forum) or app.user.getSymbbType() == 'user') %}
+    {% if forum.getType() == 'forum' and ( hasSymbbAccess('SYMBB_FORUM#CREATE_TOPIC', forum) or app.user.getSymbbType() == 'user') %}
          <div class="btn-group">
-             {% if hasSymbbAccess('write', forum) %}
+             {% if hasSymbbAccess('SYMBB_FORUM#CREATE_TOPIC', forum) %}
              <button type="button" class="btn btn-default btn-sm" onclick="window.location.href='{{ path('_symbb_forum_topic_new', {'forum': forum.getId()}) }}'">{% trans %}new Topic{% endtrans %}</button>
              {% endif %}
              {% if app.user.getSymbbType() == 'user' %}
