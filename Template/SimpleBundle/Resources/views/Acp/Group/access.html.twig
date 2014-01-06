@@ -1,0 +1,46 @@
+{% trans_default_domain "symbb_backend" %}
+
+{% extends getSymbbTemplateConfig('acp') ~ ':Acp:Layout/access.html.twig' %}
+
+{% block symbb_body %}
+    <form>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+              {{ 'Step 1: Select a group'|trans }}
+            </div>
+            <div class="panel-footer">
+                <select name="group">
+                {% for group in groups %}
+                        <option value="{{group.getId()}}">{{group.getName()}}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+              {{ 'Step 2: Select a forum'|trans }}
+            </div>
+            <div class="panel-footer">
+                <select name="forum">
+                {% for id, forum in forumList %}
+                        <option value="{{id}}">{{forum}}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+              {{ 'Step 3: Include Sub-forums ?'|trans }}
+            </div>
+            <div class="panel-footer">
+                <input type="checkbox">
+            </div>
+        </div>
+
+        <button class="btn btn-success">{{ 'Next'|trans }}</button>
+        
+    </form>
+{% endblock %}

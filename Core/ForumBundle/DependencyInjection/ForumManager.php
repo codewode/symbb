@@ -33,11 +33,12 @@ class ForumManager
      */
     protected $postFlagHandler;
     
-    public function __construct(SecurityContextInterface $securityContext, TopicFlagHandler $topicFlagHandler, PostFlagHandler $postFlagHandler)
+    public function __construct(SecurityContextInterface $securityContext, TopicFlagHandler $topicFlagHandler, PostFlagHandler $postFlagHandler, $em)
     {
         $this->securityContext  = $securityContext;
         $this->topicFlagHandler = $topicFlagHandler;
-        $this->postFlagHandler = $postFlagHandler;
+        $this->postFlagHandler  = $postFlagHandler;
+        $this->em               = $em;
     }
     
     public function getUser(){
@@ -57,6 +58,35 @@ class ForumManager
     {
         $posts = $this->postFlagHandler->findPostsByFlag('new', $parent, null, true, $limit);
         return $posts;
+    }
+    
+    
+    
+    public function getSelectList()
+    {
+        $repo = $this->em->getRepository('SymBBCoreForumBundle:Forum');
+        $list = array();
+
+        $entries = $repo->findBy(array('parent' => null), array('position' => 'ASC', 'name' => 'ASC'));
+        foreach ($entries as $entity) {
+            $list[$entity->getId()] = $entity;
+            $this->addChildsToArray($entity, $list);
+        }
+
+        return $list;
+
+    }
+
+    private function addChildsToArray($entity, &$array)
+    {
+        $childs = $entity->getChildren();
+        if (!empty($childs) && count($childs) > 0) {
+            foreach ($childs as $child) {
+                $array[$child->getId()] = $child;
+                $this->addChildsToArray($child, $array);
+            }
+        }
+
     }
     
 }

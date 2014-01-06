@@ -33,3 +33,7 @@ _symbbcoreforumbundle_forum_sort:
 _symbbcoreforumbundle_forum_remove:
     pattern:  /acp/forum/remove/{id}
     defaults: { _controller: SymBBCoreForumBundle:Acp:remove }
+    
+_symbbcoreuserbundle_group_access:
+    pattern:  /acp/access/group
+    defaults: { _controller: SymBBCoreUserBundle:AcpAccess:group }
