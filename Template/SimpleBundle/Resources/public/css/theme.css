@@ -22,6 +22,10 @@ root, body, html {
     float: left;
 }
 
+.symbb_body .alert {
+    margin-top: 15px;
+}
+
 .row {
     margin-left: 0;
     margin-right: 0;

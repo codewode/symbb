@@ -7,11 +7,14 @@
     {% trans %}Your post has been saved successfully. You will now be redirected ...{% endtrans %}
     <script type="text/javascript">
     <!--
-    window.location = "{{ path('_symbb_forum_topic_show', {'name': post.getTopic.getSeoName(), 'id': post.getTopic.getId()} ) }}?page=last#symbb_bottom";
+    var newLocation = "{{ path('_symbb_forum_topic_show', {'name': post.getTopic.getSeoName(), 'id': post.getTopic.getId()} ) }}?page=last#symbb_bottom";
+    setTimeout('window.location="'+newLocation+'"', 300);
     //–>
     </script>
 </div>
 {% endif %}
+
+{% if not saved %}
 <div id="symbb_bottom"></div>
 
 <div id="symbb_bbcode_editor" class="">
@@ -57,3 +60,4 @@
         {{ form_end(form) }}
     </div>
 </div>
+{% endif %}

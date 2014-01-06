@@ -87,6 +87,11 @@
             <div class="clear"></div>
 
             <div class="symbb_actions">
+                
+            {% if app.getUser.getSymbbType() == 'guest' %}
+                <div class="alert alert-info">{% trans %}You are not currently logged.{% endtrans %}</div>
+            {% endif %}
+                
             {% block symbb_actions %}
                    
             {% endblock %}
@@ -96,13 +101,12 @@
             
             <div class="symbb_body">
 
-                {% if app.getUser.getSymbbType() == 'guest' %}
-                    <div class="alert alert-info">{% trans %}You are not currently logged.{% endtrans %}</div>
-                {% endif %}
+                
 
                 {% block symbb_body %}
                     
                 {% endblock %}
+                <div class="clear"></div>
             </div>
             
             <div class="symbb_sidebar pull-right">
