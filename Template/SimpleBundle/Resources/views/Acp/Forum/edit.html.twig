@@ -11,9 +11,7 @@
             {{ 'Eintrag speichern'|trans }}
         </div>
         {{ form_row(form._token) }}
-        <table class="table">
         {{ form_restbootstrap(form) }}
-        </table>
         <input type="hidden" name="id" value="{{ entity.getId() }}" />
         <div class="panel-footer">
             <button onclick="submit();" type="button" class="btn btn-info">{{ 'save'|trans({}) }}</button>

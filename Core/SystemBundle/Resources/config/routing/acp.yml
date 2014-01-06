@@ -35,5 +35,5 @@ _symbbcoreforumbundle_forum_remove:
     defaults: { _controller: SymBBCoreForumBundle:Acp:remove }
     
 _symbbcoreuserbundle_group_access:
-    pattern:  /acp/access/group
+    pattern:  /acp/access/group/{step}
     defaults: { _controller: SymBBCoreUserBundle:AcpAccess:group }

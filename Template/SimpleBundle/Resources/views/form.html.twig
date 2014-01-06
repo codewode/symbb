@@ -65,16 +65,25 @@
     <textarea class="form-control" {{ block('widget_attributes') }}>{{ value }}</textarea>
 {% endspaceless %}
 {% endblock textarea_widget %}
+ 
     
-{% block button_widget %}
+{% block button_attributes %}
 {% spaceless %}
-    {% if label is empty %}
-        {% set label = name|humanize %}
-    {% endif %}
-    <button type="{{ type|default('button') }}" {{ block('button_attributes') }} class="btn btn-default">{{ label|trans({}, translation_domain) }}</button>
-{% endspaceless %}
-{% endblock button_widget %}
+    id="{{ id }}" name="{{ full_name }}"{% if disabled %} disabled="disabled"{% endif -%}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' btn btn-default')|trim}) %}
     
+    {%- for attrname, attrvalue in attr -%}
+        {{- " " -}}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ attrvalue|trans({}, translation_domain) }}"
+        {%- elseif attrvalue is sameas(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not sameas(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{% endspaceless %}
+{% endblock button_attributes %}
 
 <!-- BOOTSTRAP IMPLEMENTATION -->
     

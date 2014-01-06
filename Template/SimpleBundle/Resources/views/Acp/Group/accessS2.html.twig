@@ -1,0 +1,61 @@
+{% trans_default_domain "symbb_backend" %}
+
+{% extends getSymbbTemplateConfig('acp') ~ ':Acp:Layout/access.html.twig' %}
+
+{% form_theme form getSymbbTemplateConfig('acp') ~ '::form.html.twig' %}
+
+{% block javascripts %} 
+    {{ parent() }}
+    {% javascripts 
+        '@SymBBCoreForumBundle/Resources/public/js/tabs.js' filter='?yui_js'
+     %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block symbb_body %}
+    {{ form_startbootstrap(form) }}
+    {{ form_row(form._token) }}
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+              {{ 'Gruppe'|trans }}: {{ group.getName() }}
+            </div>
+            <div class="panel-footer">
+                {% for forum in forumList %}
+                <div class="page-header">
+                    <h2>{{forum.getName()}} <small>{% if subforum %}{{ 'and all subforums'|trans }}{% endif %}</small></h2>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <ul class="nav nav-tabs nav-justified">
+                            {% for key, permissionData in accessManager.getPrefixDataObject(forum) %}
+                            <li {% if loop.first %} class="active" {% endif %}><a class="symbb_tab" data-tab="{{ key }}">{{ key }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        {% set count = 0%}
+                        {% for key, permissionData in accessManager.getPrefixDataObject(forum) %}
+                            <div class="symbb_tabcontent" data-tab="{{ key }}">
+                                <div class="panel panel-default">
+                                    {% for permission in permissionData.permissions %}
+                                        <div>
+                                            <input type="checkbox" name="{{ key }}[]" id="permission-{{count}}" > <label for="permission-{{count}}">{{ permission }}</label>
+                                        </div>
+                                        {% set count = count + 1%}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {{ form_row(form.next) }}
+        {{ form_row(form.back) }}
+
+    {{ form_end(form) }}
+{% endblock %}

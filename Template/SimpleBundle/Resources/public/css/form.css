@@ -36,3 +36,13 @@ form .panel-heading .nav-tabs.nav-justified {
 form input[type="checkbox"] {
     margin-top: 10px;
 }
+
+form select {
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+form .btn {
+    float: left;
+    margin-right: 5px;
+}

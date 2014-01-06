@@ -232,4 +232,22 @@ class AccessManager {
     public function throwExceptionForLastCheck(){
         throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
     }
+    
+    public function getPrefixDataObject($object){
+        $prefixData = array();
+        foreach($this->aclManager as $aclManager){
+            $prefixes       = $aclManager->getPrefixes();
+            foreach($prefixes as $prefix){
+                if($aclManager->validateObject($prefix, $object)){
+                    $permissionMap = $aclManager->getPermissionMap($prefix);
+                    $class = new \ReflectionClass ($permissionMap);
+                    $constants = $class->getConstants ();
+                    foreach($constants as $constant){
+                        $prefixData[$prefix]['permissions'][] = $prefix.$constant;
+                    }
+                }
+            }
+        }
+        return $prefixData;
+    }
 }
