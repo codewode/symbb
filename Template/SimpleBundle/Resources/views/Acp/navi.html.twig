@@ -12,5 +12,10 @@
             </button>
             <a class="navbar-brand" href="#">SymBB</a>
         </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {{ knp_menu_render('SymBBCoreAdminBundle:Builder:mainMenu', {'template': getSymbbTemplateConfig('acp') ~ '::menu.html.twig'}) }}
+        </div><!-- /.navbar-collapse -->
     </div>
 </nav>
