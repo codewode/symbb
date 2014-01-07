@@ -12,6 +12,8 @@ namespace SymBB\Core\ForumBundle\Acl;
 
 use \SymBB\Core\ForumBundle\Acl\MaskBuilder\Forum\Basic as ForumMaskBuilder;
 use \SymBB\Core\ForumBundle\Acl\PermissionMap\Forum\Basic as ForumPermissionMap;
+use \SymBB\Core\ForumBundle\Acl\MaskBuilder\Forum\Mod as ForumModMaskBuilder;
+use \SymBB\Core\ForumBundle\Acl\PermissionMap\Forum\Mod as ForumModPermissionMap;
 use \SymBB\Core\ForumBundle\Acl\MaskBuilder\Post\Basic as PostMaskBuilder;
 use \SymBB\Core\ForumBundle\Acl\PermissionMap\Post\Basic as PostPermissionMap;
 use \SymBB\Core\ForumBundle\Acl\MaskBuilder\Topic\Basic as TopicMaskBuilder;
@@ -24,6 +26,7 @@ use \SymBB\Core\SystemBundle\Acl\AbstractManager;
 class Manager extends AbstractManager {
     
     const SYMBB_FORUM_BASIC =  'SYMBB_FORUM#';
+    const SYMBB_FORUM_MOD =  'SYMBB_FORUM_MOD#';
     const SYMBB_TOPIC_BASIC =  'SYMBB_TOPIC#';
     const SYMBB_POST_BASIC =  'SYMBB_POST#';
     
@@ -32,12 +35,14 @@ class Manager extends AbstractManager {
 
         $this->maskBuilders = array(
             self::SYMBB_FORUM_BASIC => new ForumMaskBuilder(),
+            self::SYMBB_FORUM_MOD => new ForumModMaskBuilder(),
             self::SYMBB_TOPIC_BASIC => new TopicMaskBuilder(),
             self::SYMBB_POST_BASIC => new PostMaskBuilder()
         );
         
         $this->permissionMaps = array(
             self::SYMBB_FORUM_BASIC => new ForumPermissionMap(),
+            self::SYMBB_FORUM_MOD => new ForumModPermissionMap(),
             self::SYMBB_TOPIC_BASIC => new TopicPermissionMap(),
             self::SYMBB_POST_BASIC => new PostPermissionMap()
         );
@@ -46,6 +51,8 @@ class Manager extends AbstractManager {
     
     public function validateObject($prefix, $object){
         if($prefix == self::SYMBB_FORUM_BASIC && $object instanceof Forum){
+            return true;
+        } else if($prefix == self::SYMBB_FORUM_MOD && $object instanceof Forum){
             return true;
         } else if($prefix == self::SYMBB_TOPIC_BASIC && $object instanceof Topic){
             return true;
@@ -72,7 +79,7 @@ class Manager extends AbstractManager {
         ){
             $checks[] = array(
                 'object' => $object->getTopic()->getForum(),
-                'permission' => self::SYMBB_FORUM_BASIC.ForumPermissionMap::PERMISSION_EDIT_POST
+                'permission' => self::SYMBB_FORUM_MOD.ForumModPermissionMap::PERMISSION_EDIT_POST
             );
         }
         
@@ -82,7 +89,7 @@ class Manager extends AbstractManager {
         ){
             $checks[] = array(
                 'object' => $object->getTopic()->getForum(),
-                'permission' => self::SYMBB_FORUM_BASIC.ForumPermissionMap::PERMISSION_DELETE_POST
+                'permission' => self::SYMBB_FORUM_MOD.ForumModPermissionMap::PERMISSION_DELETE_POST
             );
         }
         
@@ -92,7 +99,7 @@ class Manager extends AbstractManager {
         ){
             $checks[] = array(
                 'object' => $object->getTopic()->getForum(),
-                'permission' => self::SYMBB_FORUM_BASIC.ForumPermissionMap::PERMISSION_EDIT_TOPIC
+                'permission' => self::SYMBB_FORUM_MOD.ForumModPermissionMap::PERMISSION_EDIT_TOPIC
             );
         }
         
@@ -102,7 +109,7 @@ class Manager extends AbstractManager {
         ){
             $checks[] = array(
                 'object' => $object->getTopic()->getForum(),
-                'permission' => self::SYMBB_FORUM_BASIC.ForumPermissionMap::PERMISSION_DELETE_TOPIC
+                'permission' => self::SYMBB_FORUM_MOD.ForumModPermissionMap::PERMISSION_DELETE_TOPIC
             );
         }
         

@@ -62,8 +62,4 @@ class Basic extends \SymBB\Core\SystemBundle\Acl\AbstractPermissionMap {
         );
     }
     
-    public function getMasks($permission, $object = null) {
-        return parent::getMasks($permission, $object);
-    }
-    
 }

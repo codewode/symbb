@@ -16,65 +16,20 @@ class Basic extends \SymBB\Core\SystemBundle\Acl\AbstractPermissionMap {
     const PERMISSION_VIEW        = 'VIEW';
     const PERMISSION_CREATE_TOPIC= 'CREATE_TOPIC';
     const PERMISSION_CREATE_POST = 'CREATE_POST';
-    const PERMISSION_EDIT_TOPIC  = 'EDIT_TOPIC';
-    const PERMISSION_EDIT_POST   = 'EDIT_POST';
-    const PERMISSION_DELETE_TOPIC= 'DELETE_TOPIC';
-    const PERMISSION_DELETE_POST = 'DELETE_POST';
-    const PERMISSION_MASTER      = 'MASTER';
-    const PERMISSION_OWNER       = 'OWNER';
     
     public function __construct()
     {
         $this->map = array(
             self::PERMISSION_VIEW => array(
-                MaskBuilder::MASK_VIEW,
-                MaskBuilder::MASK_MASTER,
-                MaskBuilder::MASK_OWNER,
+                MaskBuilder::MASK_VIEW
             ),
 
             self::PERMISSION_CREATE_TOPIC => array(
-                MaskBuilder::CODE_CREATE_TOPIC,
-                MaskBuilder::MASK_MASTER,
-                MaskBuilder::MASK_OWNER,
+                MaskBuilder::MASK_CREATE_TOPIC
             ),
 
             self::PERMISSION_CREATE_POST => array(
-                MaskBuilder::MASK_CREATE_POST,
-                MaskBuilder::MASK_MASTER,
-                MaskBuilder::MASK_OWNER,
-            ),
-
-            self::PERMISSION_EDIT_TOPIC => array(
-                MaskBuilder::MASK_EDIT_TOPIC,
-                MaskBuilder::MASK_MASTER,
-                MaskBuilder::MASK_OWNER,
-            ),
-
-            self::PERMISSION_EDIT_POST => array(
-                MaskBuilder::MASK_EDIT_POST,
-                MaskBuilder::MASK_MASTER,
-                MaskBuilder::MASK_OWNER,
-            ),
-
-            self::PERMISSION_DELETE_TOPIC => array(
-                MaskBuilder::MASK_DELETE_TOPIC,
-                MaskBuilder::MASK_MASTER,
-                MaskBuilder::MASK_OWNER,
-            ),
-
-            self::PERMISSION_DELETE_POST => array(
-                MaskBuilder::MASK_DELETE_POST,
-                MaskBuilder::MASK_MASTER,
-                MaskBuilder::MASK_OWNER,
-            ),
-
-            self::PERMISSION_MASTER => array(
-                MaskBuilder::MASK_MASTER,
-                MaskBuilder::MASK_OWNER,
-            ),
-
-            self::PERMISSION_OWNER => array(
-                MaskBuilder::MASK_OWNER,
+                MaskBuilder::MASK_CREATE_POST
             ),
 
         );

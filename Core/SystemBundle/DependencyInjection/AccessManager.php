@@ -87,7 +87,7 @@ class AccessManager {
      * @throws Exception
      */
     public function grantAccess($masks, $object, $identity = null){
-        
+
         $objects = array();
         foreach((array)$masks as $mask){
             foreach($this->aclManager as $aclManager){
@@ -108,6 +108,7 @@ class AccessManager {
                 }
             }
         }
+
 
         foreach($objects as $objectData){
             
@@ -137,12 +138,54 @@ class AccessManager {
             foreach((array)$masks as $currMask){
                 $builder->add($currMask);
             }
+
             $finalMask = $builder->get();
             $acl->insertObjectAce($securityIdentity, $finalMask);
 
             $this->aclProvider->updateAcl($acl);
         }
         
+    }
+    
+    public function removeAllAccess($object, $identity){
+        
+        if($identity instanceof UserInterface){
+            $securityIdentity   = $this->getUserIdentity($identity);
+        } else if($identity instanceof \SymBB\Core\UserBundle\Entity\Group){
+            $securityIdentity   = $this->getUserGroupIdentity($identity);
+        } else {
+            throw new Exception('Unknown Security Indentity for '.ClassUtils::getRealClass($identity));
+        }
+        
+        foreach($this->aclManager as $aclManager){
+            
+            $prefixes = $aclManager->getPrefixes();
+            foreach($prefixes as $prefix){
+                $domainObject       = $aclManager->createDomainObject($prefix, $object);
+                if(is_object($domainObject)){
+                    $objectIdentity     = ObjectIdentity::fromDomainObject($domainObject);
+                    try {
+                        $acl            = $this->aclProvider->findAcl($objectIdentity);
+
+                        // For some reason we need to use an index to update an 
+                        // ACE, so we need to use an index, so start looping
+                        foreach($acl->getObjectAces() as $index => $ace) {
+                            $aceSecurityId = $ace->getSecurityIdentity();
+                            if($aceSecurityId ->equals($securityIdentity)) {
+                                try {
+                                    $acl->deleteObjectAce($index); 
+                                }
+                                catch (\OutOfBoundsException $exc) {
+                                }               }
+                        }
+                        
+                        $this->aclProvider->updateAcl($acl);
+                        
+                    } catch (AclNotFoundException $exc) {
+                    }
+                }
+            }
+        }
     }
     
     /**
