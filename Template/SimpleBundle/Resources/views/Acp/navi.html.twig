@@ -12,14 +12,5 @@
             </button>
             <a class="navbar-brand" href="#">SymBB</a>
         </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            {{ knp_menu_render('SymBBCoreAdminBundle:Builder:mainMenu', {'template': getSymbbTemplateConfig('acp') ~ '::menu.html.twig'}) }}
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ path('_symbb_forum_index') }}">{% trans %}show Forum{% endtrans %}</a></li>
-                <li><a href="{{ path('fos_user_security_logout') }}">{% trans %}Logout{% endtrans %}</a></li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
     </div>
 </nav>
