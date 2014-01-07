@@ -31,10 +31,6 @@
     color: #2E5F75;
 }
 
-.symbb_header_bg .nameBlock .description{
-    color: #FFF !important;
-}
-
 .symbb_list .row.category a, 
 .symbb_list .row a {
     cursor: pointer;
