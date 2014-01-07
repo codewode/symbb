@@ -10,9 +10,13 @@ root, body, html {
 
 .symbb_container {
     width: 95%;
-    margin: 80px auto;
-    border:1px solid #FFF;
+    border: 1px solid #FFF;
     background-color: #FFF;
+    position: relative;
+    top: 80px;
+    left: 50%;
+    margin-left: -47.5%;
+    min-height: 80%;
 }
 
 .symbb_body {
