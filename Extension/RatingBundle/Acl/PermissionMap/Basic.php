@@ -9,10 +9,9 @@
 
 namespace SymBB\Extension\RatingBundle\Acl\PermissionMap;
 
-use \Symfony\Component\Security\Acl\Permission\BasicPermissionMap;
 use SymBB\Extension\RatingBundle\Acl\MaskBuilder\Basic as MaskBuilder;
 
-class Basic extends BasicPermissionMap {
+class Basic extends \SymBB\Core\SystemBundle\Acl\AbstractPermissionMap {
     
     const PERMISSION_VIEW        = 'VIEW';
     const PERMISSION_EDIT        = 'EDIT';

@@ -1,0 +1,15 @@
+# sections
+SYMBB_FORUM#: Forum
+SYMBB_FORUM_RATING#: Bewertung
+
+# access list
+SYMBB_FORUM#VIEW: Forum Betrachten
+SYMBB_FORUM#CREATE_TOPIC: Themen erzeugen
+SYMBB_FORUM#CREATE_POST: Beiträge erzeugen
+SYMBB_FORUM#EDIT_TOPIC: Themen editieren
+SYMBB_FORUM#EDIT_POST: Beiträge editieren
+SYMBB_FORUM#DELETE_TOPIC: Themen löschen
+SYMBB_FORUM#DELETE_POST: Beiträge löschen
+
+SYMBB_FORUM_RATING#VIEW: Bewertungen einsehen
+SYMBB_FORUM_RATING#EDIT: Bewertung abgeben

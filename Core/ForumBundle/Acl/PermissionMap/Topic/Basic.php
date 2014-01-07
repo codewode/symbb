@@ -9,10 +9,9 @@
 
 namespace SymBB\Core\ForumBundle\Acl\PermissionMap\Topic;
 
-use \Symfony\Component\Security\Acl\Permission\BasicPermissionMap;
 use SymBB\Core\ForumBundle\Acl\MaskBuilder\Post\Basic as MaskBuilder;
 
-class Basic extends BasicPermissionMap {
+class Basic extends \SymBB\Core\SystemBundle\Acl\AbstractPermissionMap {
     
     const PERMISSION_VIEW        = 'VIEW';
     const PERMISSION_EDIT        = 'EDIT';

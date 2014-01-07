@@ -16,6 +16,7 @@
 {% block symbb_body %}
     {{ form_startbootstrap(form) }}
     {{ form_row(form._token) }}
+    {{ form_row(form.subforum) }}
 
         <div class="panel panel-default">
             <div class="panel-body">
@@ -30,18 +31,18 @@
                     <div class="panel-heading">
                         <ul class="nav nav-tabs nav-justified">
                             {% for key, permissionData in accessManager.getPrefixDataObject(forum) %}
-                            <li {% if loop.first %} class="active" {% endif %}><a class="symbb_tab" data-tab="{{ key }}">{{ key }}</a></li>
+                            <li {% if loop.first %} class="active" {% endif %}><a class="symbb_tab" data-tab="{{ key }}" data-tabgroup="{{ forum.getId() }}">{{ key|trans({}, 'symbb_access') }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>
                     <div class="panel-body">
                         {% set count = 0%}
                         {% for key, permissionData in accessManager.getPrefixDataObject(forum) %}
-                            <div class="symbb_tabcontent" data-tab="{{ key }}">
+                            <div class="symbb_tabcontent" data-tab="{{ key }}" data-tabgroup="{{ forum.getId() }}">
                                 <div class="panel panel-default">
                                     {% for permission in permissionData.permissions %}
                                         <div>
-                                            <input type="checkbox" name="{{ key }}[]" id="permission-{{count}}" > <label for="permission-{{count}}">{{ permission }}</label>
+                                            <input {% if hasSymbbAccess(permission, forum, group) %} checked="checked" {% endif %} type="checkbox" value="1" name="access[{{ forum.getId() }}][{{ permission }}]" id="permission-{{count}}" > <label for="permission-{{count}}">{{ permission|trans({}, 'symbb_access') }}</label>
                                         </div>
                                         {% set count = count + 1%}
                                     {% endfor %}
@@ -54,7 +55,7 @@
             </div>
         </div>
 
-        {{ form_row(form.next) }}
+        {{ form_row(form.save) }}
         {{ form_row(form.back) }}
 
     {{ form_end(form) }}

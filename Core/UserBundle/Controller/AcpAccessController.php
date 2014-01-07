@@ -67,13 +67,21 @@ class AcpAccessController extends Controller
         
         if(is_array($data['forum']) && !empty($data['forum']) && $groupId > 0){
             
+            
+            if(isset($data['subforum']) && $data['subforum']){
+               $subforum = true; 
+            } else {
+                $subforum = false;
+            }
+            
             $group = $this->get('doctrine')->getRepository('SymBBCoreUserBundle:Group', 'symbb')
                 ->find($groupId);
             
             $defaultData = array();
             $form = $this->get('form.factory')->createNamedBuilder('step2', 'form', $defaultData, array('translation_domain' => 'symbb_backend'))
-                ->add('next', 'submit', array('attr' => array('class' => 'btn-success')))
+                ->add('save', 'submit', array('attr' => array('class' => 'btn-success')))
                 ->add('back', 'submit', array('attr' => array('class' => 'btn-danger')))
+                ->add('subforum', 'hidden', array('data' => (int)$subforum))
                 ->getForm();
 
             $form->handleRequest($this->get('request'));
@@ -89,11 +97,6 @@ class AcpAccessController extends Controller
             $forumList = $this->get('doctrine')->getRepository('SymBBCoreForumBundle:Forum', 'symbb')
                 ->findBy(array('id' => $data['forum']));
 
-            if(isset($data['subforum']) && $data['subforum']){
-               $subforum = true; 
-            } else {
-                $subforum = false;
-            }
             
 
             return $this->render(

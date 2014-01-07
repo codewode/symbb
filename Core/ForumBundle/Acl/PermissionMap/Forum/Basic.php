@@ -9,11 +9,9 @@
 
 namespace SymBB\Core\ForumBundle\Acl\PermissionMap\Forum;
 
-use \Symfony\Component\Security\Acl\Permission\BasicPermissionMap;
 use \SymBB\Core\ForumBundle\Acl\MaskBuilder\Forum\Basic as MaskBuilder;
-use \SymBB\Core\ForumBundle\Acl\Manager;
 
-class Basic extends BasicPermissionMap {
+class Basic extends \SymBB\Core\SystemBundle\Acl\AbstractPermissionMap {
     
     const PERMISSION_VIEW        = 'VIEW';
     const PERMISSION_CREATE_TOPIC= 'CREATE_TOPIC';
@@ -79,14 +77,6 @@ class Basic extends BasicPermissionMap {
                 MaskBuilder::MASK_OWNER,
             ),
 
-        );
-    }
-    
-    public function getParentMap(){
-        return array(
-            self::PERMISSION_CREATE_TOPIC => array(
-                Manager::SYMBB_POST_BASIC
-            )
         );
     }
     

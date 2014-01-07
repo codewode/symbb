@@ -168,8 +168,10 @@ class AccessManager {
             
         } else if($indentityObject instanceof \SymBB\Core\UserBundle\Entity\Group){
             $indentity          = $this->getUserGroupIdentity($indentityObject);
+        } else {
+            return false;
         }
-        
+
         foreach($this->aclManager as $aclManager){
             $checks             = $aclManager->createAccessChecks($permission, $object, $indentity);
             $this->accessChecks = array_merge($this->accessChecks, $checks);
@@ -206,8 +208,10 @@ class AccessManager {
             
             try {
                 $masks              = $permissionMap->getMasks($permission, $object);
-                $acl                = $this->aclProvider->findAcl($objectIdentity);
-                $access             = $acl->isGranted($masks, array($indentity)); 
+                if(!empty($masks)){
+                    $acl                = $this->aclProvider->findAcl($objectIdentity);
+                    $access             = $acl->isGranted($masks, array($indentity));
+                }
             } catch (NoAceFoundException $exc) {
                 //$access             = false;
             } catch (AclNotFoundException $exc) {
@@ -243,7 +247,9 @@ class AccessManager {
                     $class = new \ReflectionClass ($permissionMap);
                     $constants = $class->getConstants ();
                     foreach($constants as $constant){
-                        $prefixData[$prefix]['permissions'][] = $prefix.$constant;
+                        if($constant !== 'MASTER' && $constant !== 'OWNER'){
+                            $prefixData[$prefix]['permissions'][] = $prefix.$constant;
+                        }
                     }
                 }
             }
