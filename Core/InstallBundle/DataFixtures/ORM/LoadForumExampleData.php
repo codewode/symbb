@@ -184,33 +184,75 @@ class LoadForumExampleData extends AbstractFixture implements OrderedFixtureInte
         
         // ADMIN ACCESS
         $accessService->grantAccess(array(
-            'SYMBB_FORUM#MASTER',
-            'SYMBB_FORUM_RATING#MASTER'
+            'SYMBB_FORUM#VIEW',
+            'SYMBB_FORUM#CREATE_TOPIC',
+            'SYMBB_FORUM#CREATE_POST',
+            'SYMBB_FORUM_MOD#EDIT_TOPIC',
+            'SYMBB_FORUM_MOD#EDIT_POST',
+            'SYMBB_FORUM_MOD#DELETE_TOPIC',
+            'SYMBB_FORUM_MOD#DELETE_POST',
+            'SYMBB_FORUM_RATING#VIEW',
+            'SYMBB_FORUM_RATING#EDIT'
         ), $forum, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-            'SYMBB_FORUM#MASTER',
-            'SYMBB_FORUM_RATING#MASTER'
+            'SYMBB_FORUM#VIEW',
+            'SYMBB_FORUM#CREATE_TOPIC',
+            'SYMBB_FORUM#CREATE_POST',
+            'SYMBB_FORUM_MOD#EDIT_TOPIC',
+            'SYMBB_FORUM_MOD#EDIT_POST',
+            'SYMBB_FORUM_MOD#DELETE_TOPIC',
+            'SYMBB_FORUM_MOD#DELETE_POST',
+            'SYMBB_FORUM_RATING#VIEW',
+            'SYMBB_FORUM_RATING#EDIT'
         ), $forum2, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-            'SYMBB_FORUM#MASTER',
-            'SYMBB_FORUM_RATING#MASTER'
+            'SYMBB_FORUM#VIEW',
+            'SYMBB_FORUM#CREATE_TOPIC',
+            'SYMBB_FORUM#CREATE_POST',
+            'SYMBB_FORUM_MOD#EDIT_TOPIC',
+            'SYMBB_FORUM_MOD#EDIT_POST',
+            'SYMBB_FORUM_MOD#DELETE_TOPIC',
+            'SYMBB_FORUM_MOD#DELETE_POST',
+            'SYMBB_FORUM_RATING#VIEW',
+            'SYMBB_FORUM_RATING#EDIT'
         ), $forum3, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-            'SYMBB_FORUM#MASTER',
-            'SYMBB_FORUM_RATING#MASTER'
+            'SYMBB_FORUM#VIEW',
+            'SYMBB_FORUM#CREATE_TOPIC',
+            'SYMBB_FORUM#CREATE_POST',
+            'SYMBB_FORUM_MOD#EDIT_TOPIC',
+            'SYMBB_FORUM_MOD#EDIT_POST',
+            'SYMBB_FORUM_MOD#DELETE_TOPIC',
+            'SYMBB_FORUM_MOD#DELETE_POST',
+            'SYMBB_FORUM_RATING#VIEW',
+            'SYMBB_FORUM_RATING#EDIT'
         ), $forum4, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-            'SYMBB_FORUM#MASTER',
-            'SYMBB_FORUM_RATING#MASTER'
+            'SYMBB_FORUM#VIEW',
+            'SYMBB_FORUM#CREATE_TOPIC',
+            'SYMBB_FORUM#CREATE_POST',
+            'SYMBB_FORUM_MOD#EDIT_TOPIC',
+            'SYMBB_FORUM_MOD#EDIT_POST',
+            'SYMBB_FORUM_MOD#DELETE_TOPIC',
+            'SYMBB_FORUM_MOD#DELETE_POST',
+            'SYMBB_FORUM_RATING#VIEW',
+            'SYMBB_FORUM_RATING#EDIT'
         ), $forum5, $this->getReference('admin-group'));
         
         $accessService->grantAccess(array(
-            'SYMBB_FORUM#MASTER',
-            'SYMBB_FORUM_RATING#MASTER'
+            'SYMBB_FORUM#VIEW',
+            'SYMBB_FORUM#CREATE_TOPIC',
+            'SYMBB_FORUM#CREATE_POST',
+            'SYMBB_FORUM_MOD#EDIT_TOPIC',
+            'SYMBB_FORUM_MOD#EDIT_POST',
+            'SYMBB_FORUM_MOD#DELETE_TOPIC',
+            'SYMBB_FORUM_MOD#DELETE_POST',
+            'SYMBB_FORUM_RATING#VIEW',
+            'SYMBB_FORUM_RATING#EDIT'
         ), $forum6, $this->getReference('admin-group'));
         
     }
