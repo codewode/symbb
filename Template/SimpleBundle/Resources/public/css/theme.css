@@ -6,6 +6,7 @@ root, body, html {
     width: 100%;
     height: 100%;
     background-color: #254C73;
+    /**
     background:
     radial-gradient(#1c1c1c 15%, transparent 16%) 0 0,
     radial-gradient(#1c1c1c 15%, transparent 16%) 8px 8px,
@@ -13,6 +14,7 @@ root, body, html {
     radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
     background-color:#282828;
     background-size:15px 15px;
+    */
 }
 
 .symbb_container {
