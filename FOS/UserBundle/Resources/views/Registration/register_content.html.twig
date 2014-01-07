@@ -1,0 +1,13 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% form_theme form 'SymBBTemplateSimpleBundle::form.html.twig' %}
+
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" role="form" class="form-horizontal fos_user_registration_register">
+    {{ form_widget(form.email) }}
+        {{ form_widget(form.username) }}
+        {{ form_widget(form.plainPassword.first) }}
+        {{ form_widget(form.plainPassword.second) }}
+    {{ form_rest(form) }}
+        <br/>
+        <input type="submit" id="_submit" name="_submit" value="{{ 'registration.submit'|trans }}" class="btn btn-lg btn-primary btn-block" />
+</form>

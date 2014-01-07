@@ -98,7 +98,9 @@ class TopicFlagHandler extends \SymBB\Core\ForumBundle\DependencyInjection\Abstr
                $user->getSymbbType() === 'user'
             ){
 
-                if($element instanceof \SymBB\Core\ForumBundle\Entity\Topic){
+                $elementClass = \Symfony\Component\Security\Core\Util\ClassUtils::getRealClass($element);
+                
+                if($elementClass == 'SymBB\Core\ForumBundle\Entity\Topic'){
 
                     if($limit && count($this->foundTopics) >= $limit){
                         return $this->foundTopics;
@@ -118,7 +120,7 @@ class TopicFlagHandler extends \SymBB\Core\ForumBundle\DependencyInjection\Abstr
                         }
                     }
 
-                } else if($element instanceof \SymBB\Core\ForumBundle\Entity\Forum){
+                } else if($elementClass == 'SymBB\Core\ForumBundle\Entity\Forum'){
 
                     $topics = $element->getTopics();
 
@@ -137,8 +139,13 @@ class TopicFlagHandler extends \SymBB\Core\ForumBundle\DependencyInjection\Abstr
                         $this->doFindTopicsByFlag($flag, $child, $user, $objects, $limit);
                     }
 
+                }  else if($elementClass == 'SymBB\Core\ForumBundle\Entity\Post'){
+
+                    $topic = $element->getTopic();
+                    $this->doFindTopicsByFlag($flag, $topic, $user, $objects, $limit);
+                    
                 } else if(is_object($element)) {
-                    throw new \Exception('findTopicsByFlag don´t know the object ('.get_class($element).')');
+                    throw new \Exception('findTopicsByFlag don´t know the object ('.$elementClass.')');
                 }
             }     
         }

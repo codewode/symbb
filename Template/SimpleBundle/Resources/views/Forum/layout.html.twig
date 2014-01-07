@@ -1,6 +1,6 @@
 {% trans_default_domain "symbb_frontend" %}
 
-{% extends getSymbbTemplateConfig('forum') ~ '::layout.html.twig' %}
+{% extends getSymbbTemplateConfig('forum') ~ '::layoutWithSidebar.html.twig' %}
 
 {% import "SymBBTemplateSimpleBundle:Forum:forumMacros.html.twig" as symbBBForumMacro %}
 {% import "SymBBTemplateSimpleBundle:Topic:topicMacros.html.twig" as symbBBForumTopicMacro %}
@@ -30,8 +30,5 @@
     {% include getSymbbTemplateConfig('forum') ~ ':Forum:sidebar.html.twig' with {'forum': null} %}
     
 {% endblock %}    
-
-{% block symbb_body %}
     
-{% endblock %}
-
+   

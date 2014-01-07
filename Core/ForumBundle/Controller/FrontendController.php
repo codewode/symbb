@@ -69,12 +69,7 @@ class FrontendController  extends Controller
         
         $posts = $this->get('symbb.core.forum.manager')->findNewestPosts(null, 50);
         
-        $pagination = new \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination(array());
-        $pagination->setItems($posts);
-        $pagination->setItemNumberPerPage(10);
-        $pagination->setTemplate($this->getTemplateBundleName('forum').':Pagination:pagination.html.twig');
-        
-        return $this->render($this->getTemplateBundleName('forum').':Forum:newest.html.twig', array('topicPagination' => $pagination));
+        return $this->render($this->getTemplateBundleName('forum').':Forum:newest.html.twig', array('posts' => $posts));
     }
     
     public function ignoreAction($forum){

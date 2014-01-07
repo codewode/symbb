@@ -5,3 +5,6 @@ fos_user:
     model_manager_name: symbb
     group:
         group_class: SymBB\Core\UserBundle\Entity\Group
+    registration:
+        form:
+            type: symbb_fos_user_registration

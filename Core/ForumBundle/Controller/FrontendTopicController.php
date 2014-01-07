@@ -133,8 +133,7 @@ class FrontendTopicController  extends Controller
 
         $form       = null;
         $saved      = $this->handleTopicRequest($form, $forum, $topic);
-
-        $params = array('forum' => $forum, 'topic' => $topic);
+        $params     = array('forum' => $forum, 'topic' => $topic);
         $params['form']     = $form->createView();
         $params['saved']    = $saved;
         

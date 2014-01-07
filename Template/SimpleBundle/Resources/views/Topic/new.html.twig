@@ -31,16 +31,6 @@
 {% block symbb_body %}
 
 {% if not saved %}
-<div class="alert alert-success">
-    {% trans %}Your post has been saved successfully. You will now be redirected ...{% endtrans %}
-    <script type="text/javascript">
-    <!--
-    var newLocation = "{{ path('_symbb_forum_topic_show', {'name': topic.getSeoName(), 'id': topic.getId()} ) }}";
-    setTimeout('window.location="'+newLocation+'"', 300);
-    //–>
-    </script>
-</div>
-{% else %}
 <div id="symbb_bottom"></div>
 <div class="symbb_topic ">
 

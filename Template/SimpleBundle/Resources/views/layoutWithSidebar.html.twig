@@ -1,0 +1,25 @@
+
+{% extends getSymbbTemplateConfig('forum') ~ '::layout.html.twig' %}
+
+{% block symbb_body_container %}
+
+<div class="row">
+    <div class="symbb_body col-md-10">
+        {% block symbb_body %}
+
+        {% endblock %}
+        <div class="clear"></div>
+    </div>
+
+    <div class="symbb_sidebar col-md-2">
+        <div class="padding10">
+            {% block symbb_sidebar %}
+
+            {% endblock %}
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+{% endblock %}

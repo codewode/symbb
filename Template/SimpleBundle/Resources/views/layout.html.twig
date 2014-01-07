@@ -99,25 +99,11 @@
             
             <div class="clear"></div>
             
-            <div class="symbb_body">
-
-                
-
+            {% block symbb_body_container %}
                 {% block symbb_body %}
-                    
+
                 {% endblock %}
-                <div class="clear"></div>
-            </div>
-            
-            <div class="symbb_sidebar pull-right">
-                <div class="padding10">
-                    {% block symbb_sidebar %}
-                   
-                    {% endblock %}
-                    <div class="clear"></div>
-                </div>
-            </div>
-            <div class="clear"></div>
+            {% endblock %}
         </div>
     </body>
 </html>
