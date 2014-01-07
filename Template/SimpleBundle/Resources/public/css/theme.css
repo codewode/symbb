@@ -23,13 +23,15 @@ root, body, html {
     top: 80px;
     left: 50%;
     margin-left: -47.5%;
+
+}
+
+.symbb_container .row {
+    padding: 10px;
 }
 
 .symbb_body {
-    padding: 10px;
-    padding-top: 0px;
-    width: 80%;
-    float: left;
+    padding: 0px;
 }
 
 .symbb_body .alert {
@@ -144,10 +146,6 @@ root, body, html {
 
 .symbb_navi .navbar-collapse {
     padding-left: 0px;
-}
-
-.symbb_sidebar {
-    width: 20%;
 }
 
 .symbb_sidebar .padding10 {

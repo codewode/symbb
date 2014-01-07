@@ -10,6 +10,7 @@ $(document).ready(function() {
         if($(tab).data('tabgroup')){
             tabgroupKey = $(tab).data('tabgroup');
         }
+
         groups[groups.length] = tabgroupKey;
         if($(tab).parent().hasClass('active')){
             activeTab[tabgroupKey] = tabKey;
@@ -25,7 +26,7 @@ $(document).ready(function() {
         });
     });
     
-    $(groups).each(function(groupkey){
+    $(groups).each(function(key, groupkey){
         symBBToggleTab(activeTab[groupkey], groupkey);
     });
     

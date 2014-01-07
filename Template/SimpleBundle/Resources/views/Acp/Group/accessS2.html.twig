@@ -7,7 +7,7 @@
 {% block javascripts %} 
     {{ parent() }}
     {% javascripts 
-        '@SymBBCoreForumBundle/Resources/public/js/tabs.js' filter='?yui_js'
+        '@SymBBTemplateSimpleBundle/Resources/public/js/tabs.js' filter='?yui_js'
      %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -24,11 +24,9 @@
             </div>
             <div class="panel-footer">
                 {% for forum in forumList %}
-                <div class="page-header">
-                    <h2>{{forum.getName()}} <small>{% if subforum %}{{ 'and all subforums'|trans }}{% endif %}</small></h2>
-                </div>
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading">
+                        <h2>{{forum.getName()}} <small>{% if subforum %}{{ 'and all subforums'|trans }}{% endif %}</small></h2>
                         <ul class="nav nav-tabs nav-justified">
                             {% for key, permissionData in accessManager.getPrefixDataObject(forum) %}
                             <li {% if loop.first %} class="active" {% endif %}><a class="symbb_tab" data-tab="{{ key }}" data-tabgroup="{{ forum.getId() }}">{{ key|trans({}, 'symbb_access') }}</a></li>
@@ -39,7 +37,7 @@
                         {% set count = 0%}
                         {% for key, permissionData in accessManager.getPrefixDataObject(forum) %}
                             <div class="symbb_tabcontent" data-tab="{{ key }}" data-tabgroup="{{ forum.getId() }}">
-                                <div class="panel panel-default">
+                                <div class="panel">
                                     {% for permission in permissionData.permissions %}
                                         <div>
                                             <input {% if hasSymbbAccess(permission, forum, group) %} checked="checked" {% endif %} type="checkbox" value="1" name="access_{{ forum.getId() }}[{{ permission }}]" id="permission-{{count}}" > <label for="permission-{{count}}">{{ permission|trans({}, 'symbb_access') }}</label>

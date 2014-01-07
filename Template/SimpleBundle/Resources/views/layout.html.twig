@@ -100,9 +100,14 @@
             <div class="clear"></div>
             
             {% block symbb_body_container %}
-                {% block symbb_body %}
+            <div class="row">
+                <div class="symbb_body col-md-12">
+                    {% block symbb_body %}
 
-                {% endblock %}
+                    {% endblock %}
+                    <div class="clear"></div>
+                </div>
+            </div>
             {% endblock %}
         </div>
     </body>

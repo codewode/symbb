@@ -39,7 +39,7 @@
                     <div class="user">{% trans with {'%user%': post.getAuthor().getUsername(), '%date%': post.getCreated().format('D d.M Y'), '%time%': post.getCreated().format('H:i')} %}by %user% on %date% at %time%{% endtrans %}</div>
                 </a>
                 <div>
-                    <quote>{{post.getText()|bbcode_clean|slice(0, 50)|raw}}</quote>
+                    <blockquote>{{post.getText()|bbcode_clean|slice(0, 50)|raw}}</blockquote>
                 </div>
             </div>
         </div>
