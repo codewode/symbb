@@ -33,7 +33,7 @@ class SaveListener {
         if(!empty($surveyQuestion) && !empty($surveyAnswers)) {
             
             $repo = $this->em->getRepository('SymBBExtensionSurveyBundle:Survey');
-            $survey = $repo->findOneBy(array('post' => $post));
+            $survey = $repo->findOneBy(array('post' => $post->getId()));
             
             if (!$survey) {
                 $survey = new \SymBB\Extension\SurveyBundle\Entity\Survey();
