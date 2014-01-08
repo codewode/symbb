@@ -1,27 +1,27 @@
 # SymBB Forum System
 
 
-Genauere Infos und Anleitungen findet ihr hier:
+More detailed information and instructions can be found here (currently only in German):
 
 https://github.com/seyon/symbb/wiki/
 
-Für eine "fertige" Symfony Version könnt ihr die Sandbox nutzen:
+For a "finished" Symfony version you can use the Sandbox :
 
 https://github.com/seyon/symbb_sandbox
 
-# Demo
+# demo
 
-Eine Demo der aktuellen Funktionen findet ihr hier:
+A demo of the latest features can be found here :
 
 http://symbb.de/
 
-solange keine Beta feststeht dient die Seite als Demo. Die Daten werden regelmäsig resettet.
-Zudem kann die Version leicht hinter der aktuellen Version hinterherhinken da ich Sie nur update wenn die Dev. einigernmassen Stabil ist.
+As long as no beta is , the page serves as a demo. The data to be reset regularly provide .ç
+In addition, the version can easily lag behind the current version since I only update when the Dev is reasonably stable .
 
-# Initalisieren der Beispieldaten solange es keinen Installer gibt
+# Init the sample data as long as there is no installer
 
 
-Mit folgendem Befehlt könnt ihr die Beispieldaten importieren 
+With the following command should you can import the sample data
 
  php app/console doctrine:schema:drop --force --full-database --em=symbb --env=dev
 
@@ -29,5 +29,6 @@ Mit folgendem Befehlt könnt ihr die Beispieldaten importieren
 
  php app/console doctrine:fixtures:load --em=symbb --env=dev
 
-Bitte beachtet das --env eure Wunsch umgebung sein muss. Aktuell haben prod, dev sowie test unterschiedliche Datenbank Prefixe damit nicht ungewollt Daten gelöscht werden
-Zudem ist zu beachten das die User und Group Daten UNBEDINGT benötigt werden. Die Foren Fixturen sind optional.
+
+Please note that - your request must be env environment . Unwanted data will be deleted currently have prod, dev and not test different database prefixes so
+Also note that the User and Group Data MUST be required. The forums fixtures are optional.
