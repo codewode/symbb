@@ -147,6 +147,12 @@ class FrontendTopicController  extends \SymBB\Core\SystemBundle\Controller\Abstr
         $forum      = $topic->getForum();
         $em->remove($topic);
         $em->flush();
+        
+        $this->get('session')->getFlashBag()->add(
+            'success',
+            $this->get('translator')->trans('Your post has been deleted successfully. You will now be redirected ...', array(), 'symbb_frontend')
+        );
+        
         return $this->render($this->getTemplateBundleName('forum').':Topic:delete.html.twig', array('forum' => $forum));
     }
     
@@ -232,6 +238,11 @@ class FrontendTopicController  extends \SymBB\Core\SystemBundle\Controller\Abstr
                 $em->persist($post);
             }
             $em->flush();
+            
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('Your post has been saved successfully You will now be redirected ...', array(), 'symbb_frontend')
+            );
             
             $accessService  = $this->get('symbb.core.access.manager');
             $accessService->grantAccess('SYMBB_TOPIC#OWNER', $topic);

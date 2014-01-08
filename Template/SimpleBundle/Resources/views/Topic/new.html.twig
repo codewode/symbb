@@ -16,15 +16,14 @@
 
 {% block symbb_actions %}
     {% if saved %}
-    <div class="alert alert-success">
-        {% trans %}Your post has been saved successfully. You will now be redirected ...{% endtrans %}
-        <script type="text/javascript">
-        <!--
-        var newLocation = "{{ path('symbb_forum_topic_show', {'name': topic.getSeoName(), 'id': topic.getId()} ) }}";
-        setTimeout('window.location="'+newLocation+'"', 300);
-        //–>
-        </script>
-    </div>
+
+    <script type="text/javascript">
+    <!--
+    var newLocation = "{{ path('symbb_forum_topic_show', {'name': topic.getSeoName(), 'id': topic.getId()} ) }}";
+    setTimeout('window.location="'+newLocation+'"', 300);
+    //–>
+    </script>
+
     {% endif %}
 {% endblock %}
 

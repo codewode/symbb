@@ -3,15 +3,14 @@
 {% form_theme form 'SymBBTemplateSimpleBundle::form.html.twig' %}
 
 {% if saved %}
-<div class="alert alert-success">
-    {% trans %}Your post has been saved successfully. You will now be redirected ...{% endtrans %}
-    <script type="text/javascript">
-    <!--
-    var newLocation = "{{ path('symbb_forum_topic_show', {'name': post.getTopic.getSeoName(), 'id': post.getTopic.getId()} ) }}?page=last#symbb_bottom";
-    setTimeout('window.location="'+newLocation+'"', 300);
-    //–>
-    </script>
-</div>
+
+<script type="text/javascript">
+<!--
+var newLocation = "{{ path('symbb_forum_topic_show', {'name': post.getTopic.getSeoName(), 'id': post.getTopic.getId()} ) }}?page=last#symbb_bottom";
+setTimeout('window.location="'+newLocation+'"', 300);
+//–>
+</script>
+
 {% endif %}
 
 {% if not saved %}

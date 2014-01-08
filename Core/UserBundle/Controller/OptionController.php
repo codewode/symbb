@@ -8,7 +8,8 @@
 */
 namespace SymBB\Core\UserBundle\Controller;
 
-use SymBB\Core\UserBundle\Form\Type\Option;
+use \SymBB\Core\UserBundle\Form\Type\Option;
+use \SymBB\Core\UserBundle\Form\Type\SecurityOption;
 
 class OptionController extends \SymBB\Core\SystemBundle\Controller\AbstractController 
 {
@@ -37,6 +38,10 @@ class OptionController extends \SymBB\Core\SystemBundle\Controller\AbstractContr
             $em = $this->getDoctrine()->getManager('symbb');
             $em->persist($data);
             $em->flush();
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('Your changes were saved!', array(), 'symbb_frontend')
+            );
         }
         
         return $this->render(
@@ -45,4 +50,24 @@ class OptionController extends \SymBB\Core\SystemBundle\Controller\AbstractContr
         );
 	}
     
+    public function securityAction(){
+        
+        $user = $this->getUser();
+        $form = $this->createForm(new SecurityOption(), $user);
+        $form->handleRequest($this->get('request'));
+        
+        if ($form->isValid()) {
+            $password = $form->get('password')->getData();
+            $this->get('symbb.core.user.manager')->changeUserPassword($user, $password);
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('Your changes were saved!', array(), 'symbb_frontend')
+            );
+        }
+        
+        return $this->render(
+            $this->getTemplateBundleName('forum').':User:options_security.html.twig',
+            array('form' => $form->createView())
+        );
+	}
 }

@@ -17,6 +17,24 @@
 {% endspaceless %}
 {% endblock form_widget_simple %}
     
+{% block repeated_rowbootstrap %}
+{% spaceless %}
+    {#
+    No need to render the errors here, as all errors are mapped
+    to the first child (see RepeatedTypeValidatorExtension).
+    #}
+    {{ block('form_rowsbootstrap') }}
+{% endspaceless %}
+{% endblock repeated_rowbootstrap %}
+    
+{% block form_rowsbootstrap %}
+{% spaceless %}
+    {% for child in form %}
+        {{ form_rowbootstrap(child) }}
+    {% endfor %}
+{% endspaceless %}
+{% endblock form_rowsbootstrap %}
+
     
 {% block checkbox_widget %}
 {% spaceless %}

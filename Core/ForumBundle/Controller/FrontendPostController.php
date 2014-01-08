@@ -95,6 +95,12 @@ class FrontendPostController extends \SymBB\Core\SystemBundle\Controller\Abstrac
         }
         $em->remove($post);
         $em->flush();
+        
+        $this->get('session')->getFlashBag()->add(
+            'success',
+            $this->get('translator')->trans('Your post has been deleted successfully. You will now be redirected ...', array(), 'symbb_frontend')
+        );
+        
         return $this->render($this->getTemplateBundleName('forum').':Post:delete.html.twig', array('topic' => $topic));
     }
     
@@ -167,6 +173,11 @@ class FrontendPostController extends \SymBB\Core\SystemBundle\Controller\Abstrac
             $em->persist($post);
             $em->persist($topic);
             $em->flush();
+            
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('Your post has been saved successfully You will now be redirected ...', array(), 'symbb_frontend')
+            );
             
             //only if the id was "0" ( only by "new" )
             if($oldId === null){

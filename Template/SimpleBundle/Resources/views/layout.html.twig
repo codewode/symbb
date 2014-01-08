@@ -99,6 +99,18 @@
                 <div class="alert alert-info">{% trans %}You are not currently logged.{% endtrans %}</div>
             {% endif %}
                 
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+                
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-danger">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+                
             {% block symbb_actions %}
                    
             {% endblock %}

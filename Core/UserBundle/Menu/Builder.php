@@ -21,8 +21,7 @@ class Builder extends ContainerAware
         $menu = $factory->createItem('root');
 
         $menu->addChild('Profil', array('route' => 'symbb_user_options', 'routeParameters' => array()))->setExtra('translation_domain', 'symbb_frontend');
-        $menu->addChild('Sicherheit', array('route' => 'symbb_forum_index'))->setExtra('translation_domain', 'symbb_frontend');
-        $menu->addChild('Benachrichtigungen', array('route' => 'symbb_forum_index'))->setExtra('translation_domain', 'symbb_frontend');
+        $menu->addChild('Security', array('route' => 'symbb_user_options_security'))->setExtra('translation_domain', 'symbb_frontend');
 
         return $menu;
 
