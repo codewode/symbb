@@ -30,5 +30,5 @@ With the following command should you can import the sample data
  php app/console doctrine:fixtures:load --em=symbb --env=dev
 
 
-Please note that - your request must be env environment . Unwanted data will be deleted currently have prod, dev and not test different database prefixes so
-Also note that the User and Group Data MUST be required. The forums fixtures are optional.
+Please note that " -env " is your wish environment. 
+Also note that the User and Group Data are required. The forums fixtures are optional.
