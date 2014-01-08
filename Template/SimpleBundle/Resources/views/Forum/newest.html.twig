@@ -24,7 +24,7 @@
             
         <div class="row topic">
             <div class="col-md-12 nameBlock">
-                <a href="{{ path('_symbb_forum_topic_show', {'id': post.getTopic().getId(), 'name': post.getTopic().getSeoName()}) }}">
+                <a href="{{ path('symbb_forum_topic_show', {'id': post.getTopic().getId(), 'name': post.getTopic().getSeoName()}) }}">
                     <div class="name">{{post.getName()}}</div>
                     <div class="labels">
                     {% if checkSymbbForTopicAnsweredFlag(post) %}

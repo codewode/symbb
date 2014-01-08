@@ -9,13 +9,9 @@
 
 namespace SymBB\Core\ForumBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-
-class FrontendController  extends Controller 
+class FrontendController extends \SymBB\Core\SystemBundle\Controller\AbstractController 
 {
-    
-    protected $templateBundle = null;
     
     public function indexAction(){
         return $this->portalAction();
@@ -111,14 +107,6 @@ class FrontendController  extends Controller
                 'name' => $forum->getSeoName(),
                 'id'  => $forum->getId()
             ));
-    }
-    
-    protected function getTemplateBundleName($for = 'forum'){
-        if($this->templateBundle === null){
-            $config = $this->container->getParameter('symbb_config');
-            $this->templateBundle = $config['template'][$for];
-        }
-        return $this->templateBundle;
     }
     
     protected function ignoreForum(\SymBB\Core\ForumBundle\Entity\Forum $forum){

@@ -9,10 +9,10 @@
                     <div class="btn-group btn-group-xs">
                        <button type="button" class="btn btn-default quote" data-user="{{post.getAuthor().getUsername()}}" data-quote="{{post.getText()}}" >{% trans %}Quote{% endtrans %}</button>
                         {% if hasSymbbAccess('SYMBB_POST#EDIT', post) %}
-                        <button type="button" class="btn btn-default btn-primary" onclick="window.location.href='{{ path('_symbb_edit_post', {'post': post.getId()}) }}'">{% trans %}Edit{% endtrans %}</button>
+                        <button type="button" class="btn btn-default btn-primary" onclick="window.location.href='{{ path('symbb_edit_post', {'post': post.getId()}) }}'">{% trans %}Edit{% endtrans %}</button>
                         {% endif %}
                         {% if hasSymbbAccess('SYMBB_POST#DELETE', post) %}
-                        <button type="button" class="btn btn-default btn-danger" onclick="if (confirm('{% trans %}you really want to delete the entry?{% endtrans %}')) { window.location.href='{{ path('_symbb_delete_post', {'post': post.getId()}) }}' };" >{% trans %}Delete{% endtrans %}</button>
+                        <button type="button" class="btn btn-default btn-danger" onclick="if (confirm('{% trans %}you really want to delete the entry?{% endtrans %}')) { window.location.href='{{ path('symbb_delete_post', {'post': post.getId()}) }}' };" >{% trans %}Delete{% endtrans %}</button>
                         {% endif %}
                     </div>
                 </div>

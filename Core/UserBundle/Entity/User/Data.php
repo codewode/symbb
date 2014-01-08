@@ -42,11 +42,6 @@ class Data
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $avatar;
-    
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $gravatar = false;
 
 
     ############################################################################
@@ -54,12 +49,10 @@ class Data
     ############################################################################
     public function getSignature(){return (string)$this->signature;}
     public function setSignature($value){ $this->signature = $value;}
-    public function getAvatarUrl(){return (string)$this->avatar;}
-    public function setAvatarUrl($value){ $this->avatar = $value;}
+    public function getAvatar(){return (string)$this->avatar;}
+    public function setAvatar($value){ $this->avatar = $value;}
     public function getUser(){return $this->user;}
     public function setUser($value){ $this->user = $value;}
-    public function hasGravatar(){return $this->gravatar;}
-    public function setGravatar($value){$this->gravatar = $value;}
     ############################################################################
     
     public function hasSignature(){

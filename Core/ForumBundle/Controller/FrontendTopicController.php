@@ -9,16 +9,10 @@
 
 namespace SymBB\Core\ForumBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use SymBB\Core\UserBundle\Acl\PermissionMap;
-use SymBB\Core\UserBundle\Acl\MaskBuilder;
 
-
-class FrontendTopicController  extends Controller 
+class FrontendTopicController  extends \SymBB\Core\SystemBundle\Controller\AbstractController 
 {
     
-    protected $templateBundle = null;
     protected $topic = null;
     protected $post = null;
     protected $forum = null;
@@ -264,9 +258,9 @@ class FrontendTopicController  extends Controller
         
         // check if form was submited
         if($topic->getId() > 0){
-            $url        = $this->generateUrl('_symbb_forum_topic_edit', array('topic' => $topic->getId()));
+            $url        = $this->generateUrl('symbb_forum_topic_edit', array('topic' => $topic->getId()));
         } else {
-            $url        = $this->generateUrl('_symbb_forum_topic_new', array('forum' => $forum->getId()));
+            $url        = $this->generateUrl('symbb_forum_topic_new', array('forum' => $forum->getId()));
         }
         
         $dispatcher = $this->get('event_dispatcher');
@@ -285,7 +279,7 @@ class FrontendTopicController  extends Controller
     protected function getPostForm($topic){
         
         $post       = \SymBB\Core\ForumBundle\Entity\Post::createNew($topic, $this->getUser());
-        $url        = $this->generateUrl('_symbb_new_post', array('topic' => $topic->getId()));
+        $url        = $this->generateUrl('symbb_new_post', array('topic' => $topic->getId()));
         $dispatcher = $this->get('event_dispatcher');
         $form       = $this->createForm(new \SymBB\Core\ForumBundle\Form\Type\PostType($url, $post, $dispatcher, $this->get('translator')), $post);
         
@@ -294,20 +288,6 @@ class FrontendTopicController  extends Controller
         }
         
         return $form;
-    }
-
-    
-    /**
-     * get the Template Bundle name
-     * @param string $for
-     * @return string
-     */
-    protected function getTemplateBundleName($for = 'forum'){
-        if($this->templateBundle === null){
-            $config = $this->container->getParameter('symbb_config');
-            $this->templateBundle = $config['template'][$for];
-        }
-        return $this->templateBundle;
     }
     
     

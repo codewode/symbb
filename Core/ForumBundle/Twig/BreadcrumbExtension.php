@@ -47,7 +47,7 @@ class BreadcrumbExtension extends \Twig_Extension
         }
         
         $home           = $this->translator->trans('Overview', array(), 'symbb_frontend');
-        $uri            = $this->router->generate('_symbb_forum_index');
+        $uri            = $this->router->generate('symbb_forum_index');
         $breadcrumb[]   = array('name' => $home, 'link' => $uri);
         $breadcrumb     = array_reverse($breadcrumb);
         
@@ -62,7 +62,7 @@ class BreadcrumbExtension extends \Twig_Extension
     protected function createForForum(\SymBB\Core\ForumBundle\Entity\Forum $object, $breadcrumb){
         while (is_object($object)) {
             if(is_object($object)){
-                $uri = $this->router->generate('_symbb_forum_show', array('id' => $object->getId(), 'name' => $object->getSeoName()));
+                $uri = $this->router->generate('symbb_forum_show', array('id' => $object->getId(), 'name' => $object->getSeoName()));
                 $breadcrumb[]   = array('name' => $object->getName(), 'link' => $uri);
             }
             $object = $object->getParent();
@@ -72,7 +72,7 @@ class BreadcrumbExtension extends \Twig_Extension
     
     protected function createForTopic(\SymBB\Core\ForumBundle\Entity\Topic $object, $breadcrumb){
         if($object->getId() > 0){
-            $uri            = $this->router->generate('_symbb_forum_topic_show', array('id' => $object->getId(), 'name' => $object->getSeoName()));
+            $uri            = $this->router->generate('symbb_forum_topic_show', array('id' => $object->getId(), 'name' => $object->getSeoName()));
             $breadcrumb[]   = array('name' => $object->getName(), 'link' => $uri);
         }
         $forum          = $object->getForum();

@@ -9,15 +9,9 @@
 
 namespace SymBB\Core\ForumBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use SymBB\Core\UserBundle\Acl\PermissionMap;
-use SymBB\Core\UserBundle\Acl\MaskBuilder;
-
-class FrontendPostController  extends Controller 
+class FrontendPostController extends \SymBB\Core\SystemBundle\Controller\AbstractController 
 {
     
-    protected $templateBundle = null;
     protected $topic = null;
     protected $post = null;
     protected $forum = null;
@@ -229,9 +223,9 @@ class FrontendPostController  extends Controller
         }
         
         if($post->getId() > 0){
-            $url    = $this->generateUrl('_symbb_edit_post', array('post' => $post->getId()));
+            $url    = $this->generateUrl('symbb_edit_post', array('post' => $post->getId()));
         } else {
-            $url    = $this->generateUrl('_symbb_new_post', array('topic' => $topic->getId()));
+            $url    = $this->generateUrl('symbb_new_post', array('topic' => $topic->getId()));
         }
         
         $dispatcher = $this->get('event_dispatcher');
@@ -278,19 +272,6 @@ class FrontendPostController  extends Controller
             }
         }
         return $bbcodes;
-    }
-    
-    /**
-     * get the Template Bundle name
-     * @param string $for
-     * @return string
-     */
-    protected function getTemplateBundleName($for = 'forum'){
-        if($this->templateBundle === null){
-            $config = $this->container->getParameter('symbb_config');
-            $this->templateBundle = $config['template'][$for];
-        }
-        return $this->templateBundle;
     }
     
     

@@ -29,8 +29,8 @@ class BBCodeManagerExtension extends \Twig_Extension
         );
     }
     
-    public function getSymbbBBCodes(){
-        return $this->bbcodeManager->getBBCodes();
+    public function getSymbbBBCodes($set = 'default'){
+        return $this->bbcodeManager->getBBCodes($set);
     }
     
     public function getSymbbBBCodesJson(){

@@ -35,12 +35,7 @@ class UserDataExtension extends \Twig_Extension
     public function getSymbbUserAvatar(\SymBB\Core\UserBundle\Entity\UserInterface $user)
     {
         $data   = $user->getSymbbData();
-        $avatar = $data->getAvatarUrl();
-        // do not check for gravatar exist directly because its slow! we use the boolean flag
-        if(empty($avatar) && $data->hasGravatar()){
-            $gravatar   = new \SymBB\Core\UserBundle\GravatarApi();
-            $avatar     = $gravatar->getUrl($user->getEmail());
-        }
+        $avatar = $data->getAvatar();
         if(empty($avatar)){
             $avatar = '/bundles/symbbtemplatesimple/images/avatar/empty.gif';
         }

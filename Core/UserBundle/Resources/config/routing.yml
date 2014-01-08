@@ -1,0 +1,4 @@
+symbb_user_options:
+    pattern:  /user/options
+    defaults: { _controller: SymBBCoreUserBundle:Option:index }
+    

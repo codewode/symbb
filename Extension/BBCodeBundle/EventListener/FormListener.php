@@ -18,7 +18,6 @@ class FormListener
     {
        $builder = $event->getBuilder();
        $builder->add('text', new BBEditorType(), array('attr' => array(
-           'class' => 'symbb_bbcode_editor_textarea',
            'placeholder' => $event->getTranslator()->trans('Give Your text here', array(), 'symbb_frontend')
            )));
     }

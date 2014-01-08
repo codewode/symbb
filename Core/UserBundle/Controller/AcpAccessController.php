@@ -8,13 +8,10 @@
 */
 namespace SymBB\Core\UserBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class AcpAccessController extends Controller 
+class AcpAccessController extends \SymBB\Core\SystemBundle\Controller\AbstractController 
 {
-    protected $templateBundle;
     
     public function groupAction($step){
         $name = "groupStep".(int)$step.'Action';
@@ -53,7 +50,7 @@ class AcpAccessController extends Controller
             return $this->groupStep2Action();
         } else {
             return $this->render(
-                $this->getTemplateBundleName().':Acp:Group\accessS1.html.twig',
+                $this->getTemplateBundleName('acp').':Acp:Group\accessS1.html.twig',
                 array('form' => $form->createView())
             );
         }
@@ -119,7 +116,7 @@ class AcpAccessController extends Controller
                 ->findBy(array('id' =>$forumIds));
             
             return $this->render(
-                $this->getTemplateBundleName().':Acp:Group\accessS2.html.twig',
+                $this->getTemplateBundleName('acp').':Acp:Group\accessS2.html.twig',
                 array(
                     'group' => $group, 
                     'forumList' => $forumList,
@@ -133,16 +130,6 @@ class AcpAccessController extends Controller
             return $this->redirect($this->generateUrl('_symbbcoreuserbundle_group_access', array('step' => 1)));
         }
         
-    }
-
-    protected function getTemplateBundleName()
-    {
-        if ($this->templateBundle === null) {
-            $config = $this->container->getParameter('symbb_config');
-            $this->templateBundle = $config['template']['acp'];
-        }
-        return $this->templateBundle;
-
     }
     
 }

@@ -45,7 +45,20 @@ class EventExtension extends \Twig_Extension
             new \Twig_SimpleFunction('executeSymbbTemplateFormPostEvent', array($this, 'executeSymbbTemplateFormPostEvent'), array(
                 'is_safe' => array('html')
             )),
+            new \Twig_SimpleFunction('executeSymbbEvent', array($this, 'executeSymbbEvent'), array(
+                'is_safe' => array('html')
+            )),
         );
+    }
+
+    public function executeSymbbEvent($eventName)
+    {
+        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
+        $dispatcher = $this->container->get('event_dispatcher');
+        $event      = new \SymBB\Core\EventBundle\Event\TemplateDefaultEvent($this->env);
+        $dispatcher->dispatch('symbb.'.$eventName, $event);
+        $html       = $event->getHtml();
+        return $html;
     }
 
     public function executeSymbbTemplateFormTopicEvent($eventName, $form)

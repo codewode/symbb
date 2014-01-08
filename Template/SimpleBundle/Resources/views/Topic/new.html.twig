@@ -20,7 +20,7 @@
         {% trans %}Your post has been saved successfully. You will now be redirected ...{% endtrans %}
         <script type="text/javascript">
         <!--
-        var newLocation = "{{ path('_symbb_forum_topic_show', {'name': topic.getSeoName(), 'id': topic.getId()} ) }}";
+        var newLocation = "{{ path('symbb_forum_topic_show', {'name': topic.getSeoName(), 'id': topic.getId()} ) }}";
         setTimeout('window.location="'+newLocation+'"', 300);
         //–>
         </script>
@@ -68,7 +68,7 @@
                 
                 {{ executeSymbbTemplateFormTopicEvent('before.buttons', form) }}
                 <button class="btn btn-success" type="submit">{{ 'Save'|trans }}</button>
-                <button class="btn btn-danger" onclick="window.location.href='{{ path('_symbb_forum_show', {'name': forum.getSeoName(), 'id': forum.getId()}) }}'; return false;">{{ 'Abort'|trans }}</button>
+                <button class="btn btn-danger" onclick="window.location.href='{{ path('symbb_forum_show', {'name': forum.getSeoName(), 'id': forum.getId()}) }}'; return false;">{{ 'Abort'|trans }}</button>
                 {{ executeSymbbTemplateFormTopicEvent('after.buttons', form) }}
             </div>
         </div>

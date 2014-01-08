@@ -93,6 +93,11 @@ root, body, html {
     float: left;
 }
 
+.avatar img {
+    height: 150px;
+    border: 1px solid #FFF;
+}
+
 .avatar_mini img {
     height: 32px;
     border: 1px solid #FFF;
