@@ -3,10 +3,14 @@ language: php
 php:
   - 5.4
   - 5.5
+  
+services:
+  - memcached # will start memcached
 
 before_script: 
+  - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer self-update
-  - composer update
+  - composer install --dev --prefer-source
 
 notifications:
   email: christianwielath@googlemail.com
