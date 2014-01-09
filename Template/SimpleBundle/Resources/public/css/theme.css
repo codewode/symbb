@@ -28,11 +28,25 @@ root, body, html {
 
 }
 
+.btn-group {
+    margin-bottom: 20px;
+}
+
+.symbb_body .btn-group {
+    margin-bottom: 0px;
+}
+
 .symbb_container .row {
-    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.symbb_topic .row.body:last-child {
+    margin-bottom: 20px;
 }
 
 .symbb_body {
+    margin-bottom: 20px;
     padding: 0px;
 }
 
@@ -144,6 +158,10 @@ root, body, html {
     width: 100%;
 }
 
+.symbb_navi {
+    margin-bottom: 20px;
+}
+
 .symbb_navi .navbar-default {
     border: none;
     border-bottom: 1px solid #ccc;
@@ -162,4 +180,5 @@ root, body, html {
 .symbb_actions {
     padding: 10px;
     padding-bottom: 0px;
+    padding-top: 0px;
 }
