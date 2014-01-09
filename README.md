@@ -9,13 +9,25 @@ For a "finished" Symfony version you can use the Sandbox :
 
 https://github.com/seyon/symbb_sandbox
 
-# demo
+# Bundles are used
+
+- FOSUserBundle ( optional, but recommended )
+- FOSRestBundle ( for future api )
+- FOSJsRoutingBundle 
+- FOSMessageBundle (PM System)
+- KnpMenuBundle
+- KnpPaginatorBundle
+- SonataIntlBundle ( Date formating )
+- FMBbcodeBundle (BBCodes)
+- LswMemcacheBundle (Memcache Manager)
+
+# Demo
 
 A demo of the latest features can be found here :
 
 http://symbb.de/
 
-As long as no beta is , the page serves as a demo. The data to be reset regularly provide .ç
+As long as no beta is , the page serves as a demo. The data is cleared regularly.
 In addition, the version can easily lag behind the current version since I only update when the Dev is reasonably stable .
 
 # Init the sample data as long as there is no installer
