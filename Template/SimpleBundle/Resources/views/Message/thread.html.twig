@@ -8,12 +8,9 @@
   <div class="panel-heading">{{ thread.subject }}</div>
   <div class="panel-body">
     {% for message in thread.messages %}
-        <div class="messenger_thread_message">
-            <div class="messenger_thread_message_info">
-                {% trans with {'%sender%': message.sender|e, '%date%': message.createdAt|date} from 'symbb_frontend' %}message_info{% endtrans %}
-            </div>
-
-            <div class="messenger_thread_message_body" id="message_{{ message.id }}">
+        <div class="panel panel-default">
+            <div class="panel-heading">{% trans with {'%sender%': message.sender|e, '%date%': message.createdAt|date} from 'symbb_frontend' %}message_info{% endtrans %}</div>
+            <div class="panel-body" id="message_{{ message.id }}">
                 {{ message.body }}
             </div>
         </div>
