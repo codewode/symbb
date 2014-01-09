@@ -10,13 +10,13 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand glyphicon glyphicon-th-large" href="{{path('_symbb_index')}}">
-                    </a>
+                </a>
             </div>
             <ol class="breadcrumb">
                 {% for item in breadcrumb %}
                     {% spaceless %}
                     {% if loop.last %}
-                    <li class="active">{{item.name}}</li>
+                        <li class="active"><a href="{{item.link}}">{{item.name}}</a></li>
                     {% else %}
                         <li><a href="{{item.link}}">{{item.name}}</a></li>
                     {% endif %}
