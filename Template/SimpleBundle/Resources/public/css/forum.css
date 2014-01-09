@@ -24,6 +24,11 @@
     font-size: 12px;
 }
 
+.symbb_list .row.new {
+    color: #31708f;
+    background-color: #d9edf7;
+}
+
 .symbb_list .row .nameBlock .user,
 .symbb_list .row .lastPostBlock .user,
 .symbb_list .row .nameBlock .description {

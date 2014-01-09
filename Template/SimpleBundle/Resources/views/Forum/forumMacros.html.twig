@@ -7,7 +7,7 @@ Macro to generate the row of a forum
 -->
 
 {% macro forumRow(object) %}
-    <div class="row forum"> 
+    <div class="row forum {% if checkSymbbForForumNewFlag(object) %}new{% endif %}"> 
         <div class="col-md-6 nameBlock">{{_self.nameRow(object, true, true)}}</div>
         <div class="col-md-2 postCountBlock">
             {{object.getTopicCount()}} <span>{% trans %}Topics{% endtrans %}</span><br/>
@@ -128,7 +128,7 @@ Macro to generate a list of all topics
     
     {% for topic in topicPagination %}
 
-    <div class="row topic">
+    <div class="row topic {% if checkSymbbForTopicNewFlag(topic) %}new{% endif %}">
         <div class="col-md-6 nameBlock">
             <a href="{{ path('symbb_forum_topic_show', {'id': topic.getId(), 'name': topic.getSeoName()}) }}">
                 <div class="name">{{topic.getName()}}</div>
