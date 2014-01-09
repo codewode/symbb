@@ -39,9 +39,9 @@
                         <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}" title="{% trans from 'symbb_frontend' %}goto_last{% endtrans %}">
                             →
                         </a>
-                        {% trans with {'%date%': thread.lastMessage.createdAt|date} from 'symbb_frontend' %}on{% endtrans %}
+                        {% trans with {'%date%': thread.lastMessage.createdAt|date} from 'symbb_frontend' %}message_on{% endtrans %}
                         <br />
-                        {% trans with {'%sender%': thread.lastMessage.sender|e } from 'symbb_frontend' %}by{% endtrans %}
+                        {% trans with {'%sender%': thread.lastMessage.sender|e } from 'symbb_frontend' %}message_by{% endtrans %}
                     {% else %}
                         ----
                     {% endif %}

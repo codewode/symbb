@@ -78,3 +78,7 @@ last_message: letzte Nachricht
 actions: Aktionen
 success_deleted: Erfolgreich gelöscht
 sent: Gesendet
+message_info: Nachricht
+message_on: am %date%
+message_by: von %sender%
+
