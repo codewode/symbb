@@ -8,6 +8,7 @@ services:
   - memcached # will start memcached
 
 before_script: 
+  - apt-get install php5-memcached
   - composer self-update
   - composer install --dev --prefer-source
 
