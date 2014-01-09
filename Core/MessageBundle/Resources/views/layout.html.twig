@@ -1,0 +1,15 @@
+{% trans_default_domain "symbb_frontend" %}
+
+{% extends getSymbbTemplateConfig('forum') ~ '::layoutWithSidebar.html.twig' %}
+
+{% block symbb_sidebar %}
+{{ knp_menu_render('SymBBCoreMessageBundle:Builder:mainMenu', {'template': getSymbbTemplateConfig('forum') ~ '::sidemenu.html.twig'}) }}
+{% endblock %}
+
+{% block symbb_body %}
+
+<div class="fos_message_content">
+    {% block fos_message_content %}{% endblock %}
+</div>
+
+{% endblock %}

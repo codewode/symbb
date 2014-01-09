@@ -4,3 +4,4 @@ doctrine:
             symbb:
                 mappings:
                     SymBBCoreMessageBundle: ~
+                    FOSMessageBundle: ~

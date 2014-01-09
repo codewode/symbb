@@ -18,4 +18,9 @@ class SymBBCoreMessageBundle extends Bundle
         parent::build($container);
         $container->addCompilerPass(new DependencyInjection\ConfigCompilerPass());
     }
+    
+    public function getParent()
+    {
+        return 'FOSMessageBundle';
+    }
 }

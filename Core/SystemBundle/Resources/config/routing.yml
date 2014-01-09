@@ -14,7 +14,7 @@ fos_user_resetting:
  
 fos_message:
     resource: "@FOSMessageBundle/Resources/config/routing.xml"
-    prefix: /optional_routing_prefix
+    prefix: /messages
  
 _symbb_acp_routings:
     resource: "@SymBBCoreSystemBundle/Resources/config/routing/acp.yml"
