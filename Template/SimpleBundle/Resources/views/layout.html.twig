@@ -47,8 +47,8 @@
                     <button onclick="window.location.href='{{ path('symbb_user_options') }}'" type="button" class="btn btn-default btn-xs">
                         <span class="glyphicon glyphicon-cog"></span> {{ 'Options'|trans }}
                     </button>
-                    <button type="button" class="btn btn-default btn-xs">
-                        <span class="glyphicon glyphicon-comment"></span> {{ 'Messages'|trans }}
+                    <button onclick="window.location.href='{{ path('fos_message_inbox') }}'" type="button" class="btn btn-default btn-xs {% if fos_message_nb_unread() %} btn-danger{% endif %}">
+                        <span class="glyphicon glyphicon-comment"></span> {{ fos_message_nb_unread() }} {{ 'Messages'|trans }} 
                     </button>
                 </div>
                 {% endif %}
