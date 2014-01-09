@@ -62,19 +62,39 @@ class ForumManager
     
     
     
-    public function getSelectList()
+    public function getSelectList($types = array())
     {
-        $repo = $this->em->getRepository('SymBBCoreForumBundle:Forum');
-        $list = array();
-
-        $entries = $repo->findBy(array('parent' => null), array('position' => 'ASC', 'name' => 'ASC'));
+        $repo   = $this->em->getRepository('SymBBCoreForumBundle:Forum');
+        $list   = array();
+        $by     = array('parent' => null);
+        if(!empty($types)){
+            $by['type'] = $types;
+        }
+        $entries = $repo->findBy($by, array('position' => 'ASC', 'name' => 'ASC'));
         foreach ($entries as $entity) {
             $list[$entity->getId()] = $entity;
             $this->addChildsToArray($entity, $list);
         }
 
-        return $list;
+        $listFinal = array();
+        
+        foreach($list as $forum){
+            $name = ' '.$forum->getName();
+            $name = $this->addSpaceForParents($forum, $name);
+            $listFinal[$forum->getId()] = $name;
+        }
+        
+        return $listFinal;
 
+    }
+    
+    private function addSpaceForParents($forum, $name){
+        $parent = $forum->getParent();
+        if(is_object($parent)){
+            $name = '─'.$name;
+            $name = $this->addSpaceForParents($parent, $name);
+        }
+        return $name;
     }
 
     private function addChildsToArray($entity, &$array)

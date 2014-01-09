@@ -10,11 +10,14 @@
         <div class="panel-heading">
             {{ 'Eintrag speichern'|trans }}
         </div>
+        <div class="panel-body">
         {{ form_row(form._token) }}
         {{ form_restbootstrap(form) }}
         <input type="hidden" name="id" value="{{ entity.getId() }}" />
+        </div>
         <div class="panel-footer">
             <button onclick="submit();" type="button" class="btn btn-info">{{ 'save'|trans({}) }}</button>
+            <div class="clear"></div>
         </div>
     </div>
 {{ form_end(form) }}
