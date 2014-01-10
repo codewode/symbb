@@ -4,7 +4,8 @@
 
     <testsuites>
         <testsuite name="SymBB Complete test suite">
-            <directory suffix="Test.php">./*/Tests</directory>
+            <directory suffix="Test.php">./Core/*/Tests</directory>
+            <directory suffix="Test.php">./Extension/*/Tests</directory>
         </testsuite>
     </testsuites>
 
