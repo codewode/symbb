@@ -2,8 +2,7 @@
 
 namespace SymBB\Core\UserBundle\Tests;
 
-use SymBB\Core\UserBundle\DependencyInjection\UserManager;
-use SymBB\Core\UserBundle\Entity\User;
+use \SymBB\Core\UserBundle\DependencyInjection\UserManager;
 
 class UserManagerTest extends \PHPUnit_Framework_TestCase
 {
